@@ -584,16 +584,16 @@ a.card { display: block; }
   position: absolute;
   inset-block: 0;
   inset-inline-end: 0;
-  width: 62%;
+  width: min(62%, 1000px);           /* on very wide screens it would run under the text */
   z-index: -2;
   background-size: cover;
-  background-position: center 30%;
+  background-position: center 72%;  /* low enough to keep the grinder and sparks in the frame */
   /* NEW: mask-image fades the photo itself into the black page. Black in a
      mask = visible, transparent = invisible. Two masks are combined: a fade
      from the text side, and a fade at the bottom, so there's no hard edge. */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%), linear-gradient(to top, transparent 0%, #000 30%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.7) 20%, #000 42%), linear-gradient(to top, transparent 0%, #000 14%);
   -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to right, transparent 0%, #000 45%), linear-gradient(to top, transparent 0%, #000 30%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.7) 20%, #000 42%), linear-gradient(to top, transparent 0%, #000 14%);
   mask-composite: intersect;
 }
 
@@ -630,6 +630,10 @@ a.card { display: block; }
 .gear-axle { fill: rgba(255, 122, 26, 0.45); }
 /* Home hero: the gears sit in the bottom corner, under the faded edge of the photo */
 .hero .gears { top: auto; bottom: -170px; inset-inline-end: -110px; width: min(520px, 80vw); opacity: 0.75; }
+/* Once the hero photo is in, the gears move to the bottom-left so they never sit on the photo */
+@media (min-width: 1025px) {
+  .hero:not(:has(.hero-photo.is-empty)) .gears { inset-inline-end: auto; inset-inline-start: -230px; bottom: -250px; width: 440px; opacity: 0.5; }
+}
 @media (max-width: 860px) {
   /* quieter, smaller and further into the corner on phones, so they stay out from behind the headings */
   .gears { opacity: 0.4; width: 300px; top: -150px; inset-inline-end: -130px; }
@@ -914,8 +918,8 @@ a.card { display: block; }
 [dir="rtl"] .card:hover .card-arrow { transform: translateX(-4px); }
 [dir="rtl"] .card-arrow { transform: scaleX(-1); }
 [dir="rtl"] .hero-photo {
-  -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 45%), linear-gradient(to top, transparent 0%, #000 30%);
-  mask-image: linear-gradient(to left, transparent 0%, #000 45%), linear-gradient(to top, transparent 0%, #000 30%);
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.7) 20%, #000 42%), linear-gradient(to top, transparent 0%, #000 14%);
+  mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.7) 20%, #000 42%), linear-gradient(to top, transparent 0%, #000 14%);
 }
 [dir="rtl"] .progress span {
   background:
@@ -1000,6 +1004,7 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
      NEW: :has() means "a .hero that CONTAINS an .is-empty photo". */
   .hero:has(.hero-photo.is-empty) { min-height: auto; }
   .hero:has(.hero-photo.is-empty) .hero-text { padding-block: 96px 64px; }
+  .hero-photo { background-position: center 25%; }   /* phones/tablets: keep the face in view behind the text */
   /* gears drop below the text and buttons instead of sitting behind them */
   .hero .gears { width: 340px; bottom: -230px; inset-inline-end: -130px; }
 }

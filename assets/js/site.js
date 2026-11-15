@@ -330,7 +330,8 @@ function renderHero() {
   if (!slot) return;
   const first = photosIn(slot.dataset.folder)[0];
   if (first) {
-    slot.style.backgroundImage = `url("${first.webp || first.src}")`;
+    // encodeURI turns spaces in file names (like "hero .jpeg") into %20 so CSS can read them
+    slot.style.backgroundImage = `url("${encodeURI(first.webp || first.src)}")`;
     slot.classList.remove('is-empty');
   } else {
     slot.classList.add('is-empty');
