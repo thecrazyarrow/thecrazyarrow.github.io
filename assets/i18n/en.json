@@ -104,6 +104,7 @@
   "projects.guitar.problem": "A full guitar body is far bigger than a hobby print bed, and it has to survive string tension.",
   "projects.guitar.process": "A 20 × 40 mm aluminium T-slot extrusion runs from the body into the neck as the backbone. The body has hexagonal through-holes and is split into bolt-together modules that fit a 220 × 220 × 250 mm bed.",
   "projects.guitar.result": "The body is modelled. Spin it below. Next: printing and assembly.",
+  "common.tapToRotate": "Tap to rotate",
   "common.viewerHint": "Drag to rotate · scroll or pinch to zoom · double-click to reset",
   "projects.guitar.t1": "25.5\" scale",
   "projects.guitar.t2": "22 frets",

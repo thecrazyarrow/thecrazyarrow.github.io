@@ -68,6 +68,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 84px;            /* jump links stop below the sticky header */
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;   /* no grey flash on tap: cards give their own feedback */
 }
 
 body {
@@ -506,6 +507,10 @@ a.card { display: block; }
   gap: 14px;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
   margin-top: 24px;
+}
+/* A single-photo slot (About) fills its whole column instead of being a small tile */
+.gallery[data-limit="1"] {
+  grid-template-columns: 1fr;
 }
 
 .gallery button {                  /* each photo is a button that opens the lightbox */
@@ -963,16 +968,22 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
     overflow-y: auto;
   }
   .nav.open { display: flex; }
-  .nav-links { flex-direction: column; }
-  .nav-links a { padding: 11px 8px; font-size: 1rem; }
+  /* One column of links on phones, two or three side by side on tablets */
+  .nav-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 2px 12px; }
+  .nav-links a { padding: 12px 10px; font-size: 1rem; }
   .nav-actions { justify-content: space-between; flex-wrap: wrap; }
 }
 
-@media (max-width: 860px) {
-  .split, .contact-grid, .footer-inner { grid-template-columns: 1fr; }
-  .section { padding-block: 64px; }
+/* ---- TABLETS (861–1100px; phones have their own gear size in section 9) ---- */
+@media (min-width: 861px) and (max-width: 1100px) {
+  /* smaller gear cluster, tucked higher, so it stays out of the opening paragraph */
+  .gears { width: 380px; top: -140px; }
+}
 
-  /* Hero: the photo goes BEHIND the text, darker, faded at the top and bottom */
+/* ---- TABLETS + PHONES (up to 1024px): the hero photo goes BEHIND the text ----
+   Side by side only works on wide screens; on a tablet the text would sit on
+   top of the photo's face. */
+@media (max-width: 1024px) {
   .hero { align-items: end; }
   .hero-photo {
     width: 100%;
@@ -985,12 +996,58 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
     mask-image: linear-gradient(to bottom, #000 30%, transparent 92%);
   }
   .hero-text { padding-block: 120px 56px; }
+  /* No photo in zynx/ yet? Then don't leave a screen of empty space above the text.
+     NEW: :has() means "a .hero that CONTAINS an .is-empty photo". */
+  .hero:has(.hero-photo.is-empty) { min-height: auto; }
+  .hero:has(.hero-photo.is-empty) .hero-text { padding-block: 96px 64px; }
+  /* gears drop below the text and buttons instead of sitting behind them */
+  .hero .gears { width: 340px; bottom: -230px; inset-inline-end: -130px; }
 }
 
+/* ---- PHONES (up to 860px) ---- */
+@media (max-width: 860px) {
+  .split, .contact-grid, .footer-inner { grid-template-columns: 1fr; }
+  .section { padding-block: 64px; }
+}
+
+/* ---- SMALL PHONES (up to 480px) ---- */
 @media (max-width: 480px) {
   .card { padding: 20px; }
   .project > summary, .project.featured > summary { padding: 22px; }
-  .project-body { padding: 22px; }
+  .project-body { padding: 20px 16px 22px; }
+  .ppr > div { padding: 14px; }          /* less boxed-in padding, so text gets the width */
+  .section-head { margin-bottom: 26px; }
   .btn { padding: 11px 20px; }
   .lang-switch button { padding: 5px 7px; }
+}
+
+
+/* ===================== 15. TOUCH SCREENS =====================
+   "(pointer: coarse)" = the device is used with a finger (phones, tablets). */
+
+/* The "Tap to rotate" label on 3D models. viewer.js adds .is-active after a tap. */
+.viewer-tap {
+  display: none;
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(11, 9, 7, 0.8);
+  border: 1px solid var(--accent);
+  color: var(--accent-light);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  pointer-events: none;            /* the tap goes through to the model */
+}
+@media (pointer: coarse) {
+  .model-frame:not(.is-active) .viewer-tap { display: block; }
+  .model-frame.is-active { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(255, 122, 26, 0.35); }
+
+  /* Bigger tap targets for fingers */
+  .lang-switch button { min-height: 36px; padding-inline: 11px; }
+  .chips li { padding-block: 8px; }
 }

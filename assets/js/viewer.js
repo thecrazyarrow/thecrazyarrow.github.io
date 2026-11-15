@@ -129,12 +129,35 @@ function createViewer(frame) {
     controls.autoRotate = true;
   });
 
-  // Fullscreen button
+  // Fullscreen button. iPhones can't make a <div> fullscreen, so hide it there.
   const fullBtn = frame.querySelector('.viewer-btn');
   if (fullBtn) {
-    fullBtn.addEventListener('click', function () {
-      if (document.fullscreenElement) document.exitFullscreen();
-      else frame.requestFullscreen();
+    if (!frame.requestFullscreen) {
+      fullBtn.hidden = true;
+    } else {
+      fullBtn.addEventListener('click', function () {
+        if (document.fullscreenElement) document.exitFullscreen();
+        else frame.requestFullscreen();
+      });
+    }
+  }
+
+  // PHONES & TABLETS: a model that grabs every swipe would stop you scrolling
+  // the page. So on touch screens the model starts "locked": swipes scroll the
+  // page, one tap unlocks it (then swipes rotate), and tapping anywhere else
+  // locks it again. "(pointer: coarse)" = the main pointer is a finger.
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    const lock = function (locked) {
+      controls.enabled = !locked;
+      renderer.domElement.style.touchAction = locked ? 'pan-y' : 'none';   // pan-y = let the page scroll
+      frame.classList.toggle('is-active', !locked);
+    };
+    lock(true);
+    frame.addEventListener('click', function (e) {
+      if (!e.target.closest('.viewer-btn') && !controls.enabled) lock(false);
+    });
+    document.addEventListener('pointerdown', function (e) {
+      if (controls.enabled && !frame.contains(e.target)) lock(true);
     });
   }
 

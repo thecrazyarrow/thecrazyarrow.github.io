@@ -116,6 +116,7 @@
   "projects.guitar.process": "20 × 40 mmのアルミTスロットフレームが、ボディからネックまで背骨として通っています。ボディには六角形の貫通穴があり、220 × 220 × 250 mmの造形エリアに収まるボルト締めのモジュールに分割されています。",
   "projects.guitar.result": "ボディのモデリングは完了。下で回して見てみてください。次は印刷と組み立てです。",
   "common.viewerHint": "ドラッグで回転・スクロールまたはピンチでズーム・ダブルクリックでリセット",
+  "common.tapToRotate": "タップして回転",
   "projects.guitar.t1": "25.5インチスケール",
   "projects.guitar.t2": "22フレット",
   "projects.guitar.t3": "ハムバッカー2基",
