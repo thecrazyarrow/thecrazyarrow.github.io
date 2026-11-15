@@ -30,6 +30,9 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 // localStorage can throw in private windows, so every use is wrapped in try/catch
 function storageGet(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
 function storageSet(key, value) { try { localStorage.setItem(key, value); } catch (e) { /* ignore */ } }
+// sessionStorage = like localStorage, but forgotten when the tab is closed
+function sessionGet(key) { try { return sessionStorage.getItem(key); } catch (e) { return null; } }
+function sessionSet(key, value) { try { sessionStorage.setItem(key, value); } catch (e) { /* ignore */ } }
 
 // Reads a JSON file. Returns null instead of crashing if it's missing.
 async function getJSON(path) {
@@ -55,6 +58,8 @@ const ICONS = {
   link: '<path d="M4 4h16v16H4zM8 10v6M8 7v.01M12 16v-4a2 2 0 0 1 4 0v4M12 12v4"/>',
   arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
   camera: '<rect x="2" y="7" width="14" height="11" rx="2"/><path d="m16 11 6-3v9l-6-3"/><circle cx="9" cy="12.5" r="2.5"/>',
+  moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
 };
 function icon(name) {
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
@@ -107,6 +112,17 @@ function buildChrome() {
       <header class="site-header">
         <div class="container header-inner">
           <a href="index.html" class="brand" aria-label="Aaron Angel Netto, home">${BRAND_HTML}</a>
+          <!-- The "light mode" switch. Spoiler: it never works (see setupLightModeEgg) -->
+          <button class="theme-toggle" type="button" role="switch" aria-checked="false"
+                  data-i18n-attr="aria-label:egg.label" aria-label="Light mode">
+            <span class="tt-sun" aria-hidden="true">${icon('sun')}</span>
+            <span class="tt-knob" aria-hidden="true">${icon('moon')}</span>
+          </button>
+          <div class="egg-lines" hidden>
+            <span data-i18n="egg.1">No, we don't like to blind ourselves.</span>
+            <span data-i18n="egg.2">Really? You want to get flashbanged with light mode?</span>
+            <span data-i18n="egg.3">Nope. I won't allow it.</span>
+          </div>
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav"
                   data-i18n-attr="aria-label:nav.menu" aria-label="Open menu">&#9776;</button>
           <nav class="nav" id="main-nav" aria-label="Main">
@@ -535,6 +551,56 @@ function addGears() {
 }
 
 
+// ===================== 6c. EASTER EGG: "LIGHT MODE" =====================
+// The switch in the header pretends to turn on light mode. It never does.
+//   1st try: the knob slides over, gets yanked back   -> line egg.1
+//   2nd try: same, plus a faint "flashbang"           -> line egg.2
+//   3rd try and after: the switch just shakes "no"    -> line egg.3
+// The count lives in sessionStorage, so a new visit starts the joke again.
+// The lines themselves are in the i18n files (egg.1, egg.2, egg.3).
+
+function setupLightModeEgg() {
+  const toggle = $('.theme-toggle');
+  if (!toggle) return;
+
+  // The little message box (role="status" so screen readers read it out too)
+  const toast = document.createElement('div');
+  toast.className = 'egg-toast';
+  toast.setAttribute('role', 'status');
+  toast.innerHTML = '<span class="egg-gear" aria-hidden="true"></span><span class="egg-text"></span>';
+  document.body.appendChild(toast);
+
+  let hideTimer = 0;
+  let resetTimer = 0;
+
+  toggle.addEventListener('click', () => {
+    const tries = Math.min((Number(sessionGet('lightModeTries')) || 0) + 1, 3);
+    sessionSet('lightModeTries', String(tries));
+
+    // Restart the animation: remove the classes, force the browser to notice, add again
+    toggle.classList.remove('is-trying', 'is-refusing');
+    void toggle.offsetWidth;
+    toggle.classList.add(tries < 3 ? 'is-trying' : 'is-refusing');
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => toggle.classList.remove('is-trying', 'is-refusing'), 1000);
+
+    // Attempt 2: a quick, faint white flash. (Skipped for people who turn motion off.)
+    if (tries === 2 && !reducedMotion) {
+      const flash = document.createElement('div');
+      flash.className = 'egg-flash';
+      document.body.appendChild(flash);
+      flash.addEventListener('animationend', () => flash.remove());
+    }
+
+    const line = $(`.egg-lines [data-i18n="egg.${tries}"]`);
+    $('.egg-text', toast).textContent = line ? line.textContent : '';
+    toast.classList.add('show');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => toast.classList.remove('show'), 3800);
+  });
+}
+
+
 // ===================== 7. CONTACT FORM =====================
 // Until you paste your Formspree ID into the form's action (see README),
 // pressing Send opens the visitor's email app with the message filled in.
@@ -614,6 +680,7 @@ async function init() {
   setupLightbox();
   setupTapFeedback();
   setupContactForm();
+  setupLightModeEgg();
   setupSong();
 
   // A link like about.html?lang=ja opens straight in Japanese
