@@ -1,0 +1,891 @@
+/*
+  ============================================================
+  site.css : how the whole V2 site LOOKS
+  ============================================================
+  One stylesheet for every page. Sections:
+    1. Theme variables        8. Galleries & placeholders
+    2. Reset & basics         9. Page-specific blocks
+    3. Typography            10. 3D viewer
+    4. Buttons, chips, badges 11. Page variants (industrial, guitar, growth)
+    5. Header & nav          12. Right-to-left (Arabic) fixes
+    6. Cards (hover-lift)    13. Reduced motion
+    7. Timelines & flows     14. Small screens
+
+  NEW in V2: "logical properties". Instead of margin-left we write
+  margin-inline-start, which means "the side where text STARTS".
+  In English that's the left; in Arabic (right-to-left) it's the
+  right. So most of the layout mirrors itself for Arabic for free.
+*/
+
+
+/* ===================== 1. THEME VARIABLES ===================== */
+:root {
+  --bg: #0b0a08;              /* deep warm black */
+  --surface: #16130e;         /* cards */
+  --surface-2: #1e1a12;       /* raised bits inside cards */
+  --line: #4a3c20;            /* gold-brown hairlines */
+  --gold: #d4a84b;            /* the main accent */
+  --gold-light: #e8c87a;      /* hover / highlights */
+  --text: #f3ead7;            /* warm off-white */
+  --muted: #a8987a;           /* secondary text */
+  --glow: 0 18px 48px -18px rgba(212, 168, 75, 0.45);
+
+  --font-display: 'Sora', 'Segoe UI', Arial, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, monospace;
+
+  --radius: 14px;
+  --radius-sm: 10px;
+  --max: 1160px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);   /* a soft "settle" curve for animations */
+}
+
+/* Japanese and Arabic get fonts that actually contain their letters.
+   site.js loads these fonts only when you switch language. */
+html[lang="ja"] { --font-body: 'Noto Sans JP', 'Inter', sans-serif; --font-display: 'Noto Sans JP', 'Sora', sans-serif; }
+html[lang="ar"] { --font-body: 'IBM Plex Sans Arabic', 'Inter', sans-serif; --font-display: 'IBM Plex Sans Arabic', 'Sora', sans-serif; }
+
+
+/* ===================== 2. RESET & BASICS ===================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;            /* jump links stop below the sticky header */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 1.02rem;
+  overflow-x: hidden;                  /* nothing may cause sideways scrolling on phones */
+}
+
+img, video, canvas, iframe { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+button, input, textarea, select { font: inherit; color: inherit; }
+strong { font-weight: 600; color: var(--text); }
+
+/* NEW: :focus-visible shows a ring only for keyboard users (not mouse clicks).
+   A clear focus ring is essential for people who navigate with Tab. */
+:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection { background: var(--gold); color: var(--bg); }
+
+/* Hidden "Skip to content" link that appears when you press Tab */
+.skip-link {
+  position: absolute;
+  inset-inline-start: 16px;
+  top: -60px;
+  z-index: 100;
+  background: var(--gold);
+  color: var(--bg);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+.skip-link:focus { top: 12px; }
+
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;                 /* centred */
+  padding-inline: 20px;
+}
+
+.section { padding-block: 88px; }
+.section + .section { padding-top: 24px; }
+
+/* Visually hidden but still read by screen readers */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+
+/* ===================== 3. TYPOGRAPHY ===================== */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+h1 { font-size: clamp(2.5rem, 7vw, 4.8rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 18px; }
+h3 { font-size: 1.22rem; margin-bottom: 8px; }
+h4 { font-size: 1rem; margin-bottom: 6px; }
+
+p { color: var(--muted); }
+p + p { margin-top: 14px; }
+
+/* Small gold "eyebrow" label above headings */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  max-width: 680px;
+}
+
+.section-head { margin-bottom: 36px; max-width: 760px; }
+
+/* The big italic quotes */
+.quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  line-height: 1.4;
+  color: var(--gold-light);
+  border-inline-start: 3px solid var(--gold);
+  padding-inline-start: 22px;
+  margin-block: 36px;
+  max-width: 860px;
+}
+
+.note {
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-top: 18px;
+}
+
+/* The brand mark: "engineered by chaos" */
+.brandmark {
+  font-family: var(--font-mono);
+  color: var(--gold);
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+}
+
+
+/* ===================== 4. BUTTONS, CHIPS, BADGES ===================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: 1.5px solid var(--gold);
+  cursor: pointer;
+  transition: transform 0.25s var(--ease), background-color 0.25s, color 0.25s, box-shadow 0.25s;
+}
+.btn:hover, .btn:focus-visible { transform: translateY(-3px); box-shadow: var(--glow); }
+
+.btn-gold { background: var(--gold); color: var(--bg); }
+.btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); }
+
+.btn-ghost { background: transparent; color: var(--gold); }
+.btn-ghost:hover { background: var(--gold); color: var(--bg); }
+
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 0.2s, color 0.2s;
+}
+.chips li:hover { border-color: var(--gold); color: var(--gold-light); }
+
+.badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  padding: 3px 11px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.badge-solid { background: var(--gold); color: var(--bg); }
+
+
+/* ===================== 5. HEADER & NAV ===================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(11, 10, 8, 0.86);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(74, 60, 32, 0.6);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+}
+
+/* Text logo (used until assets/logo/logo.svg exists) */
+.brand { display: flex; flex-direction: column; line-height: 1.1; flex-shrink: 0; }
+.brand-main {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+.brand-main b { color: var(--gold); font-weight: 700; }
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  color: var(--gold);
+  text-transform: lowercase;
+  margin-top: 3px;
+}
+.brand img { height: 40px; width: auto; }
+
+.nav { display: flex; align-items: center; gap: 18px; }
+.nav-links { display: flex; gap: 2px; }
+.nav-links a {
+  display: block;
+  padding: 8px 8px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color 0.2s, background-color 0.2s;
+}
+.nav-links a:hover { color: var(--gold-light); }
+.nav-links a[aria-current="page"] { color: var(--gold); background: rgba(212, 168, 75, 0.08); }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.btn-hire { padding: 8px 16px; font-size: 0.88rem; white-space: nowrap; }
+
+/* EN / 日本語 / عربي */
+.lang-switch {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px;
+}
+.lang-switch button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.78rem;
+  padding: 5px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  color: var(--muted);
+  transition: background-color 0.2s, color 0.2s;
+}
+.lang-switch button:hover { color: var(--gold-light); }
+.lang-switch button[aria-pressed="true"] { background: var(--gold); color: var(--bg); font-weight: 600; }
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  color: var(--gold);
+  font-size: 1.3rem;
+}
+
+
+/* ===================== 6. CARDS (hover-lift) ===================== */
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  transition: transform 0.35s var(--ease), border-color 0.35s, box-shadow 0.35s;
+}
+
+/* The lift: on mouse hover, on keyboard focus inside the card,
+   and ".is-tapped" which site.js adds for a moment when you tap on a phone. */
+.card:hover,
+.card:focus-within,
+.card.is-tapped {
+  transform: translateY(-6px);
+  border-color: var(--gold);
+  box-shadow: var(--glow);
+}
+
+.card p { font-size: 0.97rem; }
+.card ul.bullets { margin-top: 10px; }
+
+/* A whole card that's a link */
+a.card { display: block; }
+.card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;              /* NEW: centres the icon both ways in one line */
+  background: rgba(212, 168, 75, 0.1);
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.card-icon svg { width: 22px; height: 22px; }
+.card-arrow {
+  position: absolute;
+  top: 24px;
+  inset-inline-end: 24px;
+  color: var(--gold);
+  transition: transform 0.3s var(--ease);
+}
+.card:hover .card-arrow { transform: translateX(4px); }
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  /* NEW: min(100%, 300px) means "300px, unless the screen is narrower" so a
+     card can never overflow a small phone. */
+}
+.grid-2 { grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); }
+
+/* Bullet lists inside cards, with small gold diamonds */
+.bullets li {
+  position: relative;
+  padding-inline-start: 20px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-size: 0.96rem;
+}
+.bullets li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 2px;
+  top: 0.65em;
+  width: 7px;
+  height: 7px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
+
+
+/* ===================== 7. TIMELINES & FLOWS ===================== */
+
+/* Vertical timeline: a gold line with dots */
+.timeline {
+  position: relative;
+  border-inline-start: 2px solid var(--line);
+  padding-inline-start: 28px;
+  display: grid;
+  gap: 26px;
+  max-width: 760px;
+}
+.timeline li { position: relative; }
+.timeline li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: -36px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--gold);
+}
+.timeline li.now::before { background: var(--gold); box-shadow: 0 0 0 6px rgba(212, 168, 75, 0.18); }
+.timeline .when {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  display: block;
+}
+.timeline .what { color: var(--text); }
+
+/* Step flow: Concept → Design → Build ... */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 8px;
+  align-items: center;
+  margin-block: 20px;
+}
+.flow li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+}
+.flow li span {
+  border: 1px solid var(--gold);
+  color: var(--gold-light);
+  background: rgba(212, 168, 75, 0.06);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+.flow li:not(:last-child)::after { content: '→'; color: var(--gold); }
+
+
+/* ===================== 8. GALLERIES & PLACEHOLDERS ===================== */
+.gallery {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  margin-top: 24px;
+}
+
+.gallery button {                  /* each photo is a button that opens the lightbox */
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  padding: 0;
+  background: var(--surface);
+  cursor: zoom-in;
+  aspect-ratio: 4 / 3;
+  transition: transform 0.3s var(--ease), border-color 0.3s;
+}
+.gallery button:hover { transform: translateY(-4px); border-color: var(--gold); }
+.gallery img { width: 100%; height: 100%; object-fit: cover; }
+
+/* "Photo coming soon": shown when a folder has no images yet */
+.ph {
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(212, 168, 75, 0.08), transparent 70%),
+    var(--surface);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  color: var(--gold);
+  text-align: center;
+  padding: 16px;
+}
+.ph svg { width: 30px; height: 30px; opacity: 0.8; }
+.ph span { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--muted); }
+
+/* Lightbox: the big photo view. NEW: <dialog> is a built-in pop-up element. */
+.lightbox {
+  border: none;
+  background: transparent;
+  max-width: 94vw;
+  max-height: 92vh;
+  margin: auto;
+}
+.lightbox::backdrop { background: rgba(6, 5, 4, 0.92); }
+.lightbox img { max-width: 94vw; max-height: 86vh; border-radius: var(--radius-sm); margin: 0 auto; }
+.lightbox button {
+  display: block;
+  margin: 12px auto 0;
+  background: none;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  border-radius: 999px;
+  padding: 6px 18px;
+  cursor: pointer;
+}
+
+
+/* ===================== 9. PAGE-SPECIFIC BLOCKS ===================== */
+
+/* --- Home hero --- */
+.hero {
+  position: relative;
+  min-height: calc(100vh - 64px);
+  min-height: calc(100svh - 64px);   /* NEW: svh = "small viewport height", ignores phone address bars */
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;                /* keeps the z-index layers below contained in the hero */
+}
+
+.hero-photo {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: 62%;
+  z-index: -2;
+  background-size: cover;
+  background-position: center 30%;
+  /* NEW: mask-image fades the photo itself into the black page. Black in a
+     mask = visible, transparent = invisible. Two masks are combined: a fade
+     from the text side, and a fade at the bottom, so there's no hard edge. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%), linear-gradient(to top, transparent 0%, #000 30%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, #000 45%), linear-gradient(to top, transparent 0%, #000 30%);
+  mask-composite: intersect;
+}
+
+/* Placeholder "photo" when zynx/ is empty: a warm glow like a grinder's sparks */
+.hero-photo.is-empty {
+  background:
+    radial-gradient(ellipse 45% 40% at 62% 52%, rgba(232, 200, 122, 0.22), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 70% 60%, rgba(212, 168, 75, 0.10), transparent 75%);
+}
+
+/* width/height 100%: a canvas is 300×150 by default unless told otherwise */
+.sparks { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+.hero-text { max-width: 620px; padding-block: 60px; }
+.hero h1 { margin-block: 18px 10px; }
+.hero .tagline {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+  color: var(--text);
+  font-weight: 500;
+}
+.hero .brandmark { display: block; margin-top: 14px; font-size: 0.95rem; }
+
+/* --- Inner page heroes --- */
+.page-hero {
+  padding-block: 92px 40px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;                /* keeps the glow and sparks behind the text, inside the hero */
+}
+.page-hero::before {                 /* a soft gold glow in the corner */
+  content: '';
+  position: absolute;
+  inset-inline-end: -10%;
+  top: -40%;
+  width: 60%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(212, 168, 75, 0.12), transparent 65%);
+  z-index: -1;
+}
+.page-hero h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); margin-bottom: 14px; }
+
+/* --- "Currently" strip --- */
+.currently {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.currently .eyebrow { margin: 0; }
+.currently li { color: var(--text); display: flex; align-items: center; gap: 8px; }
+.currently li:not(.eyebrow)::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+/* --- Projects: big panels that open --- */
+/* NEW: <details> + <summary> is a built-in open/close box. No JS needed. */
+.project { padding: 0; overflow: hidden; }
+.project > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 28px;
+  display: grid;
+  gap: 10px;
+}
+.project > summary::-webkit-details-marker { display: none; }
+.project-title { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.project-title h3 { margin: 0; font-size: clamp(1.3rem, 3vw, 1.8rem); }
+.project .toggle {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--gold);
+  margin-top: 4px;
+}
+.project .toggle::after { content: ' +'; }
+.project[open] .toggle::after { content: ' −'; }
+.project-body { padding: 0 28px 30px; border-top: 1px solid var(--line); padding-top: 26px; }
+.project.featured { grid-column: 1 / -1; border-color: var(--gold); }
+.project.featured > summary { padding: 38px 32px; }
+.project:hover, .project:focus-within { transform: translateY(-4px); }
+.project[open]:hover,
+.project[open]:focus-within { transform: none; }   /* don't float the open panel while reading */
+
+.ppr { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); margin-block: 10px 24px; }
+.ppr > div { background: var(--surface-2); border-radius: var(--radius-sm); padding: 18px; border: 1px solid rgba(74, 60, 32, 0.6); }
+.ppr h4 { color: var(--gold); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+.stack-row { margin-top: 18px; }
+
+/* --- Two columns (garage, about) --- */
+.split { display: grid; gap: 28px; grid-template-columns: 1fr 1fr; align-items: start; }
+.bike-head { margin-bottom: 18px; }
+.bike-head .nick { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); color: var(--gold); line-height: 1; }
+.bike-col { display: grid; gap: 16px; }
+.tagline-small { font-family: var(--font-mono); font-size: 0.78rem; color: var(--gold); display: block; margin-bottom: 6px; }
+
+/* --- Growth log --- */
+.gap-card dl { display: grid; gap: 12px; margin-top: 12px; }
+.gap-card dt { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+.gap-card dd { color: var(--muted); font-size: 0.95rem; }
+.progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  margin-top: 18px;
+  overflow: hidden;
+}
+.progress span {
+  display: block;
+  height: 100%;
+  width: 0;                          /* site.js sets the real width */
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: inherit;
+  transition: width 1.2s var(--ease);
+}
+.progress-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); margin-top: 6px; }
+
+/* --- Song panel --- */
+.song-panel {
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: clamp(26px, 5vw, 48px);
+  background: radial-gradient(circle at 20% 0%, rgba(212, 168, 75, 0.14), transparent 60%), var(--surface);
+  text-align: center;
+}
+.song-title { font-family: var(--font-display); font-size: clamp(2.2rem, 7vw, 4rem); color: var(--gold-light); margin-block: 6px 12px; }
+.song-embed { margin-top: 24px; border-radius: var(--radius-sm); overflow: hidden; }
+.song-embed iframe { width: 100%; border: 0; }
+
+/* --- Videos (from V1) --- */
+.video-frame { aspect-ratio: 16 / 9; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--line); background: #000; }
+.video-frame iframe, .video-frame video { width: 100%; height: 100%; border: 0; }
+.video-vertical { aspect-ratio: 9 / 16; }
+.shorts { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)); margin-top: 20px; }
+
+/* --- Contact form --- */
+.contact-grid { display: grid; gap: 28px; grid-template-columns: 1fr 1.3fr; align-items: start; }
+.contact-links { display: grid; gap: 12px; }
+.contact-links a { display: flex; align-items: center; gap: 10px; color: var(--text); word-break: break-word; }
+.contact-links a:hover { color: var(--gold-light); }
+.contact-links svg { width: 20px; height: 20px; color: var(--gold); flex-shrink: 0; }
+
+.form { display: grid; gap: 14px; }
+.form label { display: grid; gap: 6px; font-size: 0.88rem; color: var(--muted); }
+.form input, .form textarea {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+.form input:focus, .form textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 3px rgba(212, 168, 75, 0.2); }
+.form textarea { min-height: 140px; resize: vertical; }
+.form-status { font-size: 0.9rem; color: var(--gold-light); min-height: 1.4em; }
+
+/* --- Facts list (About) --- */
+.facts { display: grid; gap: 14px; }
+.facts dt { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+.facts dd { color: var(--text); }
+
+.jp-line { font-family: 'Noto Sans JP', var(--font-body); color: var(--gold-light); }
+
+/* --- "Hire me" band at the bottom of every page --- */
+.cta-band {
+  margin-block: 40px 80px;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: clamp(28px, 6vw, 56px);
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(212, 168, 75, 0.16), transparent 65%),
+    var(--surface);
+}
+.cta-band h2 { margin-bottom: 10px; }
+.cta-band p { margin-inline: auto; max-width: 560px; }
+.cta-band .btn-row { justify-content: center; }
+
+/* --- Footer --- */
+.site-footer { border-top: 1px solid var(--line); padding-block: 44px 32px; }
+.footer-inner { display: grid; gap: 24px; grid-template-columns: 1.2fr 1fr 1fr; align-items: start; }
+.footer-inner a { color: var(--muted); }
+.footer-inner a:hover { color: var(--gold-light); }
+.footer-links { display: grid; gap: 6px; font-size: 0.92rem; }
+.footer-japan p { color: var(--text); font-size: 0.95rem; }
+.copyright { margin-top: 28px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+
+/* --- 404 --- */
+.lost { min-height: 70vh; display: grid; place-items: center; text-align: center; }
+.lost .code { font-family: var(--font-mono); font-size: clamp(4rem, 18vw, 9rem); color: var(--gold); line-height: 1; }
+
+
+/* ===================== 10. 3D VIEWER (assets/js/viewer.js) ===================== */
+.model-frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: radial-gradient(circle at 50% 35%, #241e14, var(--bg) 75%);
+  cursor: grab;
+}
+.model-frame:active { cursor: grabbing; }
+.model-frame canvas { width: 100%; height: 100%; }
+.model-frame:fullscreen { aspect-ratio: auto; border-radius: 0; border: none; }
+.viewer-status {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 16px;
+  font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted);
+  pointer-events: none;
+}
+.model-frame.is-missing .viewer-status { align-items: flex-end; color: var(--gold); }
+.viewer-status[hidden] { display: none; }
+.viewer-btn {
+  position: absolute; top: 10px; inset-inline-end: 10px;
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid var(--line); background: rgba(11, 10, 8, 0.75);
+  color: var(--gold); cursor: pointer;
+}
+.viewer-btn:hover { border-color: var(--gold); }
+.model-card { padding: 12px 12px 22px; }
+.model-card .model-frame { margin-bottom: 16px; }
+.model-card > :not(.model-frame) { margin-inline: 10px; }
+.model-card:hover { transform: none; }   /* no wobble while dragging a model */
+.model-stats { margin-top: 12px; }
+.viewer-hint { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); margin-top: 10px; }
+
+
+/* ===================== 11. PAGE VARIANTS =====================
+   Each page's <body> has a class like "theme-industrial". */
+
+/* Industrial: grittier. A subtle noise texture and harder edges. */
+.theme-industrial {
+  --surface: #13110d;
+  --radius: 10px;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.8 0 0 0 0 0.66 0 0 0 0 0.3 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.theme-industrial .page-hero { min-height: 52vh; display: flex; align-items: center; }
+.theme-industrial .page-hero::before { background: radial-gradient(circle, rgba(232, 160, 60, 0.18), transparent 65%); }
+.theme-industrial .card { border-top: 2px solid var(--gold); }
+.theme-industrial h1 { text-transform: uppercase; letter-spacing: 0.01em; }
+.repair-card .eyebrow::before { content: '[FIX] '; }
+
+/* Guitar: softer and warmer */
+.theme-guitar {
+  --surface: #1a140d;
+  --radius: 20px;
+  background: radial-gradient(ellipse at 50% -10%, #2a1d0e 0%, var(--bg) 55%) fixed, var(--bg);
+}
+.theme-guitar .card { border-color: rgba(212, 168, 75, 0.3); }
+
+/* Growth: quieter, less glow */
+.theme-growth { --glow: 0 12px 30px -16px rgba(212, 168, 75, 0.3); }
+.theme-growth .page-hero::before { opacity: 0.5; }
+
+
+/* ===================== 12. RIGHT-TO-LEFT (Arabic) =====================
+   Logical properties already mirror most things. These are the rest. */
+[dir="rtl"] .flow li:not(:last-child)::after { content: '←'; }
+[dir="rtl"] .card:hover .card-arrow { transform: translateX(-4px); }
+[dir="rtl"] .card-arrow { transform: scaleX(-1); }
+[dir="rtl"] .hero-photo {
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 45%), linear-gradient(to top, transparent 0%, #000 30%);
+  mask-image: linear-gradient(to left, transparent 0%, #000 45%), linear-gradient(to top, transparent 0%, #000 30%);
+}
+[dir="rtl"] .progress span { background: linear-gradient(-90deg, var(--gold), var(--gold-light)); }
+/* Arabic letters JOIN together. Extra letter-spacing breaks the joins, so turn it off. */
+html[lang="ar"] * { letter-spacing: 0 !important; }
+
+
+/* ===================== 13. SCROLL REVEAL & REDUCED MOTION ===================== */
+/* "js" is added to <html> by a tiny inline script, so if JavaScript is off
+   nothing stays invisible. */
+.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.js .reveal.is-visible { opacity: 1; transform: none; }
+
+/* NEW: some people get dizzy from motion and turn it off in their system
+   settings. This media query respects that choice. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  .js .reveal { opacity: 1; transform: none; }
+  .card:hover, .card:focus-within, .card.is-tapped, .btn:hover, .gallery button:hover { transform: none; }
+  .sparks { display: none; }
+}
+
+
+/* ===================== 14. SMALLER SCREENS ===================== */
+
+/* Nav collapses earlier than other things, because it has a lot of links */
+@media (max-width: 1300px) {
+  .menu-toggle { display: grid; place-items: center; }
+  .nav {
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 14px 20px 22px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    display: none;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+  }
+  .nav.open { display: flex; }
+  .nav-links { flex-direction: column; }
+  .nav-links a { padding: 11px 8px; font-size: 1rem; }
+  .nav-actions { justify-content: space-between; flex-wrap: wrap; }
+}
+
+@media (max-width: 860px) {
+  .split, .contact-grid, .footer-inner { grid-template-columns: 1fr; }
+  .section { padding-block: 64px; }
+
+  /* Hero: the photo goes BEHIND the text, darker, faded at the top and bottom */
+  .hero { align-items: end; }
+  .hero-photo {
+    width: 100%;
+    opacity: 0.45;
+    -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 92%);
+    mask-image: linear-gradient(to bottom, #000 30%, transparent 92%);
+  }
+  [dir="rtl"] .hero-photo {
+    -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 92%);
+    mask-image: linear-gradient(to bottom, #000 30%, transparent 92%);
+  }
+  .hero-text { padding-block: 120px 56px; }
+}
+
+@media (max-width: 480px) {
+  .card { padding: 20px; }
+  .project > summary, .project.featured > summary { padding: 22px; }
+  .project-body { padding: 22px; }
+  .btn { padding: 11px 20px; }
+  .lang-switch button { padding: 5px 7px; }
+}

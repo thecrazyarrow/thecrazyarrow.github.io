@@ -1,0 +1,189 @@
+<!--
+  projects.html : CUSTOM PROJECTS
+  Each project is a <details> box: the <summary> is the panel you see,
+  and clicking it opens the full story (Problem → Process → Result).
+  Photos come from assets/images/projects/<project>/ automatically.
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="meta.projects.title">Custom Projects | Aaron Angel Netto</title>
+  <meta name="description" data-i18n-attr="content:meta.projects.desc" content="A cement 3D printer built from scratch, a mouldable splint, a 3D-printed electric guitar and a gesture-controlled robotic arm.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Custom Projects | Aaron Angel Netto">
+  <meta property="og:description" content="A cement 3D printer built from scratch, and more.">
+  <meta property="og:url" content="https://YOUR-SITE-URL/projects.html">
+  <meta property="og:image" content="https://YOUR-SITE-URL/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0a08">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var l = localStorage.getItem('lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } else if (l === 'ja') { document.documentElement.lang = 'ja'; } } catch (e) {}
+  </script>
+  <!-- three.js location, for the guitar's 3D viewer (same as V1) -->
+  <script type="importmap">
+    { "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+  </script>
+</head>
+
+<body class="theme-projects">
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero container">
+      <span class="eyebrow" data-i18n="projects.eyebrow">Custom projects</span>
+      <h1 data-i18n="projects.title">Things I designed and built from zero</h1>
+      <p class="lead" data-i18n="projects.lead">Every project here started as a problem with no off-the-shelf answer. Open a panel for the full story.</p>
+    </section>
+
+    <section class="section container" style="padding-top:20px">
+      <div class="grid grid-2">
+
+        <!-- ===================== ★ CEMENT 3D PRINTER (featured) ===================== -->
+        <!-- "open" = this one starts opened -->
+        <details class="card project featured reveal" open>
+          <summary>
+            <div class="project-title">
+              <span class="badge badge-solid" data-i18n="projects.featured">★ Featured</span>
+              <h3 data-i18n="projects.cement.title">Custom Cement 3D Printer</h3>
+            </div>
+            <p data-i18n="projects.cement.summary">My major college engineering project: a cement-based 3D printer designed and built from scratch, covering the mechanical structure, motion, electronics and extrusion.</p>
+            <span class="toggle" data-i18n="common.details">Details</span>
+          </summary>
+          <div class="project-body">
+            <div class="ppr">
+              <div><h4 data-i18n="common.problem">Problem</h4><p data-i18n="projects.cement.problem">Cement behaves nothing like thermoplastic. Material consistency, flow rate, extrusion pressure, nozzle geometry and layer deposition all had to be solved, and motion and material flow had to work as one system.</p></div>
+              <div><h4 data-i18n="common.process">Process</h4><p data-i18n="projects.cement.process">A BigTreeTech controller with stepper motors and drivers, a custom auger-based extruder and a peristaltic pump for material delivery, running Marlin firmware. Designed in FreeCAD and refined through repeated build, test and fix cycles.</p></div>
+              <div><h4 data-i18n="common.result">Result</h4><p data-i18n="projects.cement.result">A complete printer, built by hand, where the motion system and the cement flow work together to lay down layers.</p></div>
+            </div>
+
+            <ol class="flow" aria-label="Build stages">
+              <li><span data-i18n="projects.cement.s1">Concept</span></li>
+              <li><span data-i18n="projects.cement.s2">Mechanical design</span></li>
+              <li><span data-i18n="projects.cement.s3">Electronics</span></li>
+              <li><span data-i18n="projects.cement.s4">Fabrication</span></li>
+              <li><span data-i18n="projects.cement.s5">Assembly</span></li>
+              <li><span data-i18n="projects.cement.s6">Control</span></li>
+              <li><span data-i18n="projects.cement.s7">Testing</span></li>
+              <li><span data-i18n="projects.cement.s8">Iteration</span></li>
+            </ol>
+
+            <blockquote class="quote" data-i18n="projects.cement.quote">"I didn't just use a 3D printer. I built one for a material it was never designed to print."</blockquote>
+
+            <ul class="chips stack-row">
+              <li>BigTreeTech</li><li>Marlin</li><li>FreeCAD</li>
+              <li data-i18n="projects.cement.t1">Stepper motors &amp; drivers</li>
+              <li data-i18n="projects.cement.t2">Auger extrusion</li>
+              <li data-i18n="projects.cement.t3">Peristaltic pump</li>
+            </ul>
+
+            <div class="gallery" data-folder="assets/images/projects/cement-printer" data-placeholders="3"
+                 data-i18n-attr="data-alt:projects.cement.title" data-alt="Custom Cement 3D Printer"></div>
+          </div>
+        </details>
+
+        <!-- ===================== MOULDABLE SPLINT ===================== -->
+        <details class="card project reveal">
+          <summary>
+            <div class="project-title"><h3 data-i18n="projects.splint.title">Universal Mouldable Splint</h3></div>
+            <p data-i18n="projects.splint.summary">A splint printed flat on a standard printer, then heat-formed with hot water to fit the patient's limb.</p>
+            <span class="toggle" data-i18n="common.details">Details</span>
+          </summary>
+          <div class="project-body">
+            <div class="ppr">
+              <div><h4 data-i18n="common.problem">Problem</h4><p data-i18n="projects.splint.problem">The idea came from a hospital visit. Casts are heavy and bulky, and one-size-fits-all splints rarely fit well.</p></div>
+              <div><h4 data-i18n="common.process">Process</h4><p data-i18n="projects.splint.process">A flat-bed-printable design that softens in hot water and is shaped directly on the limb. Explored in collaboration with Athira Hospital, Chavara, Kollam.</p></div>
+              <div><h4 data-i18n="common.result">Result</h4><p data-i18n="projects.splint.result">A splint that is lighter and less bulky than a cast, with adaptable geometry, designed for low-cost local fabrication.</p></div>
+            </div>
+            <ul class="chips stack-row">
+              <li data-i18n="skill.fdm">FDM printing</li><li data-i18n="projects.splint.t1">Thermoforming</li><li data-i18n="projects.splint.t2">Product design</li>
+            </ul>
+            <p class="note" data-i18n="projects.splint.note">A product-development concept, not a clinically validated medical device.</p>
+            <div class="gallery" data-folder="assets/images/projects/splint" data-placeholders="2"
+                 data-i18n-attr="data-alt:projects.splint.title" data-alt="Universal Mouldable Splint"></div>
+          </div>
+        </details>
+
+        <!-- ===================== 3D-PRINTED GUITAR ===================== -->
+        <details class="card project reveal">
+          <summary>
+            <div class="project-title">
+              <h3 data-i18n="projects.guitar.title">3D-Printed Electric Guitar</h3>
+              <span class="badge" data-i18n="projects.guitar.badge">In design</span>
+            </div>
+            <p data-i18n="projects.guitar.summary">An original sci-fi, asymmetric, angular electric guitar designed in Autodesk Fusion.</p>
+            <span class="toggle" data-i18n="common.details">Details</span>
+          </summary>
+          <div class="project-body">
+            <div class="ppr">
+              <div><h4 data-i18n="common.problem">Problem</h4><p data-i18n="projects.guitar.problem">A full guitar body is far bigger than a hobby print bed, and it has to survive string tension.</p></div>
+              <div><h4 data-i18n="common.process">Process</h4><p data-i18n="projects.guitar.process">A 20 × 40 mm aluminium T-slot extrusion runs from the body into the neck as the backbone. The body has hexagonal through-holes and is split into bolt-together modules that fit a 220 × 220 × 250 mm bed.</p></div>
+              <div><h4 data-i18n="common.result">Result</h4><p data-i18n="projects.guitar.result">The body is modelled. Spin it below. Next: printing and assembly.</p></div>
+            </div>
+
+            <!-- The 3D viewer from V1 (assets/js/viewer.js) -->
+            <div class="model-frame" data-model="models/GUITAR%20BODY.stl" data-color="#d4a84b">
+              <p class="viewer-status">Loading model…</p>
+              <button class="viewer-btn" type="button" aria-label="Fullscreen">&#x26F6;</button>
+            </div>
+            <p class="viewer-hint" data-i18n="common.viewerHint">Drag to rotate · scroll or pinch to zoom · double-click to reset</p>
+
+            <ul class="chips stack-row model-stats">
+              <li>Autodesk Fusion</li>
+              <li data-i18n="projects.guitar.t1">25.5" scale</li>
+              <li data-i18n="projects.guitar.t2">22 frets</li>
+              <li data-i18n="projects.guitar.t3">Two humbuckers</li>
+              <li data-i18n="projects.guitar.t4">Fixed bridge</li>
+              <li data-i18n="projects.guitar.t5">Volume, tone &amp; 3-way selector</li>
+            </ul>
+            <div class="gallery" data-folder="assets/images/projects/guitar" data-placeholders="2"
+                 data-i18n-attr="data-alt:projects.guitar.title" data-alt="3D-Printed Electric Guitar"></div>
+          </div>
+        </details>
+
+        <!-- ===================== ROBOTIC ARM ===================== -->
+        <details class="card project reveal">
+          <summary>
+            <div class="project-title"><h3 data-i18n="projects.arm.title">Gesture-Controlled Robotic Arm</h3></div>
+            <p data-i18n="projects.arm.summary">Built single-handedly: a robotic arm that follows hand gestures through computer vision.</p>
+            <span class="toggle" data-i18n="common.details">Details</span>
+          </summary>
+          <div class="project-body">
+            <div class="ppr">
+              <div><h4 data-i18n="common.problem">Problem</h4><p data-i18n="projects.arm.problem">Control a robotic arm naturally, with your hand, without joysticks or a remote.</p></div>
+              <div><h4 data-i18n="common.process">Process</h4><p data-i18n="projects.arm.process">MediaPipe tracks 21 points on the hand, YOLOv8 handles detection, and an Arduino drives the motors.</p></div>
+              <div><h4 data-i18n="common.result">Result</h4><p data-i18n="projects.arm.result">An arm that responds to hand movements in real time.</p></div>
+            </div>
+            <ul class="chips stack-row">
+              <li>MediaPipe</li><li>YOLOv8</li><li>Python</li><li>Arduino</li>
+              <li data-i18n="projects.arm.t1">21-point hand tracking</li>
+            </ul>
+            <!-- Shows assets/video/robotic-arm.mp4 if you add it; hidden otherwise -->
+            <div data-hide-if-empty hidden style="margin-top:20px">
+              <div class="video-list" data-prefix="robotic-arm"></div>
+            </div>
+            <div class="gallery" data-folder="assets/images/projects/robotic-arm" data-placeholders="2"
+                 data-i18n-attr="data-alt:projects.arm.title" data-alt="Gesture-Controlled Robotic Arm"></div>
+          </div>
+        </details>
+
+      </div>
+    </section>
+  </main>
+
+  <div id="site-cta"></div>
+  <div id="site-footer"></div>
+
+  <script src="assets/js/site.js" defer></script>
+  <script type="module" src="assets/js/viewer.js"></script>
+</body>
+</html>

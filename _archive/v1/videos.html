@@ -1,0 +1,284 @@
+<!--
+  ============================================================
+  videos.html : your SECOND page, "The Edits"
+  ============================================================
+  A website is just several HTML files linking to each other.
+  This page reuses the SAME style.css and script.js, so it looks
+  and behaves exactly like the home page with no extra work.
+  That's the big advantage of keeping CSS in a separate file.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Video edits and filmmaking by Aaron Angel Netto.">
+  <title>The Edits | Aaron Angel Netto</title>   <!-- each page gets its own tab title -->
+
+  <!-- Same fonts and stylesheet as index.html -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ===================== HEADER =====================
+       Same header as the home page, with one key difference: the links.
+       On index.html, "#about" meant "jump down THIS page". Here there
+       is no About section, so we write "index.html#about", which means
+       "go to the home page, THEN jump to its About section". -->
+  <header class="header">
+    <a href="index.html" class="logo">AARON<span>/</span>NETTO</a>  <!-- the logo takes you home -->
+
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+
+    <nav class="nav">
+      <ul>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#work">What I Do</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <!-- aria-current="page" tells screen readers "you are here".
+             CSS also uses it to highlight this link in orange. -->
+        <li><a href="prints.html">Prints</a></li>
+        <li><a href="videos.html" aria-current="page">Edits</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ===================== PAGE INTRO =====================
+         "hero" reuses the blueprint grid and fonts, and "hero-small"
+         makes it shorter so the videos are the star. -->
+    <section class="hero hero-small">
+      <p class="label">// the edits</p>
+      <h1>The Edits</h1>
+      <p class="hero-motto">Shot. Cut. Rendered.</p>
+      <p class="hero-sub">
+        Filmmaking, editing and content production: rides, builds, and
+        commercial work.
+      </p>
+    </section>
+
+    <!-- ===================== FEATURED VIDEO ===================== -->
+    <section class="section">
+      <p class="label">01 // featured</p>
+      <h2 class="section-title">Supreme Food Co. Ad</h2>
+
+      <!-- A 2-column layout with the tall video on the left and the text
+           on the right. On phones CSS stacks them. -->
+      <div class="featured-short">
+
+        <!-- "video-frame" gives the rounded corners, border and black
+             background, and "video-vertical" makes it 9:16 tall (Shorts shape). -->
+        <div class="video-frame video-vertical">
+          <!--
+            <iframe> = a "window" that shows another web page inside yours.
+            YouTube's player is a web page, so we frame it in.
+
+            HOW TO GET A VIDEO ID:
+              youtube.com/shorts/mOWNOJwdcj8?si=...  ->  ID = mOWNOJwdcj8
+              (the part after /shorts/ and before the ?)
+              youtube.com/watch?v=XXXX               ->  ID = XXXX
+            Then put it at the end of: https://www.youtube-nocookie.com/embed/
+
+            The attributes:
+              src             = the player address. "youtube-nocookie.com" = no
+                                tracking cookies until the visitor presses play
+              title           = describes the video for screen readers
+              allow="..."     = permissions the player needs (fullscreen etc.)
+              referrerpolicy  = tells YouTube which site is embedding it
+                                (YouTube requires it, or it may refuse to play)
+              allowfullscreen = shows the fullscreen button
+            No loading="lazy" here: this is the first video people see,
+            so it should load straight away.
+          -->
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/mOWNOJwdcj8"
+            title="Supreme Food Co. advertisement"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- The text column beside the video -->
+        <div class="featured-text">
+          <p class="label">commercial // vertical</p>
+          <h3>Supreme Food Co.</h3>
+          <!-- TODO: describe your role (shot it? edited it?), the gear, the idea. -->
+          <p>A short-form vertical ad for Supreme Food Co. Write a line or two here
+             about your role and the idea behind the edit.</p>
+          <ul class="specs">               <!-- reuses the spec chips from your project cards -->
+            <li>9:16 Short</li>
+            <li>Commercial</li>
+            <li>Edit</li>
+          </ul>
+        </div>
+
+      </div> <!-- closes .featured-short -->
+    </section>
+
+    <!-- ===================== MORE EDITS (Shorts grid) ===================== -->
+    <section class="section">
+      <p class="label">02 // more edits</p>
+      <h2 class="section-title">More Edits</h2>
+
+      <!--
+        NEW: "shorts-grid" is like your card grid, but its columns are
+        narrower (220px minimum) because vertical videos are tall and thin.
+        That gives 4 per row on a laptop and 1 per row on a phone.
+
+        Every card has the same 3 parts:
+          1. the vertical video frame
+          2. a small number label ("edit // 02")
+          3. a title (TODO: rename "Untitled Edit" to what each video is)
+
+        loading="lazy" is VERY important here: 9 YouTube players loading at
+        once would make the page slow. Lazy means each one only loads when
+        the visitor scrolls near it.
+
+        TO ADD A VIDEO: copy one whole <article>...</article>, paste it at
+        the end, and change the ID, number and title.
+        TO REORDER: just move the <article> blocks around.
+      -->
+      <div class="shorts-grid">
+
+        <article class="card short-card">
+          <div class="video-frame video-vertical">
+            <iframe src="https://www.youtube-nocookie.com/embed/6tvvxsO46h0"
+              title="Edit 02" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <p class="label">edit // 02</p>
+          <h3>Untitled Edit</h3>
+        </article>
+
+        <article class="card short-card">
+          <div class="video-frame video-vertical">
+            <iframe src="https://www.youtube-nocookie.com/embed/WsxwuviLXPg"
+              title="Edit 03" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <p class="label">edit // 03</p>
+          <h3>Untitled Edit</h3>
+        </article>
+
+        <article class="card short-card">
+          <div class="video-frame video-vertical">
+            <iframe src="https://www.youtube-nocookie.com/embed/KnqZQk3fWLY"
+              title="Edit 04" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <p class="label">edit // 04</p>
+          <h3>Untitled Edit</h3>
+        </article>
+
+        <article class="card short-card">
+          <div class="video-frame video-vertical">
+            <iframe src="https://www.youtube-nocookie.com/embed/kDST0cMLuRo"
+              title="Edit 05" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <p class="label">edit // 05</p>
+          <h3>Untitled Edit</h3>
+        </article>
+
+        <article class="card short-card">
+          <div class="video-frame video-vertical">
+            <iframe src="https://www.youtube-nocookie.com/embed/xhGO8mQ4tv8"
+              title="Edit 06" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <p class="label">edit // 06</p>
+          <h3>Untitled Edit</h3>
+        </article>
+
+        <article class="card short-card">
+          <div class="video-frame video-vertical">
+            <iframe src="https://www.youtube-nocookie.com/embed/19kmq7kmjRE"
+              title="Edit 07" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <p class="label">edit // 07</p>
+          <h3>Untitled Edit</h3>
+        </article>
+
+        <article class="card short-card">
+          <div class="video-frame video-vertical">
+            <iframe src="https://www.youtube-nocookie.com/embed/5XGXGeM-dnY"
+              title="Edit 08" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <p class="label">edit // 08</p>
+          <h3>Untitled Edit</h3>
+        </article>
+
+        <article class="card short-card">
+          <div class="video-frame video-vertical">
+            <iframe src="https://www.youtube-nocookie.com/embed/sHTlsLwb0bA"
+              title="Edit 09" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <p class="label">edit // 09</p>
+          <h3>Untitled Edit</h3>
+        </article>
+
+        <article class="card short-card">
+          <div class="video-frame video-vertical">
+            <iframe src="https://www.youtube-nocookie.com/embed/SGpilLC3gpA"
+              title="Edit 10" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <p class="label">edit // 10</p>
+          <h3>Untitled Edit</h3>
+        </article>
+
+        <!--
+          WIDESCREEN (16:9) videos: leave out "video-vertical" and the frame
+          becomes widescreen. Those look better in the wider "card-grid",
+          so put them in their own section with <div class="card-grid">.
+
+          VIDEO FILES in your own folder (no YouTube), for short clips only (<20 MB):
+            <video src="videos/clip.mp4" poster="images/thumb.jpg"
+                   controls preload="none" playsinline></video>
+            controls = play/pause buttons, poster = image before play,
+            preload=none = download nothing until play, playsinline = no forced
+            fullscreen on iPhone. Use .mp4 (H.264).
+        -->
+
+      </div>
+    </section>
+
+    <!-- A call-to-action to your channel. Reuses the button classes. -->
+    <section class="section contact">
+      <p class="section-intro">Want the full catalogue?</p>
+      <!-- TODO: replace # with your YouTube channel link -->
+      <a href="#" target="_blank" rel="noopener" class="btn btn-primary">Watch on YouTube</a>
+      <a href="index.html" class="btn btn-outline">Back to Home</a>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Aaron Angel Netto · Engineered by Chaos</p>
+  </footer>
+
+  <!-- Same script: the year and the mobile menu work here too. -->
+  <script src="script.js"></script>
+</body>
+</html>

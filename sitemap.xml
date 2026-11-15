@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The list of pages for search engines. Replace YOUR-SITE-URL once online. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://YOUR-SITE-URL/</loc></url>
+  <url><loc>https://YOUR-SITE-URL/projects.html</loc></url>
+  <url><loc>https://YOUR-SITE-URL/manufacturing.html</loc></url>
+  <url><loc>https://YOUR-SITE-URL/industrial.html</loc></url>
+  <url><loc>https://YOUR-SITE-URL/garage.html</loc></url>
+  <url><loc>https://YOUR-SITE-URL/guitar.html</loc></url>
+  <url><loc>https://YOUR-SITE-URL/versatility.html</loc></url>
+  <url><loc>https://YOUR-SITE-URL/growth.html</loc></url>
+  <url><loc>https://YOUR-SITE-URL/about.html</loc></url>
+</urlset>

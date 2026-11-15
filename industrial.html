@@ -1,0 +1,129 @@
+<!--
+  industrial.html : INDUSTRIAL / FABRICATION
+  The grittier page. body class="theme-industrial" switches on the
+  rougher look in site.css (section 11).
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="meta.industrial.title">Industrial &amp; Fabrication | Aaron Angel Netto</title>
+  <meta name="description" data-i18n-attr="content:meta.industrial.desc" content="Engine building, big bore kit machining, SMD-level ECU repair and a hands-on repair log.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Industrial & Fabrication | Aaron Angel Netto">
+  <meta property="og:description" content="Engines, lathes, ECUs. Bring it on.">
+  <meta property="og:url" content="https://YOUR-SITE-URL/industrial.html">
+  <meta property="og:image" content="https://YOUR-SITE-URL/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0a08">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var l = localStorage.getItem('lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } else if (l === 'ja') { document.documentElement.lang = 'ja'; } } catch (e) {}
+  </script>
+</head>
+
+<body class="theme-industrial">
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <canvas class="sparks" data-count="36" aria-hidden="true"></canvas>
+      <div class="container">
+        <span class="eyebrow" data-i18n="ind.eyebrow">Industrial / fabrication</span>
+        <h1 data-i18n="ind.title">Nothing is too rough</h1>
+        <p class="lead" data-i18n="ind.lead">Engines, lathes, grinders and water-damaged circuit boards. The dirty work is where the real engineering gets tested.</p>
+      </div>
+    </section>
+
+    <section class="section container" style="padding-top:20px" aria-label="Industrial skills">
+      <div class="grid">
+        <article class="card reveal">
+          <span class="card-icon" data-icon="wrench"></span>
+          <h3 data-i18n="ind.engine.title">Engine building</h3>
+          <ul class="bullets">
+            <li data-i18n="ind.engine.b1">Full strip-downs, rebuilds and overhauls</li>
+            <li data-i18n="ind.engine.b2">Head swaps, head machining and valve work</li>
+            <li data-i18n="ind.engine.b3">Boring and sleeving</li>
+            <li data-i18n="ind.engine.b4">Thread repair and bolt-hole chasing</li>
+            <li data-i18n="ind.engine.b5">Custom clutch cables and Suzuki Swift gearbox work</li>
+            <li data-i18n="ind.engine.b6">Everything checked against manufacturer tolerances</li>
+          </ul>
+        </article>
+
+        <article class="card reveal">
+          <span class="card-icon" data-icon="layers"></span>
+          <h3 data-i18n="ind.ecu.title">Component-level electronics repair</h3>
+          <ul class="bullets">
+            <li data-i18n="ind.ecu.b1">SMD-level fault finding on water-damaged ECUs</li>
+            <li data-i18n="ind.ecu.b2">Circuit tracing</li>
+            <li data-i18n="ind.ecu.b3">Diode and resistor testing</li>
+            <li data-i18n="ind.ecu.b4">Restoring boards instead of replacing them</li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- Big bore: full width -->
+      <article class="card reveal" style="margin-top:20px">
+        <span class="eyebrow" data-i18n="ind.bore.eyebrow">Precision machining</span>
+        <h2 data-i18n="ind.bore.title">Big bore kit development</h2>
+        <p data-i18n="ind.bore.text">I assisted in developing big bore cylinder components, including for the Royal Enfield Hunter 350: lathe and CNC work to tight tolerances, measurement, fitting, inspection and iterative refinement. I also coordinated machine shops and inspected the parts they made.</p>
+        <ol class="flow" aria-label="Development process">
+          <li><span data-i18n="ind.flow.1">Concept</span></li>
+          <li><span data-i18n="ind.flow.2">Measurements</span></li>
+          <li><span data-i18n="ind.flow.3">CAD</span></li>
+          <li><span data-i18n="ind.flow.4">Machining</span></li>
+          <li><span data-i18n="ind.flow.5">Inspection</span></li>
+          <li><span data-i18n="ind.flow.6">Fitting</span></li>
+          <li><span data-i18n="ind.flow.7">Refinement</span></li>
+        </ol>
+        <blockquote class="quote" data-i18n="ind.bore.quote">"Digital design only becomes engineering when the physical component has to fit, function and survive in the real world."</blockquote>
+      </article>
+    </section>
+
+    <!-- ===================== REPAIR LOG (text from V1) ===================== -->
+    <section class="section container" aria-labelledby="log-title">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="ind.log.eyebrow">Repair log</span>
+        <h2 id="log-title" data-i18n="ind.log.title">Diagnosis is engineering too</h2>
+      </div>
+      <div class="grid">
+        <article class="card repair-card reveal">
+          <span class="eyebrow">Insta360 One RS</span>
+          <p data-i18n="ind.log.1">Water-damaged camera: full disassembly, PCB cleaning and fault isolation with a multimeter.</p>
+        </article>
+        <article class="card repair-card reveal">
+          <span class="eyebrow">Samsung S21 Ultra</span>
+          <p data-i18n="ind.log.2">Display failure: confirmed the motherboard was healthy and isolated the fault to the panel.</p>
+        </article>
+        <article class="card repair-card reveal">
+          <span class="eyebrow" data-i18n="ind.log.3title">Rally tower lights</span>
+          <p data-i18n="ind.log.3">LED fog lights wired into a rally tower on a relay-based circuit.</p>
+        </article>
+        <article class="card repair-card reveal">
+          <span class="eyebrow" data-i18n="ind.log.4title">Splendor horn</span>
+          <p data-i18n="ind.log.4">Traced and diagnosed a 6V voltage drop in the horn circuit.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" aria-labelledby="ind-gallery-title">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="common.gallery">Gallery</span>
+        <h2 id="ind-gallery-title" data-i18n="ind.gallery.title">From the workshop</h2>
+      </div>
+      <div class="gallery" data-folder="assets/images/industrial" data-placeholders="4"
+           data-i18n-attr="data-alt:ind.gallery.title" data-alt="From the workshop"></div>
+    </section>
+  </main>
+
+  <div id="site-cta"></div>
+  <div id="site-footer"></div>
+  <script src="assets/js/site.js" defer></script>
+</body>
+</html>

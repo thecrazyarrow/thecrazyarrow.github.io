@@ -1,0 +1,12 @@
+{
+  "name": "aaron-portfolio",
+  "private": true,
+  "description": "Aaron Angel Netto portfolio. Plain HTML/CSS/JS; Node is only used for the photo helper.",
+  "scripts": {
+    "media": "node tools/build-media.js",
+    "serve": "npx serve ."
+  },
+  "optionalDependencies": {
+    "sharp": "^0.33.5"
+  }
+}

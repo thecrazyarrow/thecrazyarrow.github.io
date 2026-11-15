@@ -1,0 +1,16 @@
+# Text files: let git handle line endings.
+* text=auto
+# Binary files: never touch their bytes (a converted PDF or STL would be corrupted).
+*.pdf  binary
+*.stl  binary
+*.3mf  binary
+*.glb  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.gif  binary
+*.mp4  binary
+*.webm binary
+*.mov  binary

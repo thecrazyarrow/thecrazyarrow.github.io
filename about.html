@@ -1,0 +1,125 @@
+<!--
+  about.html : ABOUT + CONTACT
+  The three story paragraphs are a FIRST DRAFT ("_draft" in en.json).
+  Rewrite them in your own voice in assets/i18n/en.json.
+
+  CONTACT FORM: replace YOUR_FORM_ID in the form's action with your
+  Formspree ID (see README). Until then, "Send" opens an email instead.
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="meta.about.title">About &amp; Contact | Aaron Angel Netto</title>
+  <meta name="description" data-i18n-attr="content:meta.about.desc" content="About Aaron Angel Netto, ECE engineer and maker from Kuwait heading to Japan. Education, languages, CV and contact.">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="About & Contact | Aaron Angel Netto">
+  <meta property="og:description" content="An engineer who learns by building. Let's build something.">
+  <meta property="og:url" content="https://YOUR-SITE-URL/about.html">
+  <meta property="og:image" content="https://YOUR-SITE-URL/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0a08">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var l = localStorage.getItem('lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } else if (l === 'ja') { document.documentElement.lang = 'ja'; } } catch (e) {}
+  </script>
+</head>
+
+<body class="theme-about">
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero container">
+      <span class="eyebrow" data-i18n="about.eyebrow">About</span>
+      <h1 data-i18n="about.title">An engineer who learns by building</h1>
+    </section>
+
+    <section class="section container" style="padding-top:20px" aria-label="About me">
+      <div class="split">
+        <!-- One photo from assets/images/about/ -->
+        <div class="gallery reveal" style="margin-top:0" data-folder="assets/images/about" data-limit="1" data-placeholders="1"
+             data-i18n-attr="data-alt:about.photoAlt" data-alt="Aaron Angel Netto"></div>
+
+        <div class="reveal">
+          <p class="lead" data-i18n="about.p1">I'm Aaron, an electronics &amp; communication engineer from the College of Engineering Perumon in Kerala, living in Kuwait. I learn by building: when something doesn't exist, I design it; when something breaks, I take it apart until I understand it.</p>
+          <p data-i18n="about.p2">My approach is always the same: identify a problem, learn what's needed, design, build, test and improve. That loop took me from a cement 3D printer to a print business that brought discontinued parts back, and through engines, lathes and circuit boards along the way.</p>
+          <p data-i18n="about.p3">Outside the workshop there are the bikes, Ava and Toraa, and the guitar, where my first song is on its way. The chaos is what drives all of it. Next stop: an engineering career in Japan.</p>
+          <div class="btn-row">
+            <a href="assets/resume/Aaron_Angel_Netto_CV.pdf" download class="btn btn-gold" data-i18n="common.cv">Download CV</a>
+            <a href="#contact" class="btn btn-ghost" data-i18n="cta.button">Get in touch</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EDUCATION + LANGUAGES ===================== -->
+    <section class="section container" aria-label="Education and languages">
+      <div class="grid grid-2">
+        <article class="card reveal">
+          <span class="eyebrow" data-i18n="about.edu.eyebrow">Education</span>
+          <dl class="facts">
+            <div>
+              <dt>2021 – 2025</dt>
+              <dd data-i18n="about.edu.btech">BTech, Electronics &amp; Communication Engineering, College of Engineering Perumon, Kerala (APJ Abdul Kalam Technological University). Coursework completed, final certification pending.</dd>
+            </div>
+            <div>
+              <dt data-i18n="about.edu.schoolWhen">12th grade</dt>
+              <dd data-i18n="about.edu.school">Jabriya Indian School, Kuwait</dd>
+            </div>
+          </dl>
+        </article>
+        <article class="card reveal">
+          <span class="eyebrow" data-i18n="about.lang.eyebrow">Languages</span>
+          <ul class="chips" style="margin-top:6px">
+            <li data-i18n="about.lang.en">English</li>
+            <li data-i18n="about.lang.hi">Hindi</li>
+            <li data-i18n="about.lang.ml">Malayalam</li>
+            <li data-i18n="about.lang.ja">Japanese (learning)</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="section container" aria-labelledby="contact-title">
+      <div class="cta-band reveal" style="text-align:start; margin-block:0">
+        <span class="eyebrow" data-i18n="cta.eyebrow">Hire me</span>
+        <h2 id="contact-title" data-i18n="cta.title">Let's build something</h2>
+        <div class="contact-grid" style="margin-top:24px">
+          <div class="contact-links">
+            <p data-i18n="contact.intro">Email is the fastest way to reach me, or send a message here.</p>
+            <a href="mailto:aaronnetto78@gmail.com"><span data-icon="mail"></span>aaronnetto78@gmail.com</a>
+            <a href="https://www.linkedin.com/in/aaron-angel-netto-86199b244" target="_blank" rel="noopener"><span data-icon="link"></span>LinkedIn</a>
+          </div>
+
+          <!-- NEW: a form. "name" on each field is the label Formspree uses in the email it sends you. -->
+          <form id="contact-form" class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <label><span data-i18n="contact.name">Name</span>
+              <input type="text" name="name" required autocomplete="name">
+            </label>
+            <label><span data-i18n="contact.email">Email</span>
+              <input type="email" name="email" required autocomplete="email">
+            </label>
+            <label><span data-i18n="contact.message">Message</span>
+              <textarea name="message" required></textarea>
+            </label>
+            <button type="submit" class="btn btn-gold" data-i18n="contact.send">Send message</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+      <p class="jp-line" lang="ja" style="text-align:center; margin-top:48px; font-size:1.3rem">日本でのエンジニア職を探しています</p>
+    </section>
+  </main>
+
+  <!-- No "Hire me" band here: this page IS the contact page -->
+  <div id="site-footer"></div>
+  <script src="assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!--
+  growth.html : GROWTH LOG
+  Each gap card has a progress bar. The NUMBER lives in
+  assets/i18n/en.json, e.g. "growth.g1.value": "90". Change it there
+  (only in en.json; the other languages reuse the English number).
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="meta.growth.title">Growth Log | Aaron Angel Netto</title>
+  <meta name="description" data-i18n-attr="content:meta.growth.desc" content="What I'm still building: degree, software skills, Japanese, industry experience and certifications, and the plan for each.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Growth Log | Aaron Angel Netto">
+  <meta property="og:description" content="What I'm working on.">
+  <meta property="og:url" content="https://YOUR-SITE-URL/growth.html">
+  <meta property="og:image" content="https://YOUR-SITE-URL/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0a08">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var l = localStorage.getItem('lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } else if (l === 'ja') { document.documentElement.lang = 'ja'; } } catch (e) {}
+  </script>
+</head>
+
+<body class="theme-growth">
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero container">
+      <span class="eyebrow" data-i18n="growth.eyebrow">Growth log</span>
+      <h1 data-i18n="growth.title">What I'm still building</h1>
+      <p class="lead" data-i18n="growth.lead">An honest list of the gaps I'm closing right now. Not apologies: work in progress, with a plan for each.</p>
+    </section>
+
+    <section class="section container" style="padding-top:20px" aria-label="Gaps">
+      <div class="grid">
+        <article class="card gap-card reveal">
+          <h3 data-i18n="growth.g1.title">Degree completion</h3>
+          <dl>
+            <div><dt data-i18n="growth.gap">The gap</dt><dd data-i18n="growth.g1.gap">Coursework is complete; the final certification is still pending.</dd></div>
+            <div><dt data-i18n="growth.why">Why it matters</dt><dd data-i18n="growth.g1.why">Engineering employers, and Japanese work visas, usually look for the completed degree.</dd></div>
+            <div><dt data-i18n="growth.plan">The plan</dt><dd data-i18n="growth.g1.plan">Complete the remaining university steps and receive the certificate.</dd></div>
+          </dl>
+          <div class="progress" data-i18n-attr="data-value:growth.g1.value" data-value="90"><span></span></div>
+          <p class="progress-label" data-i18n="growth.g1.label">Coursework done · certificate pending</p>
+        </article>
+
+        <article class="card gap-card reveal">
+          <h3 data-i18n="growth.g2.title">Software &amp; web development</h3>
+          <dl>
+            <div><dt data-i18n="growth.gap">The gap</dt><dd data-i18n="growth.g2.gap">I'm strong on hardware and still building my coding skills.</dd></div>
+            <div><dt data-i18n="growth.why">Why it matters</dt><dd data-i18n="growth.g2.why">Modern hardware runs on software, from firmware to the tools around it.</dd></div>
+            <div><dt data-i18n="growth.plan">The plan</dt><dd data-i18n="growth.g2.plan">Build real things in code. This website is part of the plan.</dd></div>
+          </dl>
+          <div class="progress" data-i18n-attr="data-value:growth.g2.value" data-value="35"><span></span></div>
+          <p class="progress-label" data-i18n="growth.g2.label">Learning by building</p>
+        </article>
+
+        <article class="card gap-card reveal">
+          <h3 data-i18n="growth.g3.title">Japanese</h3>
+          <dl>
+            <div><dt data-i18n="growth.gap">The gap</dt><dd data-i18n="growth.g3.gap">I'm learning Japanese from zero.</dd></div>
+            <div><dt data-i18n="growth.why">Why it matters</dt><dd data-i18n="growth.g3.why">My goal is an engineering career in Japan, and working there means working in Japanese.</dd></div>
+            <div><dt data-i18n="growth.plan">The plan</dt><dd data-i18n="growth.g3.plan">Daily study, aiming for JLPT N3/N2.</dd></div>
+          </dl>
+          <div class="progress" data-i18n-attr="data-value:growth.g3.value" data-value="10"><span></span></div>
+          <p class="progress-label" data-i18n="growth.g3.label">Target: JLPT N3/N2 by December 2027</p>
+        </article>
+
+        <article class="card gap-card reveal">
+          <h3 data-i18n="growth.g4.title">Formal industry experience</h3>
+          <dl>
+            <div><dt data-i18n="growth.gap">The gap</dt><dd data-i18n="growth.g4.gap">Most of my engineering work so far has been self-run or project-based, not inside a company.</dd></div>
+            <div><dt data-i18n="growth.why">Why it matters</dt><dd data-i18n="growth.g4.why">Companies work with processes, standards and teams that you only learn from the inside.</dd></div>
+            <div><dt data-i18n="growth.plan">The plan</dt><dd data-i18n="growth.g4.plan">Land an engineering role and bring the hands-on experience with me.</dd></div>
+          </dl>
+          <div class="progress" data-i18n-attr="data-value:growth.g4.value" data-value="25"><span></span></div>
+          <p class="progress-label" data-i18n="growth.g4.label">Looking for the right role</p>
+        </article>
+
+        <article class="card gap-card reveal">
+          <h3 data-i18n="growth.g5.title">Certifications</h3>
+          <dl>
+            <div><dt data-i18n="growth.gap">The gap</dt><dd data-i18n="growth.g5.gap">Strong practical CAD, FEA and manufacturing skills, but few formal certificates yet.</dd></div>
+            <div><dt data-i18n="growth.why">Why it matters</dt><dd data-i18n="growth.g5.why">A certificate lets an employer trust a skill before they've seen it in action.</dd></div>
+            <div><dt data-i18n="growth.plan">The plan</dt><dd data-i18n="growth.g5.plan">Turn the skills I already use every day into recognised certifications.</dd></div>
+          </dl>
+          <div class="progress" data-i18n-attr="data-value:growth.g5.value" data-value="15"><span></span></div>
+          <p class="progress-label" data-i18n="growth.g5.label">Getting started</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== GOALS ===================== -->
+    <section class="section container" aria-labelledby="goals-title">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="growth.goals.eyebrow">Goals</span>
+        <h2 id="goals-title" data-i18n="growth.goals.title">Where this is heading</h2>
+      </div>
+      <div class="grid grid-2">
+        <article class="card reveal" style="border-color:var(--gold)">
+          <span class="badge badge-solid" data-i18n="growth.goals.mainTag">Main goal</span>
+          <h3 style="margin-top:14px" data-i18n="growth.goals.main">Build an engineering career in Japan</h3>
+        </article>
+        <article class="card reveal">
+          <span class="badge" data-i18n="growth.goals.sideTag">Side goal</span>
+          <h3 style="margin-top:14px" data-i18n="growth.goals.side">Build a 3D print farm in India for motorcycle parts</h3>
+        </article>
+      </div>
+      <blockquote class="quote reveal" data-i18n="growth.closing">"Everything else on this site started out on a list like this."</blockquote>
+    </section>
+  </main>
+
+  <div id="site-cta"></div>
+  <div id="site-footer"></div>
+  <script src="assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!--
+  ============================================================
+  prints.html : your THIRD page, "The Print Bed"
+  ============================================================
+  Same style.css and script.js as the other pages, plus ONE new
+  file: prints.js, which draws the 3D models.
+
+  HOW TO ADD A MODEL (the short version):
+    1. Put the file in the "models" folder, e.g. models/fork-cap.stl
+       (.stl, .3mf, .obj, .glb and .gltf all work)
+    2. Copy one <article class="card model-card"> block below
+    3. Change data-model="models/your-file.stl" and the text
+    That's it. The size in mm and the triangle count fill themselves in.
+
+  IMPORTANT: browsers refuse to load 3D files when you just
+  double-click the .html file (the address starts with file://).
+  Open the site with VS Code's "Live Server" extension instead
+  (right-click prints.html > "Open with Live Server").
+  Once it's online (GitHub Pages, Netlify...) it just works.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="3D-printed parts and models designed by Aaron Angel Netto. Rotate every model in your browser.">
+  <title>The Print Bed | Aaron Angel Netto</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!--
+    NEW: an "import map". prints.js says  import ... from 'three',
+    and this map tells the browser WHERE 'three' actually lives
+    (a free CDN). three.js is the library that does the 3D drawing.
+    The version number is pinned (0.160.0) so an update can never
+    break your site by surprise.
+  -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="header">
+    <a href="index.html" class="logo">AARON<span>/</span>NETTO</a>
+
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+
+    <nav class="nav">
+      <ul>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#work">What I Do</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="prints.html" aria-current="page">Prints</a></li>  <!-- you are here -->
+        <li><a href="videos.html">Edits</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ===================== PAGE INTRO ===================== -->
+    <section class="hero hero-small">
+      <p class="label">// the print bed</p>
+      <h1>The Print Bed</h1>
+      <p class="hero-motto">Modelled. Sliced. Printed.</p>
+      <p class="hero-sub">
+        Parts I've designed and printed, live in your browser.
+        Drag to spin them, scroll or pinch to zoom, double-click to reset.
+      </p>
+    </section>
+
+    <!-- ===================== FEATURED MODEL ===================== -->
+    <section class="section">
+      <p class="label">01 // featured</p>
+      <h2 class="section-title">Sci-Fi Guitar Body</h2>
+
+      <div class="featured-model">
+        <!--
+          NEW: "data-" attributes. You can invent any attribute that
+          starts with data- and JavaScript can read it. prints.js reads:
+            data-model = the path to the 3D file            (required)
+            data-color = the filament colour, any CSS colour (optional)
+                         use "original" to keep a .3mf/.glb's own colours
+            data-up    = "z" (default) or "y". Slicers and CAD use Z-up.
+                         If a model shows up lying on its side, try "y".
+        -->
+        <div class="model-frame" data-model="models/GUITAR%20BODY.stl" data-color="#ff6a1a">
+          <p class="viewer-status">Loading model…</p>
+          <button class="viewer-btn" type="button" aria-label="View fullscreen">&#x26F6;</button>
+        </div>
+
+        <div class="featured-text">
+          <p class="label">in progress // modular</p>
+          <h3>Sci-Fi Electric Guitar</h3>
+          <!-- TODO: swap in your own words -->
+          <p>An asymmetric, angular body with hexagonal cut-through panels, split into
+             modules that each fit a 220×220 mm bed and bolt onto a 20×40 aluminium
+             extrusion spine.</p>
+          <!-- "model-stats" gets the size and triangle count added automatically.
+               The chips you write yourself stay first. -->
+          <!-- Add your own chips here, e.g. <li>PLA+</li> <li>0.2 mm layers</li> -->
+          <ul class="specs model-stats"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MODEL LIBRARY ===================== -->
+    <section class="section">
+      <p class="label">02 // model library</p>
+      <h2 class="section-title">Model Library</h2>
+      <p class="section-intro">Functional parts, prototypes and the occasional thing that just looked cool.</p>
+
+      <!--
+        Every card has the same parts:
+          1. the 3D viewer (model-frame) with its data-model path
+          2. a number label ("print // 01")
+          3. a title and a line of text
+          4. spec chips (yours + the automatic size/triangles)
+
+        Models only load when you scroll near them, so a long
+        library still opens fast.
+
+        TO ADD A MODEL: copy a whole <article>...</article>, paste it
+        at the end, change the data-model path, number and text.
+      -->
+      <div class="card-grid">
+
+        <!-- NEW: %20 is how a SPACE is written inside a web address.
+             The file is "splendor rally visor.stl", so the path becomes
+             splendor%20rally%20visor.stl. (Tip: name future files with
+             dashes instead of spaces, like rally-visor.stl.) -->
+        <article class="card model-card">
+          <div class="model-frame" data-model="models/splendor%20rally%20visor.stl" data-color="#c9ccd4">
+            <p class="viewer-status">Loading model…</p>
+            <button class="viewer-btn" type="button" aria-label="View fullscreen">&#x26F6;</button>
+          </div>
+          <p class="label">print // 01</p>
+          <h3>Splendor Rally Visor</h3>
+          <!-- TODO: add a line about the design -->
+          <p>A rally-style visor designed for AVA, my Hero Splendor 100.</p>
+          <ul class="specs model-stats"></ul>
+        </article>
+
+        <!-- data-up="y": this file was exported "Y-up", so without it the
+             can would show up lying on its side. -->
+        <article class="card model-card">
+          <div class="model-frame" data-model="models/3d%20forge%20monster%20can.stl" data-color="#7ed321" data-up="y">
+            <p class="viewer-status">Loading model…</p>
+            <button class="viewer-btn" type="button" aria-label="View fullscreen">&#x26F6;</button>
+          </div>
+          <p class="label">print // 02</p>
+          <h3>Monster Can</h3>
+          <!-- TODO: add a line about what it is / why you made it -->
+          <p>A 3D Forge print modelled after a Monster energy can.</p>
+          <ul class="specs model-stats"></ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Call to action. Reuses the contact + button styles. -->
+    <section class="section contact">
+      <p class="section-intro">Need something designed or printed?</p>
+      <a href="index.html#contact" class="btn btn-primary">Get In Touch</a>
+      <a href="index.html" class="btn btn-outline">Back to Home</a>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Aaron Angel Netto · Engineered by Chaos</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <!-- NEW: type="module" lets this file use "import". -->
+  <script type="module" src="prints.js"></script>
+</body>
+</html>

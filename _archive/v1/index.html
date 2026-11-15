@@ -1,0 +1,363 @@
+<!--
+  ============================================================
+  index.html : the CONTENT of your website
+  ============================================================
+  Quick refresher:
+    <tag> opens, </tag> closes, and content goes in between.
+    class="x" = a reusable name for CSS/JS  (.x in CSS)
+    id="x"    = a unique name, also used for #x jump links
+
+  Lines that repeat a pattern you've already seen get short
+  comments. NEW ideas get a longer explanation marked "NEW:".
+-->
+
+<!DOCTYPE html>                <!-- "this is a modern HTML5 page" -->
+<html lang="en">               <!-- the whole page; written in English -->
+
+<head>                         <!-- info ABOUT the page (not visible) -->
+  <meta charset="UTF-8">       <!-- supports every character: — × ° and so on -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- fit phone screens -->
+
+  <!-- The summary Google shows under your link in search results. -->
+  <meta name="description" content="Aaron Angel Netto: electronics engineer and maker. Robotics, CAD, 3D printing, fabrication and motorcycles. Engineered by Chaos.">
+
+  <title>Aaron Angel Netto | Engineered by Chaos</title>  <!-- browser tab text -->
+
+  <!-- Two Google Fonts this time:
+       Space Grotesk  = a geometric, slightly technical font for the main text
+       JetBrains Mono = a "monospace" font (every letter the same width, like
+                        code), used for labels so they feel like a terminal readout -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">  <!-- our styling file -->
+</head>
+
+<body>
+
+  <!-- ===================== HEADER / NAVIGATION ===================== -->
+  <header class="header">
+    <a href="#home" class="logo">AARON<span>/</span>NETTO</a>  <!-- the span lets CSS color just the slash -->
+
+    <!-- Hamburger ☰ button for phones (hidden on desktop by CSS) -->
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+
+    <nav class="nav">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">What I Do</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#garage">Garage</a></li>
+        <!-- NEW: no # here, so this goes to a different PAGE.
+             "videos.html" works because both files sit in the same folder. -->
+        <li><a href="prints.html">Prints</a></li>
+        <li><a href="videos.html">Edits</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ===================== HERO ===================== -->
+    <section id="home" class="hero">
+      <!-- the "label" class is our reusable small monospace text -->
+      <p class="label">// the crazy arrow</p>
+
+      <h1>Aaron Angel Netto</h1>  <!-- the one and only h1 on the page -->
+
+      <!-- Your motto, styled big and orange -->
+      <p class="hero-motto">Engineered by Chaos</p>
+
+      <p class="hero-tagline">
+        Electronics engineer. Maker. Builder of things that shouldn't work, until they do.
+      </p>
+
+      <p class="hero-sub">
+        I design, prototype and fabricate hardware from scratch: robotics, 3D printers,
+        motorcycle mods and everything in between.
+      </p>
+
+      <!-- "hero-actions" wraps both buttons so CSS can space them as a group -->
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="section">
+      <!-- NEW: a numbered label above each heading ("01 // about").
+           It's pure decoration that gives the page an engineering-
+           document feel. -->
+      <p class="label">01 // about</p>
+      <h2 class="section-title">About Me</h2>
+
+      <div class="about-content">   <!-- CSS makes this a 2-column grid -->
+        <div class="about-text">
+          <p>
+            I'm Aaron, an engineering generalist with a BTech in Electronics &amp;
+            Communication from the College of Engineering Perumon (CEP), Kerala.
+          </p>
+          <!-- &amp; is how you write "&" in HTML. A bare & starts special
+               codes (like &copy;), so we "escape" it to be safe. -->
+          <p>
+            I've always been the person who takes things apart to understand how they
+            work, and then builds something better from the pieces. My work sits where
+            electronics, mechanical design and digital manufacturing meet: if it can be
+            modelled, printed, wired, machined or rebuilt, I want to make it.
+          </p>
+          <p>
+            I don't use templates. Every project starts from a blank canvas, and
+            <!-- NEW: <strong> marks words as IMPORTANT (bold by default).
+                 Screen readers can stress it. It's better than making
+                 text bold with CSS when the words really matter. -->
+            <strong>"Engineered by Chaos"</strong> is the philosophy behind it: ideas
+            get messy, prototypes break, and the chaos is where the real engineering happens.
+          </p>
+          <p>
+            Outside the workshop, I ride, I film, and I founded and ran the Anime Club
+            at CEP for four years.
+          </p>
+        </div>
+
+        <!-- NEW: <aside> = content that's related but secondary, like a
+             side note. A "quick facts" card is a perfect fit. -->
+        <aside class="facts">
+          <!-- NEW: <dl> is a "description list": pairs of
+               <dt> (the term) and <dd> (its description).
+               It's the semantic way to write "Label: value" pairs. -->
+          <dl>
+            <dt>Based in</dt>    <dd>Kuwait</dd>
+            <dt>Education</dt>   <dd>BTech, Electronics &amp; Communication (CEP, Kerala)</dd>
+            <dt>Heading to</dt>  <dd>An engineering career in Japan</dd>
+            <dt>Learning</dt>    <dd>日本語 (Japanese)</dd>
+            <!-- Japanese characters work because of charset="UTF-8" above. -->
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===================== WHAT I DO ===================== -->
+    <section id="work" class="section">
+      <p class="label">02 // capabilities</p>
+      <h2 class="section-title">What I Do</h2>
+
+      <!-- A grid of 5 cards. Same auto-fit grid trick as the projects. -->
+      <div class="card-grid">
+        <article class="card service">
+          <!-- the ">" prompt symbol before each title is added by CSS (::before),
+               so the HTML stays clean -->
+          <h3>Robotics &amp; Embedded Systems</h3>
+          <p>Arduino and embedded builds, automation, gesture control, and computer vision with MediaPipe and YOLOv8.</p>
+        </article>
+
+        <article class="card service">
+          <h3>Mechanical Design &amp; CAD</h3>
+          <p>Parametric design in Fusion 360 and FreeCAD, FEA simulation, reverse engineering, and design for manufacturing.</p>
+        </article>
+
+        <article class="card service">
+          <h3>3D Printing &amp; Fabrication</h3>
+          <p>Designed and built my own 3D printer, tuned Marlin firmware, wrote G-code, and ran a 3D-printing service for customers. Also machining and welding.</p>
+          <a href="prints.html" class="card-link">Spin the models &rarr;</a>
+        </article>
+
+        <article class="card service">
+          <h3>Motorcycles &amp; Automotive</h3>
+          <p>Engine rebuilding, electrical diagnostics, custom wiring and performance mods.</p>
+        </article>
+
+        <article class="card service">
+          <h3>Video &amp; Filmmaking</h3>
+          <p>Shooting, editing and content production, including work on a Royal Enfield advertisement.</p>
+          <!-- a link from this card to the new Edits page -->
+          <a href="videos.html" class="card-link">Watch the edits &rarr;</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== FEATURED PROJECTS ===================== -->
+    <section id="projects" class="section">
+      <p class="label">03 // featured builds</p>
+      <h2 class="section-title">Featured Projects</h2>
+
+      <div class="card-grid">
+
+        <article class="card project">
+          <!-- "project-top" is one row holding the number (left) and the
+               status badge (right). Flexbox spreads them apart. -->
+          <div class="project-top">
+            <span class="project-num">01</span>
+            <!-- no status badge, so this one is finished -->
+          </div>
+          <h3>Gesture-Controlled Robotic Arm</h3>
+          <p>A robotic arm that mirrors hand movements in real time. I designed the mechanics, the electronics and the control system.</p>
+        </article>
+
+        <article class="card project">
+          <div class="project-top">
+            <span class="project-num">02</span>
+          </div>
+          <h3>Custom-Fabricated 3D Printer</h3>
+          <p>A 3D printer designed and built from the ground up: frame, motion system, electronics and firmware.</p>
+        </article>
+
+        <article class="card project">
+          <div class="project-top">
+            <span class="project-num">03</span>
+            <!-- NEW: a small status "badge". One reusable class means every
+                 badge looks the same, and you only update it in one place. -->
+            <span class="status">In Progress</span>
+          </div>
+          <h3>Sci-Fi 3D-Printed Electric Guitar</h3>
+          <p>
+            An original asymmetric, angular electric guitar designed in Fusion. A 20×40 mm
+            aluminium T-slot extrusion runs through the body into the neck as its backbone.
+            The body has hexagonal cut-through panels, and every part is modular and bolts
+            together to fit a 220×220 mm print bed.
+          </p>
+          <!-- A list of specs. CSS turns these into small chips. -->
+          <ul class="specs">
+            <li>25.5" scale</li>
+            <li>22 frets</li>
+            <li>Dual humbuckers</li>
+          </ul>
+        </article>
+
+        <article class="card project">
+          <div class="project-top">
+            <span class="project-num">04</span>
+            <span class="status">In Progress</span>
+          </div>
+          <h3>Voice-Activated AI Assistant</h3>
+          <p>A local voice assistant with a custom language model trained on my own hardware.</p>
+          <ul class="specs">
+            <li>Whisper (speech-to-text)</li>
+            <li>Piper (text-to-speech)</li>
+            <li>Porcupine (wake word)</li>
+            <li>PyTorch transformer</li>
+          </ul>
+        </article>
+
+        <article class="card project">
+          <div class="project-top">
+            <span class="project-num">05</span>
+            <span class="status">In Development</span>
+          </div>
+          <h3>Adjustable Fork Preload Cap</h3>
+          <p>A custom-designed, leadscrew-driven preload adjuster for the Royal Enfield Hunter 350's front forks, with 0–3 cm of travel.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===================== THE GARAGE ===================== -->
+    <section id="garage" class="section">
+      <p class="label">04 // the garage</p>
+      <h2 class="section-title">The Garage</h2>
+
+      <!-- "garage-grid" is a 2-column grid, one card per bike -->
+      <div class="garage-grid">
+        <article class="card bike">
+          <h3>Royal Enfield Hunter 350</h3>
+          <p>Scrambler-style handlebars, a custom cruiser seat, and a rally tower with LED fog lights on a relay-based circuit I wired myself.</p>
+        </article>
+
+        <article class="card bike">
+          <h3>Hero Splendor 100</h3>
+          <!-- the bike's nickname, styled in mono orange -->
+          <p class="bike-name">"AVA"</p>
+          <p>My best ride to date. 21,000+ km, extensively modified, and the bike I learned to wrench on.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== REPAIR LOG ===================== -->
+    <section id="repairs" class="section">
+      <p class="label">05 // repair log</p>
+      <h2 class="section-title">Repair Log</h2>
+      <p class="section-intro">Diagnosis is engineering too. A few recent fixes:</p>
+
+      <!-- A plain list. CSS makes it look like a terminal log, with a
+           "[FIX]" tag before each line. -->
+      <ul class="log">
+        <li><strong>Water-damaged Insta360 One RS:</strong> full teardown, PCB cleaning, and multimeter fault isolation</li>
+        <li><strong>Samsung S21 Ultra display failure:</strong> confirmed the motherboard was healthy and isolated the fault to the panel</li>
+        <li><strong>Motorcycle horn voltage drop:</strong> traced and diagnosed a 6V drop on a BS6 electrical system</li>
+      </ul>
+    </section>
+
+    <!-- ===================== SKILLS & TOOLS ===================== -->
+    <section id="skills" class="section">
+      <p class="label">06 // toolkit</p>
+      <h2 class="section-title">Skills &amp; Tools</h2>
+
+      <!-- Another description list (<dl>): the category is the term
+           (<dt>), the tools are the description (<dd>).
+           Each pair is wrapped in a <div> (allowed inside <dl>) so CSS
+           can style each row as a unit. -->
+      <dl class="skills-table">
+        <div><dt>Electronics</dt>   <dd>Arduino · Embedded Systems · KiCad · Circuit Debugging</dd></div>
+        <div><dt>Design</dt>        <dd>Fusion 360 · FreeCAD · FEA · Reverse Engineering</dd></div>
+        <div><dt>Manufacturing</dt> <dd>3D Printing · Marlin · G-code · Machining · Welding</dd></div>
+        <div><dt>Software</dt>      <dd>Python · PyTorch · MediaPipe · YOLOv8 · HTML/CSS/JS</dd></div>
+        <div><dt>Automotive</dt>    <dd>Engine Rebuilding · Vehicle Electrical · Custom Mods</dd></div>
+        <div><dt>Creative</dt>      <dd>Video Editing · Filmmaking · Content Production</dd></div>
+        <div><dt>Languages</dt>     <dd>English · Malayalam · Japanese (learning)</dd></div>
+      </dl>
+    </section>
+
+    <!-- ===================== OPEN TO ===================== -->
+    <section id="open-to" class="section">
+      <p class="label">07 // open to</p>
+      <h2 class="section-title">Open To</h2>
+
+      <!-- Pills again. Same pattern as the skill pills in the first version. -->
+      <ul class="pill-list">
+        <li>Automation &amp; Robotics</li>
+        <li>Mechatronics</li>
+        <li>Embedded Systems</li>
+        <li>IoT &amp; Hardware</li>
+        <li>CAD &amp; Digital Manufacturing</li>
+        <li>Technical Product Development</li>
+      </ul>
+      <p class="section-intro">Open to opportunities in Japan and internationally.</p>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="section contact">
+      <p class="label">08 // contact</p>
+      <h2 class="section-title">Let's Build Something</h2>
+      <p class="section-intro">Have a project, a role, or a problem that needs some chaos?</p>
+
+      <!-- TODO: replace you@example.com with your real email (in BOTH places:
+           the href and the visible text) -->
+      <a href="mailto:you@example.com" class="btn btn-primary">you@example.com</a>
+
+      <!-- NEW: the "download" attribute tells the browser to DOWNLOAD the file
+           instead of opening it. Put your resume in the portfolio folder and
+           name it exactly "resume.pdf" (or change the href to match). -->
+      <a href="resume.pdf" download class="btn btn-outline">Download Resume</a>
+
+      <!-- TODO: replace each "#" with your real profile link -->
+      <ul class="socials">
+        <li><a href="#" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="#" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="#" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="#" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <!-- JavaScript fills <span id="year"> with the current year -->
+    <p>&copy; <span id="year"></span> Aaron Angel Netto · Engineered by Chaos</p>
+  </footer>
+
+  <script src="script.js"></script>  <!-- loaded last so the HTML above exists first -->
+</body>
+</html>

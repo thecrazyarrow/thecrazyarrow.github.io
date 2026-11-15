@@ -1,0 +1,794 @@
+/*
+  ============================================================
+  style.css : how your website LOOKS
+  ============================================================
+  Refresher:   selector { property: value; }
+     .name  = class        #name = id        tag = every tag of that type
+  Lines marked NEW: introduce ideas you haven't seen yet.
+*/
+
+
+/* ===================== 1. VARIABLES (your theme) =====================
+   Change the theme here and the whole site follows. */
+:root {
+  --color-bg: #0c0c0e;          /* near-black background, like a workshop at night */
+  --color-surface: #16161a;     /* cards sit slightly lighter than the background */
+  --color-border: #2a2a31;      /* thin lines around cards */
+  --color-text: #ececf1;        /* main text */
+  --color-muted: #9a9aa8;       /* secondary text */
+  --color-accent: #ff6a1a;      /* "chaos orange", used for highlights and buttons */
+  --font-main: 'Space Grotesk', Arial, sans-serif;           /* body and headings */
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;   /* labels, terminal look */
+  --max-width: 1100px;
+  --radius: 10px;
+}
+
+
+/* ===================== 2. RESET & BASICS ===================== */
+* {
+  margin: 0;                    /* wipe the browser's default spacing */
+  padding: 0;
+  box-sizing: border-box;       /* width includes padding, for predictable sizes */
+}
+
+html {
+  scroll-behavior: smooth;      /* glide to #sections */
+  scroll-padding-top: 80px;     /* NEW: when jumping to a section, stop 80px early so the sticky header doesn't cover its title */
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.65;
+}
+
+a {
+  color: inherit;               /* links use the surrounding text color */
+  text-decoration: none;        /* no underline */
+}
+
+ul {
+  list-style: none;             /* no bullet points */
+}
+
+strong {
+  color: var(--color-text);     /* important words stay bright even inside muted paragraphs */
+  font-weight: 600;
+}
+
+
+/* ===================== 3. REUSABLE PIECES ===================== */
+
+/* The small "// label" text above headings */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  text-transform: lowercase;    /* NEW: forces lowercase however it's typed in the HTML */
+  letter-spacing: 0.05em;       /* NEW: a little extra space between letters. "em" = relative to the font size */
+  margin-bottom: 8px;
+}
+
+/* Every section shares width, centering and spacing */
+.section {
+  max-width: var(--max-width);
+  margin: 0 auto;               /* auto left/right = centered */
+  padding: 90px 24px;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);  /* scales with the screen, within limits */
+  margin-bottom: 32px;
+  line-height: 1.2;
+}
+
+.section-intro {
+  color: var(--color-muted);
+  margin-bottom: 24px;
+  max-width: 600px;             /* keeps lines short enough to read comfortably */
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;        /* lets a link take padding like a button */
+  padding: 12px 28px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  margin: 8px 8px 0 0;
+  transition: transform 0.2s, background-color 0.2s, color 0.2s;  /* smooth hover changes */
+}
+
+.btn:hover {
+  transform: translateY(-3px);  /* lift on hover */
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: #0c0c0e;               /* dark text on orange is easier to read than white */
+}
+
+.btn-outline {
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-accent);  /* fills in on hover */
+  color: #0c0c0e;
+}
+
+/* The base CARD look, shared by services, projects and bikes.
+   Each card type adds its own small extras further down. */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-accent);  /* the border glows orange on hover */
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.card p {
+  color: var(--color-muted);
+}
+
+/* The auto-fitting grid: as many 300px+ columns as fit the screen */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Rounded "pill" list, used for "Open To" */
+.pill-list {
+  display: flex;
+  flex-wrap: wrap;              /* wrap to new lines when out of room */
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.pill-list li {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  padding: 8px 18px;
+  border-radius: 999px;         /* fully rounded ends */
+}
+
+
+/* ===================== 4. HEADER ===================== */
+.header {
+  position: sticky;             /* sticks to the top while scrolling */
+  top: 0;
+  z-index: 10;                  /* sits above the content */
+  display: flex;
+  justify-content: space-between;  /* logo left, nav right */
+  align-items: center;
+  padding: 18px 24px;
+  background-color: rgba(12, 12, 14, 0.85);  /* see-through background */
+  backdrop-filter: blur(10px);  /* frosted glass */
+  border-bottom: 1px solid var(--color-border);
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+.logo span {
+  color: var(--color-accent);   /* the orange slash */
+}
+
+.nav ul {
+  display: flex;
+  gap: 28px;
+}
+
+.nav a {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.nav a:hover {
+  color: var(--color-accent);
+}
+
+.menu-toggle {
+  display: none;                /* hidden on desktop and shown on phones (section 9) */
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+
+/* ===================== 5. HERO ===================== */
+.hero {
+  min-height: 92vh;             /* almost the full screen height */
+  display: flex;
+  flex-direction: column;       /* stack top to bottom */
+  justify-content: center;      /* center vertically */
+  padding: 0 max(24px, calc((100% - var(--max-width)) / 2));
+  /* NEW: calc() does math in CSS and max() picks the bigger value.
+     This means "pad the sides so the content lines up with the
+     1100px sections, but never less than 24px". We need it because
+     the hero is full width, so the grid background can reach the
+     edges. */
+
+  /* NEW: a blueprint grid background, drawn entirely with CSS.
+     Each linear-gradient draws a 1px line, then transparent space.
+     background-size repeats that pattern every 40px.
+     The first gradient makes horizontal lines and the second makes
+     vertical lines. Together they form a grid. */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 8vw, 5.5rem);  /* huge on desktop, still fits on a phone */
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;      /* negative = letters slightly closer, which looks tighter at big sizes */
+}
+
+.hero-motto {
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;       /* wide spacing reads as a "stamp" or motto */
+  margin: 12px 0 28px;
+}
+
+.hero-tagline {
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+  font-weight: 500;
+  max-width: 700px;
+}
+
+.hero-sub {
+  color: var(--color-muted);
+  max-width: 620px;
+  margin: 14px 0 28px;
+}
+
+
+/* ===================== 6. ABOUT ===================== */
+.about-content {
+  display: grid;
+  grid-template-columns: 3fr 2fr;  /* text gets 3 parts and the facts card gets 2 */
+  gap: 48px;
+  align-items: start;           /* NEW: the facts card stays its own height instead of stretching to match the text */
+}
+
+.about-text p {
+  color: var(--color-muted);
+  margin-bottom: 16px;
+}
+
+/* The quick-facts card */
+.facts {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);  /* an orange stripe on the left edge only */
+  border-radius: var(--radius);
+  padding: 28px;
+}
+
+.facts dt {                     /* the term, e.g. "Based in" */
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.facts dd {                     /* the value, e.g. "Kuwait" */
+  margin-bottom: 16px;
+}
+
+/* NEW: :last-child means "only the last one". This removes the
+   extra space under the final item so the card's padding stays even. */
+.facts dd:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ===================== 7. CARD VARIANTS ===================== */
+
+/* NEW: ::before inserts content BEFORE an element, here a "> " prompt
+   in front of each service title. Because it's decoration, it lives
+   in CSS rather than in the HTML. */
+.service h3::before {
+  content: '> ';
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+}
+
+/* Project cards: the top row with the number and status badge */
+.project-top {
+  display: flex;
+  justify-content: space-between;  /* number left, badge right */
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.project-num {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+/* The "In Progress" badge */
+.status {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+/* Spec chips under some projects */
+.specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.specs li {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  background-color: var(--color-bg);  /* darker than the card, so it looks "pressed in" */
+  border: 1px solid var(--color-border);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* Garage: two equal columns */
+.garage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.bike-name {
+  font-family: var(--font-mono);
+  color: var(--color-accent) !important;
+  /* NEW: !important forces this rule to win over ".card p", which
+     would otherwise make it grey. Use it rarely, because it's a
+     sledgehammer that makes styles harder to change later. */
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+
+
+/* ===================== 8. REPAIR LOG, SKILLS, CONTACT ===================== */
+
+/* Repair log: styled like terminal output */
+.log {
+  font-size: 0.98rem;
+  border-left: 2px solid var(--color-border);  /* a vertical "timeline" line */
+}
+
+.log li {
+  padding: 14px 0 14px 20px;
+  color: var(--color-muted);
+  border-bottom: 1px dashed var(--color-border);  /* dashed divider between entries */
+}
+
+.log li:last-child {
+  border-bottom: none;          /* no divider after the final entry */
+}
+
+.log li::before {
+  content: '[FIX] ';            /* a terminal-style tag before each entry */
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-accent);
+}
+
+/* Skills table: each <div> row is a 2-column grid of category and tools */
+.skills-table div {
+  display: grid;
+  grid-template-columns: 180px 1fr;  /* fixed 180px label column, and the tools fill the rest */
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.skills-table dt {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  padding-top: 2px;             /* nudges the smaller mono text to line up with the tools text */
+}
+
+.skills-table dd {
+  color: var(--color-muted);
+}
+
+/* Contact */
+.contact {
+  text-align: center;
+}
+
+.contact .section-intro {
+  margin: 0 auto 24px;          /* auto side margins center the 600px-wide block */
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 36px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.socials a {
+  color: var(--color-muted);
+  transition: color 0.2s;
+}
+
+.socials a:hover {
+  color: var(--color-accent);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 32px 24px;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--color-border);
+}
+
+
+/* ===================== 8b. VIDEOS PAGE (videos.html) =====================
+   These are all NEW rules. Nothing above was changed. */
+
+/* NEW: an attribute selector. [aria-current="page"] matches any element
+   that has that attribute, so the current page's nav link turns orange. */
+.nav a[aria-current="page"] {
+  color: var(--color-accent);
+}
+
+/* The "Watch the edits →" link on the home page's video card */
+.card-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-accent);
+}
+
+/* A shorter hero for inner pages. It must come AFTER .hero so it wins. */
+.hero-small {
+  min-height: 50vh;             /* half the screen instead of 92% */
+}
+
+/* The 16:9 box that holds each video */
+.video-frame {
+  aspect-ratio: 16 / 9;         /* NEW: height is calculated from the width, so the box is always widescreen at any size */
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;             /* clips the video's corners to match the rounding */
+  border: 1px solid var(--color-border);
+  background-color: #000;       /* black while the player loads */
+}
+
+/* Make the iframe (or a <video>) fill the whole box */
+.video-frame iframe,
+.video-frame video {
+  width: 100%;
+  height: 100%;
+  border: 0;                    /* iframes have a default border; remove it */
+  display: block;               /* removes a tiny gap below inline elements */
+}
+
+.video-caption {
+  color: var(--color-muted);
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+/* In a grid card, the video sits at the top with space below it */
+.video-card .video-frame {
+  margin-bottom: 18px;
+}
+
+/* NEW: vertical (Shorts / Reels) videos. Comes after .video-frame so
+   its aspect-ratio wins. */
+.video-vertical {
+  aspect-ratio: 9 / 16;         /* tall instead of wide */
+  max-width: 340px;             /* without a limit, a tall box at full width would be taller than the screen */
+}
+
+/* Featured layout: the video column is exactly as wide as the video
+   (auto), and the text takes the rest (1fr). */
+.featured-short {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 48px;
+  align-items: center;          /* text is centered vertically beside the tall video */
+}
+
+.featured-short .video-vertical {
+  width: 340px;                 /* in an "auto" column the box needs a set width to know how big to be */
+}
+
+.featured-text h3 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.featured-text p {
+  color: var(--color-muted);
+  max-width: 480px;
+}
+
+/* NEW: grid for vertical Shorts. Same idea as .card-grid, but with
+   narrower columns (220px min) because tall videos are thin. */
+.shorts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  /* auto-FILL (not auto-fit) keeps empty column slots, so a last row
+     with only 1–2 videos stays the same size instead of stretching wide. */
+  gap: 20px;
+}
+
+/* Shorts cards use less padding than other cards, so the video gets the space */
+.short-card {
+  padding: 12px 12px 18px;      /* top, left/right, bottom */
+}
+
+/* Inside the grid the video fills its card's width (overrides the 340px limit) */
+.short-card .video-vertical {
+  max-width: none;
+  margin-bottom: 14px;
+}
+
+/* NEW: SPECIFICITY, or how CSS picks a winner when two rules clash.
+   ".card p" (1 class + 1 tag) would make this label grey, beating
+   ".label" (1 class only). ".short-card .label" has 2 classes, so it's
+   more specific, wins, and the label stays orange. This is a cleaner
+   fix than !important. */
+.short-card .label {
+  color: var(--color-accent);
+  margin-bottom: 2px;
+}
+
+.short-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+/* ===================== 8c. PRINTS PAGE (prints.html) ===================== */
+
+/* The box each 3D viewer lives in. prints.js puts a <canvas> inside it. */
+.model-frame {
+  position: relative;           /* NEW: lets the status text and button be placed "absolute"ly inside it */
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  /* NEW: radial-gradient = a glow from a point outward, like a lamp over the print bed */
+  background: radial-gradient(circle at 50% 35%, #22222a, var(--color-bg) 75%);
+  cursor: grab;
+}
+
+.model-frame:active {
+  cursor: grabbing;             /* the hand "closes" while you drag */
+}
+
+.model-frame canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* NEW: :fullscreen matches the element while it's in fullscreen mode */
+.model-frame:fullscreen {
+  aspect-ratio: auto;
+  border-radius: 0;
+  border: none;
+}
+
+/* "Loading model…" text, laid over the viewer */
+.viewer-status {
+  position: absolute;
+  inset: 0;                     /* NEW: shorthand for top/right/bottom/left = 0, i.e. cover the whole box */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  pointer-events: none;         /* NEW: clicks pass straight through to the 3D view underneath */
+}
+
+/* When the file is missing, move the note to the bottom so the placeholder shows */
+.model-frame.is-missing .viewer-status {
+  align-items: flex-end;
+  color: var(--color-accent);
+}
+
+/* NEW: the [hidden] attribute normally hides things, but "display:flex"
+   above would beat it, so we restore it here. */
+.viewer-status[hidden] {
+  display: none;
+}
+
+/* Fullscreen button in the top-right corner */
+.viewer-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background-color: rgba(12, 12, 14, 0.7);
+  color: var(--color-text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.viewer-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Featured model: big viewer on the left, text on the right */
+.featured-model {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 48px;
+  align-items: center;
+}
+
+/* Model cards: tighter padding so the viewer gets the room */
+.model-card {
+  padding: 12px 12px 22px;
+}
+
+/* The lift-on-hover would wobble the card while you drag the model, so turn it off */
+.model-card:hover {
+  transform: none;
+}
+
+.model-card .model-frame {
+  margin-bottom: 16px;
+}
+
+.model-card .label {            /* same specificity trick as .short-card .label */
+  color: var(--color-accent);
+  margin-bottom: 2px;
+  padding: 0 8px;
+}
+
+.model-card h3,
+.model-card p,
+.model-card .specs {
+  padding: 0 8px;               /* line the text up with the label */
+}
+
+.model-card .specs {
+  margin-top: 12px;
+}
+
+/* ===================== 9. PHONES (≤ 768px wide) =====================
+   These rules only apply on small screens and override the ones above. */
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;             /* show the ☰ button */
+  }
+
+  .nav {
+    position: absolute;         /* a dropdown under the header */
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    display: none;              /* hidden until JavaScript adds "open" */
+  }
+
+  .nav.open {
+    display: block;
+  }
+
+  .nav ul {
+    flex-direction: column;     /* stack the links */
+    gap: 0;
+    padding: 8px 24px 16px;
+  }
+
+  .nav li a {
+    display: block;             /* full-width tap target */
+    padding: 12px 0;
+  }
+
+  /* Everything that was side by side becomes one column */
+  .about-content,
+  .garage-grid,
+  .featured-model {
+    grid-template-columns: 1fr;
+  }
+  /* NEW: a comma lets one rule apply to several selectors at once. */
+
+  .skills-table div {
+    grid-template-columns: 1fr; /* category above the tools instead of beside them */
+    gap: 4px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr; /* one card per row, so 300px cards never overflow a narrow phone */
+  }
+
+  /* Featured Short: stack the video above the text, centered */
+  .featured-short {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .featured-short .video-vertical {
+    width: 100%;                /* fill the phone width... */
+    max-width: 340px;           /* ...but never more than 340px */
+    margin: 0 auto;             /* centered */
+  }
+
+  /* Shorts: one per row on phones, centered, never wider than 340px
+     (any wider and one video would be taller than the phone screen) */
+  .shorts-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;      /* NEW: centers each item inside its grid cell */
+  }
+
+  .short-card {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .section {
+    padding: 70px 20px;
+  }
+
+  .hero {
+    padding: 60px 20px;
+  }
+}

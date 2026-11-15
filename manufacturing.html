@@ -1,0 +1,157 @@
+<!--
+  manufacturing.html : 3D MODELLING & MANUFACTURING
+  The model library uses the V1 3D viewer (assets/js/viewer.js).
+  To add a model: put the file in models/ and copy one
+  <article class="card model-card"> block (see models/README.txt).
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="meta.manufacturing.title">3D Modelling &amp; Manufacturing | Aaron Angel Netto</title>
+  <meta name="description" data-i18n-attr="content:meta.manufacturing.desc" content="Reverse-engineering discontinued parts, an FDM 3D printing business, CAD and FEA, and an interactive 3D model library.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="3D Modelling & Manufacturing | Aaron Angel Netto">
+  <meta property="og:description" content="Bringing discontinued parts back.">
+  <meta property="og:url" content="https://YOUR-SITE-URL/manufacturing.html">
+  <meta property="og:image" content="https://YOUR-SITE-URL/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0a08">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var l = localStorage.getItem('lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } else if (l === 'ja') { document.documentElement.lang = 'ja'; } } catch (e) {}
+  </script>
+  <script type="importmap">
+    { "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+  </script>
+</head>
+
+<body class="theme-manufacturing">
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero container">
+      <span class="eyebrow" data-i18n="mfg.eyebrow">3D modelling &amp; manufacturing</span>
+      <h1 data-i18n="mfg.title">Bringing discontinued parts back</h1>
+      <p class="lead" data-i18n="mfg.lead">From a measurement and a broken part to a finished replacement: CAD, prototyping, testing and production.</p>
+    </section>
+
+    <!-- ===================== THE BUSINESS ===================== -->
+    <section class="section container" style="padding-top:20px" aria-labelledby="biz-title">
+      <article class="card reveal">
+        <span class="eyebrow" data-i18n="mfg.biz.eyebrow">2025 – August 2026 · A completed chapter</span>
+        <h2 id="biz-title" data-i18n="mfg.biz.title">My 3D printing business</h2>
+        <p data-i18n="mfg.biz.intro">Vehicle owners and machinery users kept running into the same wall: replacement parts that were discontinued or simply unavailable. So I founded an independent FDM 3D printing business serving clients in India and internationally.</p>
+        <ul class="bullets" style="margin-top:18px">
+          <li data-i18n="mfg.biz.b1">Designed custom and replacement parts in Fusion for motorcycles, cars and obsolete machinery</li>
+          <li data-i18n="mfg.biz.b2">Reverse-engineered discontinued components where no drawings existed</li>
+          <li data-i18n="mfg.biz.b3">Handled quotes, sourcing, production, quality checks and shipping</li>
+        </ul>
+        <ol class="flow" aria-label="Order process">
+          <li><span data-i18n="mfg.flow.1">Customer requirement</span></li>
+          <li><span data-i18n="mfg.flow.2">Measurement</span></li>
+          <li><span data-i18n="mfg.flow.3">CAD</span></li>
+          <li><span data-i18n="mfg.flow.4">Prototype</span></li>
+          <li><span data-i18n="mfg.flow.5">Testing</span></li>
+          <li><span data-i18n="mfg.flow.6">Refinement</span></li>
+          <li><span data-i18n="mfg.flow.7">Final part</span></li>
+        </ol>
+        <blockquote class="quote" data-i18n="mfg.biz.quote">"I learned how to identify a real market problem, develop a solution and deliver it to a real customer."</blockquote>
+      </article>
+    </section>
+
+    <!-- ===================== SKILLS CARDS ===================== -->
+    <section class="section container" aria-label="Manufacturing skills">
+      <div class="grid">
+        <article class="card reveal">
+          <span class="card-icon" data-icon="cube"></span>
+          <h3 data-i18n="mfg.abs.title">Rapid prototyping with ABS</h3>
+          <p data-i18n="mfg.abs.text">Print settings tuned per material and per geometry, with parts designed for strength and manufacturability from the first sketch.</p>
+        </article>
+        <article class="card reveal">
+          <span class="card-icon" data-icon="sprout"></span>
+          <h3 data-i18n="mfg.acetone.title">Acetone vapour smoothing</h3>
+          <p data-i18n="mfg.acetone.text">Every order shipped with a free acetone vapour-smoothed figurine, a small signature touch.</p>
+        </article>
+        <article class="card reveal">
+          <span class="card-icon" data-icon="layers"></span>
+          <h3 data-i18n="mfg.cad.title">Self-taught CAD &amp; FEA</h3>
+          <p data-i18n="mfg.cad.text">I learned Fusion from scratch, and use FreeCAD FEA to check loads, constraints, stress distribution and deformation as part of every design iteration.</p>
+        </article>
+      </div>
+      <blockquote class="quote reveal" data-i18n="mfg.cad.quote">"I don't wait until I know everything before starting a project. I learn what I need, apply it, test it and improve."</blockquote>
+    </section>
+
+    <!-- ===================== MODEL LIBRARY ===================== -->
+    <section class="section container" aria-labelledby="lib-title">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="mfg.lib.eyebrow">Interactive model library</span>
+        <h2 id="lib-title" data-i18n="mfg.lib.title">Spin the models</h2>
+        <p data-i18n="common.viewerHint">Drag to rotate · scroll or pinch to zoom · double-click to reset</p>
+      </div>
+
+      <!-- data-up="y": this file was exported Y-up, so it needs this to stand upright -->
+      <div class="grid">
+        <article class="card model-card reveal">
+          <div class="model-frame" data-model="models/splendor%20rally%20visor.stl" data-color="#e8c87a">
+            <p class="viewer-status">Loading model…</p>
+            <button class="viewer-btn" type="button" aria-label="Fullscreen">&#x26F6;</button>
+          </div>
+          <h3 data-i18n="mfg.lib.visor">Splendor Rally Visor</h3>
+          <p data-i18n="mfg.lib.visorText">A rally-style visor for Ava, my Hero Splendor.</p>
+          <ul class="chips model-stats"></ul>
+        </article>
+
+        <article class="card model-card reveal">
+          <div class="model-frame" data-model="models/3d%20forge%20monster%20can.stl" data-color="#d4a84b" data-up="y">
+            <p class="viewer-status">Loading model…</p>
+            <button class="viewer-btn" type="button" aria-label="Fullscreen">&#x26F6;</button>
+          </div>
+          <h3 data-i18n="mfg.lib.can">Monster Can Holder</h3>
+          <p data-i18n="mfg.lib.canText">A handlebar can holder, now riding on Toraa.</p>
+          <ul class="chips model-stats"></ul>
+        </article>
+
+        <article class="card model-card reveal">
+          <div class="model-frame" data-model="models/GUITAR%20BODY.stl" data-color="#b8893a">
+            <p class="viewer-status">Loading model…</p>
+            <button class="viewer-btn" type="button" aria-label="Fullscreen">&#x26F6;</button>
+          </div>
+          <h3 data-i18n="mfg.lib.guitar">Guitar Body</h3>
+          <p data-i18n="mfg.lib.guitarText">The body of my 3D-printed electric guitar, still in design.</p>
+          <ul class="chips model-stats"></ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== GALLERY + WHAT'S NEXT ===================== -->
+    <section class="section container" aria-labelledby="mfg-gallery-title">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="common.gallery">Gallery</span>
+        <h2 id="mfg-gallery-title" data-i18n="mfg.gallery.title">Parts, renders and prints</h2>
+      </div>
+      <div class="gallery" data-folder="assets/images/manufacturing" data-placeholders="4"
+           data-i18n-attr="data-alt:mfg.gallery.title" data-alt="Parts, renders and prints"></div>
+
+      <article class="card reveal" style="margin-top:40px; border-color:var(--gold)">
+        <span class="eyebrow" data-i18n="mfg.next.eyebrow">What's next</span>
+        <h3 data-i18n="mfg.next.title">Building a 3D print farm in India for motorcycle parts.</h3>
+      </article>
+    </section>
+  </main>
+
+  <div id="site-cta"></div>
+  <div id="site-footer"></div>
+
+  <script src="assets/js/site.js" defer></script>
+  <script type="module" src="assets/js/viewer.js"></script>
+</body>
+</html>

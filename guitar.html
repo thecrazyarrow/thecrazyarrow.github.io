@@ -1,0 +1,103 @@
+<!--
+  guitar.html : GUITAR ERA, singer-songwriter
+  WHEN "TWENTY THREE" IS RELEASED: paste the YouTube or Spotify link
+  into data-song-url="" below (one place). The player replaces
+  "Coming soon" automatically.
+  CLIPS: video files in assets/video/ whose names start with "guitar"
+  (guitar-01.mp4 ...) show up in the "Playing" section by themselves,
+  after you run  node tools/build-media.js
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="meta.guitar.title">Guitar Era | Aaron Angel Netto</title>
+  <meta name="description" data-i18n-attr="content:meta.guitar.desc" content="Self-taught on a Yamaha C40 in 1.8 years. First original song, Twenty Three, coming soon.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Guitar Era | Aaron Angel Netto">
+  <meta property="og:description" content="First song 'Twenty Three', coming soon.">
+  <meta property="og:url" content="https://YOUR-SITE-URL/guitar.html">
+  <meta property="og:image" content="https://YOUR-SITE-URL/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0a08">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var l = localStorage.getItem('lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } else if (l === 'ja') { document.documentElement.lang = 'ja'; } } catch (e) {}
+  </script>
+</head>
+
+<body class="theme-guitar">
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero container">
+      <span class="eyebrow" data-i18n="guitar.eyebrow">Guitar era · singer-songwriter</span>
+      <h1 data-i18n="guitar.title">From first chords to my own songs</h1>
+      <p class="lead" data-i18n="guitar.lead">Self-taught in 1.8 years on a Yamaha C40. Building things is one way I make something from nothing. Writing songs is the other.</p>
+    </section>
+
+    <!-- ===================== THE SONG ===================== -->
+    <section class="section container" style="padding-top:20px" aria-labelledby="song-title">
+      <!-- Paste the song link between the quotes: data-song-url="https://..." -->
+      <div class="song-panel reveal" data-song-url="">
+        <span class="eyebrow" data-i18n="guitar.song.eyebrow">First original song</span>
+        <h2 class="song-title" id="song-title">Twenty Three</h2>
+        <span class="badge badge-solid song-soon" data-i18n="guitar.song.soon">Coming soon</span>
+        <p class="song-soon" style="margin-top:16px" data-i18n="guitar.song.text">My first song, still being written. It'll play right here when it's out.</p>
+        <div class="song-embed"></div>
+      </div>
+    </section>
+
+    <!-- ===================== THE GUITAR + JOURNEY ===================== -->
+    <section class="section container" aria-labelledby="journey-title">
+      <div class="split">
+        <article class="card reveal">
+          <span class="card-icon" data-icon="guitar"></span>
+          <span class="eyebrow" data-i18n="guitar.gear.eyebrow">The guitar</span>
+          <h3>Yamaha C40</h3>
+          <p data-i18n="guitar.gear.text">A classical guitar, and the one I learned everything on.</p>
+        </article>
+
+        <div class="reveal">
+          <span class="eyebrow" data-i18n="guitar.journey.eyebrow">The journey</span>
+          <h2 id="journey-title" data-i18n="guitar.journey.title">Self-taught in 1.8 years</h2>
+          <ol class="timeline" style="margin-top:20px">
+            <li><span class="when" data-i18n="guitar.tl.1when">Day one</span><span class="what" data-i18n="guitar.tl.1">First chords on the Yamaha C40</span></li>
+            <li><span class="when" data-i18n="guitar.tl.2when">Every day after</span><span class="what" data-i18n="guitar.tl.2">Teaching myself, one song at a time</span></li>
+            <li><span class="when" data-i18n="guitar.tl.3when">Along the way</span><span class="what" data-i18n="guitar.tl.3">Playing and singing full songs</span></li>
+            <li class="now"><span class="when" data-i18n="guitar.tl.4when">1.8 years in</span><span class="what" data-i18n="guitar.tl.4">Writing my own songs, starting with "Twenty Three"</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CLIPS (hidden until there are videos) ===================== -->
+    <section class="section container" data-hide-if-empty hidden aria-labelledby="clips-title">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="guitar.clips.eyebrow">Playing</span>
+        <h2 id="clips-title" data-i18n="guitar.clips.title">Clips</h2>
+      </div>
+      <div class="video-list grid" data-prefix="guitar"></div>
+    </section>
+
+    <section class="section container" aria-labelledby="music-gallery-title">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="common.gallery">Gallery</span>
+        <h2 id="music-gallery-title" data-i18n="guitar.gallery.title">Music</h2>
+      </div>
+      <div class="gallery" data-folder="assets/images/music" data-placeholders="3"
+           data-i18n-attr="data-alt:guitar.gallery.title" data-alt="Music"></div>
+    </section>
+  </main>
+
+  <div id="site-cta"></div>
+  <div id="site-footer"></div>
+  <script src="assets/js/site.js" defer></script>
+</body>
+</html>

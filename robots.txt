@@ -1,0 +1,6 @@
+# Lets search engines index the whole site.
+# Replace YOUR-SITE-URL with the real address once the site is online.
+User-agent: *
+Allow: /
+
+Sitemap: https://YOUR-SITE-URL/sitemap.xml
