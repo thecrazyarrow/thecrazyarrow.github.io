@@ -20,30 +20,45 @@
 
 /* ===================== 1. THEME VARIABLES ===================== */
 :root {
-  --bg: #0b0a08;              /* deep warm black */
-  --surface: #16130e;         /* cards */
-  --surface-2: #1e1a12;       /* raised bits inside cards */
-  --line: #4a3c20;            /* gold-brown hairlines */
-  --gold: #d4a84b;            /* the main accent */
-  --gold-light: #e8c87a;      /* hover / highlights */
-  --text: #f3ead7;            /* warm off-white */
-  --muted: #a8987a;           /* secondary text */
-  --glow: 0 18px 48px -18px rgba(212, 168, 75, 0.45);
+  --bg: #0b0907;              /* deep warm black */
+  --surface: #16110d;         /* cards */
+  --surface-2: #1f1812;       /* raised bits inside cards */
+  --line: #4a2e18;            /* orange-brown hairlines */
+  --accent: #ff7a1a;            /* the main accent */
+  --accent-light: #ffa552;      /* hover / highlights */
+  --text: #f5ebe0;            /* warm off-white */
+  --muted: #a8927e;           /* secondary text */
+  --glow: 0 18px 48px -18px rgba(255, 122, 26, 0.45);
 
-  --font-display: 'Sora', 'Segoe UI', Arial, sans-serif;
+  /* ---- "Gears era" pieces ----
+     --gear-icon is a tiny gear drawn in SVG. CSS uses it as a MASK: the
+     element is painted orange, and the mask cuts it into a gear shape.
+     Used for bullets, timeline dots, labels and the logo. */
+  --gear-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-10 -10 20 20'%3E%3Ccircle r='5.6' fill='none' stroke='%23000' stroke-width='4'/%3E%3Cg fill='%23000'%3E%3Crect x='-1.8' y='-10' width='3.6' height='5'/%3E%3Crect x='-1.8' y='-10' width='3.6' height='5' transform='rotate(45)'/%3E%3Crect x='-1.8' y='-10' width='3.6' height='5' transform='rotate(90)'/%3E%3Crect x='-1.8' y='-10' width='3.6' height='5' transform='rotate(135)'/%3E%3Crect x='-1.8' y='-10' width='3.6' height='5' transform='rotate(180)'/%3E%3Crect x='-1.8' y='-10' width='3.6' height='5' transform='rotate(225)'/%3E%3Crect x='-1.8' y='-10' width='3.6' height='5' transform='rotate(270)'/%3E%3Crect x='-1.8' y='-10' width='3.6' height='5' transform='rotate(315)'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* Rivets: four little bolt heads in the corners of every card, like a
+     riveted steel plate. Each radial-gradient draws one dot. */
+  --rivet: radial-gradient(circle, #6b4426 0 1.2px, #3a2416 1.6px 3px, transparent 3.4px);
+  --rivets:
+    var(--rivet) 6px 6px / 12px 12px no-repeat,
+    var(--rivet) calc(100% - 6px) 6px / 12px 12px no-repeat,
+    var(--rivet) 6px calc(100% - 6px) / 12px 12px no-repeat,
+    var(--rivet) calc(100% - 6px) calc(100% - 6px) / 12px 12px no-repeat;
+
+  --font-display: 'Chakra Petch', 'Segoe UI', Arial, sans-serif;
   --font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
   --font-mono: 'JetBrains Mono', Consolas, monospace;
 
-  --radius: 14px;
-  --radius-sm: 10px;
+  --radius: 10px;               /* tighter corners: machined, not bubbly */
+  --radius-sm: 8px;
   --max: 1160px;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);   /* a soft "settle" curve for animations */
 }
 
 /* Japanese and Arabic get fonts that actually contain their letters.
    site.js loads these fonts only when you switch language. */
-html[lang="ja"] { --font-body: 'Noto Sans JP', 'Inter', sans-serif; --font-display: 'Noto Sans JP', 'Sora', sans-serif; }
-html[lang="ar"] { --font-body: 'IBM Plex Sans Arabic', 'Inter', sans-serif; --font-display: 'IBM Plex Sans Arabic', 'Sora', sans-serif; }
+html[lang="ja"] { --font-body: 'Noto Sans JP', 'Inter', sans-serif; --font-display: 'Noto Sans JP', 'Chakra Petch', sans-serif; }
+html[lang="ar"] { --font-body: 'IBM Plex Sans Arabic', 'Inter', sans-serif; --font-display: 'IBM Plex Sans Arabic', 'Chakra Petch', sans-serif; }
 
 
 /* ===================== 2. RESET & BASICS ===================== */
@@ -73,12 +88,12 @@ strong { font-weight: 600; color: var(--text); }
 /* NEW: :focus-visible shows a ring only for keyboard users (not mouse clicks).
    A clear focus ring is essential for people who navigate with Tab. */
 :focus-visible {
-  outline: 2px solid var(--gold-light);
+  outline: 2px solid var(--accent-light);
   outline-offset: 3px;
   border-radius: 6px;
 }
 
-::selection { background: var(--gold); color: var(--bg); }
+::selection { background: var(--accent); color: var(--bg); }
 
 /* Hidden "Skip to content" link that appears when you press Tab */
 .skip-link {
@@ -86,7 +101,7 @@ strong { font-weight: 600; color: var(--text); }
   inset-inline-start: 16px;
   top: -60px;
   z-index: 100;
-  background: var(--gold);
+  background: var(--accent);
   color: var(--bg);
   padding: 10px 16px;
   border-radius: var(--radius-sm);
@@ -119,7 +134,7 @@ h1, h2, h3, h4 {
   font-weight: 700;
 }
 
-h1 { font-size: clamp(2.5rem, 7vw, 4.8rem); }
+h1 { font-size: clamp(2.5rem, 7vw, 4.8rem); text-transform: uppercase; letter-spacing: 0.01em; }
 h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 18px; }
 h3 { font-size: 1.22rem; margin-bottom: 8px; }
 h4 { font-size: 1rem; margin-bottom: 6px; }
@@ -127,16 +142,32 @@ h4 { font-size: 1rem; margin-bottom: 6px; }
 p { color: var(--muted); }
 p + p { margin-top: 14px; }
 
-/* Small gold "eyebrow" label above headings */
+/* Small orange "eyebrow" label above headings */
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--accent);
   margin-bottom: 12px;
   display: block;
 }
+/* a small gear in front of every label */
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-inline-end: 0.55em;
+  vertical-align: -0.15em;
+  background: currentColor;
+  -webkit-mask: var(--gear-icon) center / contain no-repeat;
+  mask: var(--gear-icon) center / contain no-repeat;
+}
+.currently .eyebrow::before { display: none; }
+
+/* NEW: @keyframes describes an animation. "spin" = one full turn. */
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .lead {
   font-size: clamp(1.05rem, 2vw, 1.25rem);
@@ -151,8 +182,8 @@ p + p { margin-top: 14px; }
   font-style: italic;
   font-size: clamp(1.3rem, 3vw, 2rem);
   line-height: 1.4;
-  color: var(--gold-light);
-  border-inline-start: 3px solid var(--gold);
+  color: var(--accent-light);
+  border-inline-start: 3px solid var(--accent);
   padding-inline-start: 22px;
   margin-block: 36px;
   max-width: 860px;
@@ -171,7 +202,7 @@ p + p { margin-top: 14px; }
 /* The brand mark: "engineered by chaos" */
 .brandmark {
   font-family: var(--font-mono);
-  color: var(--gold);
+  color: var(--accent);
   letter-spacing: 0.22em;
   text-transform: lowercase;
 }
@@ -183,19 +214,22 @@ p + p { margin-top: 14px; }
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);       /* squared-off, like a machine button */
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   font-weight: 600;
-  border: 1.5px solid var(--gold);
+  border: 1.5px solid var(--accent);
   cursor: pointer;
   transition: transform 0.25s var(--ease), background-color 0.25s, color 0.25s, box-shadow 0.25s;
 }
 .btn:hover, .btn:focus-visible { transform: translateY(-3px); box-shadow: var(--glow); }
 
-.btn-gold { background: var(--gold); color: var(--bg); }
-.btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); }
+.btn-primary { background: var(--accent); color: var(--bg); }
+.btn-primary:hover { background: var(--accent-light); border-color: var(--accent-light); }
 
-.btn-ghost { background: transparent; color: var(--gold); }
-.btn-ghost:hover { background: var(--gold); color: var(--bg); }
+.btn-ghost { background: transparent; color: var(--accent); }
+.btn-ghost:hover { background: var(--accent); color: var(--bg); }
 
 .btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 
@@ -204,13 +238,13 @@ p + p { margin-top: 14px; }
   font-family: var(--font-mono);
   font-size: 0.78rem;
   padding: 6px 12px;
-  border-radius: 999px;
+  border-radius: 4px;                   /* square tags, like stamped metal labels */
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--text);
   transition: border-color 0.2s, color 0.2s;
 }
-.chips li:hover { border-color: var(--gold); color: var(--gold-light); }
+.chips li:hover { border-color: var(--accent); color: var(--accent-light); }
 
 .badge {
   display: inline-block;
@@ -218,14 +252,14 @@ p + p { margin-top: 14px; }
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--gold);
-  border: 1px solid var(--gold);
-  border-radius: 999px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
   padding: 3px 11px;
   vertical-align: middle;
   white-space: nowrap;
 }
-.badge-solid { background: var(--gold); color: var(--bg); }
+.badge-solid { background: var(--accent); color: var(--bg); }
 
 
 /* ===================== 5. HEADER & NAV ===================== */
@@ -233,9 +267,9 @@ p + p { margin-top: 14px; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(11, 10, 8, 0.86);
+  background: rgba(11, 9, 7, 0.86);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(74, 60, 32, 0.6);
+  border-bottom: 1px solid rgba(74, 46, 24, 0.6);
 }
 
 .header-inner {
@@ -255,12 +289,26 @@ p + p { margin-top: 14px; }
   letter-spacing: 0.01em;
   color: var(--text);
 }
-.brand-main b { color: var(--gold); font-weight: 700; }
+.brand-main b { color: var(--accent); font-weight: 700; }
+/* a small gear before the logo text, turning slowly (faster on hover) */
+.brand-gear {
+  display: inline-block;
+  width: 0.95em;
+  height: 0.95em;
+  margin-inline-end: 0.4em;
+  vertical-align: -0.12em;
+  background: var(--accent);
+  -webkit-mask: var(--gear-icon) center / contain no-repeat;
+  mask: var(--gear-icon) center / contain no-repeat;
+  animation: spin 10s linear infinite;
+}
+.brand:hover .brand-gear { animation-duration: 1.5s; }
+.brand-sub { padding-inline-start: 1.55em; }   /* lines up under the text, not the gear */
 .brand-sub {
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.28em;
-  color: var(--gold);
+  color: var(--accent);
   text-transform: lowercase;
   margin-top: 3px;
 }
@@ -277,8 +325,8 @@ p + p { margin-top: 14px; }
   white-space: nowrap;
   transition: color 0.2s, background-color 0.2s;
 }
-.nav-links a:hover { color: var(--gold-light); }
-.nav-links a[aria-current="page"] { color: var(--gold); background: rgba(212, 168, 75, 0.08); }
+.nav-links a:hover { color: var(--accent-light); }
+.nav-links a[aria-current="page"] { color: var(--accent); background: rgba(255, 122, 26, 0.08); }
 
 .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .btn-hire { padding: 8px 16px; font-size: 0.88rem; white-space: nowrap; }
@@ -301,8 +349,8 @@ p + p { margin-top: 14px; }
   color: var(--muted);
   transition: background-color 0.2s, color 0.2s;
 }
-.lang-switch button:hover { color: var(--gold-light); }
-.lang-switch button[aria-pressed="true"] { background: var(--gold); color: var(--bg); font-weight: 600; }
+.lang-switch button:hover { color: var(--accent-light); }
+.lang-switch button[aria-pressed="true"] { background: var(--accent); color: var(--bg); font-weight: 600; }
 
 .menu-toggle {
   display: none;
@@ -312,7 +360,7 @@ p + p { margin-top: 14px; }
   width: 42px;
   height: 42px;
   cursor: pointer;
-  color: var(--gold);
+  color: var(--accent);
   font-size: 1.3rem;
 }
 
@@ -320,7 +368,7 @@ p + p { margin-top: 14px; }
 /* ===================== 6. CARDS (hover-lift) ===================== */
 .card {
   position: relative;
-  background: var(--surface);
+  background: var(--rivets), var(--surface);   /* rivets on top of the plate colour */
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 26px;
@@ -333,7 +381,7 @@ p + p { margin-top: 14px; }
 .card:focus-within,
 .card.is-tapped {
   transform: translateY(-6px);
-  border-color: var(--gold);
+  border-color: var(--accent);
   box-shadow: var(--glow);
 }
 
@@ -348,8 +396,8 @@ a.card { display: block; }
   border-radius: 12px;
   display: grid;
   place-items: center;              /* NEW: centres the icon both ways in one line */
-  background: rgba(212, 168, 75, 0.1);
-  color: var(--gold);
+  background: rgba(255, 122, 26, 0.1);
+  color: var(--accent);
   margin-bottom: 16px;
 }
 .card-icon svg { width: 22px; height: 22px; }
@@ -357,7 +405,7 @@ a.card { display: block; }
   position: absolute;
   top: 24px;
   inset-inline-end: 24px;
-  color: var(--gold);
+  color: var(--accent);
   transition: transform 0.3s var(--ease);
 }
 .card:hover .card-arrow { transform: translateX(4px); }
@@ -371,7 +419,7 @@ a.card { display: block; }
 }
 .grid-2 { grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); }
 
-/* Bullet lists inside cards, with small gold diamonds */
+/* Bullet lists inside cards, with small orange diamonds */
 .bullets li {
   position: relative;
   padding-inline-start: 20px;
@@ -379,22 +427,24 @@ a.card { display: block; }
   margin-bottom: 6px;
   font-size: 0.96rem;
 }
-.bullets li::before {
+.bullets li::before {              /* a tiny orange gear instead of a dot */
   content: '';
   position: absolute;
-  inset-inline-start: 2px;
-  top: 0.65em;
-  width: 7px;
-  height: 7px;
-  background: var(--gold);
-  transform: rotate(45deg);
-  border-radius: 1px;
+  inset-inline-start: 0;
+  top: 0.5em;
+  width: 11px;
+  height: 11px;
+  background: var(--accent);
+  -webkit-mask: var(--gear-icon) center / contain no-repeat;
+  mask: var(--gear-icon) center / contain no-repeat;
+  transition: transform 0.6s var(--ease);
 }
+.card:hover .bullets li::before { transform: rotate(90deg); }   /* the gears turn when you hover the card */
 
 
 /* ===================== 7. TIMELINES & FLOWS ===================== */
 
-/* Vertical timeline: a gold line with dots */
+/* Vertical timeline: a orange line with dots */
 .timeline {
   position: relative;
   border-inline-start: 2px solid var(--line);
@@ -404,22 +454,22 @@ a.card { display: block; }
   max-width: 760px;
 }
 .timeline li { position: relative; }
-.timeline li::before {
+.timeline li::before {               /* each stop on the line is a gear */
   content: '';
   position: absolute;
-  inset-inline-start: -36px;
-  top: 6px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--bg);
-  border: 3px solid var(--gold);
+  inset-inline-start: -39px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  -webkit-mask: var(--gear-icon) center / contain no-repeat;
+  mask: var(--gear-icon) center / contain no-repeat;
 }
-.timeline li.now::before { background: var(--gold); box-shadow: 0 0 0 6px rgba(212, 168, 75, 0.18); }
+.timeline li.now::before { animation: spin 6s linear infinite; }   /* "now" keeps turning */
 .timeline .when {
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: var(--gold);
+  color: var(--accent);
   letter-spacing: 0.06em;
   display: block;
 }
@@ -440,13 +490,13 @@ a.card { display: block; }
   font-size: 0.88rem;
 }
 .flow li span {
-  border: 1px solid var(--gold);
-  color: var(--gold-light);
-  background: rgba(212, 168, 75, 0.06);
+  border: 1px solid var(--accent);
+  color: var(--accent-light);
+  background: rgba(255, 122, 26, 0.06);
   border-radius: 999px;
   padding: 6px 14px;
 }
-.flow li:not(:last-child)::after { content: '→'; color: var(--gold); }
+.flow li:not(:last-child)::after { content: '→'; color: var(--accent); }
 
 
 /* ===================== 8. GALLERIES & PLACEHOLDERS ===================== */
@@ -467,7 +517,7 @@ a.card { display: block; }
   aspect-ratio: 4 / 3;
   transition: transform 0.3s var(--ease), border-color 0.3s;
 }
-.gallery button:hover { transform: translateY(-4px); border-color: var(--gold); }
+.gallery button:hover { transform: translateY(-4px); border-color: var(--accent); }
 .gallery img { width: 100%; height: 100%; object-fit: cover; }
 
 /* "Photo coming soon": shown when a folder has no images yet */
@@ -476,13 +526,13 @@ a.card { display: block; }
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   background:
-    radial-gradient(circle at 50% 40%, rgba(212, 168, 75, 0.08), transparent 70%),
+    radial-gradient(circle at 50% 40%, rgba(255, 122, 26, 0.08), transparent 70%),
     var(--surface);
   display: grid;
   place-items: center;
   align-content: center;
   gap: 8px;
-  color: var(--gold);
+  color: var(--accent);
   text-align: center;
   padding: 16px;
 }
@@ -497,14 +547,14 @@ a.card { display: block; }
   max-height: 92vh;
   margin: auto;
 }
-.lightbox::backdrop { background: rgba(6, 5, 4, 0.92); }
+.lightbox::backdrop { background: rgba(6, 4, 3, 0.92); }
 .lightbox img { max-width: 94vw; max-height: 86vh; border-radius: var(--radius-sm); margin: 0 auto; }
 .lightbox button {
   display: block;
   margin: 12px auto 0;
   background: none;
-  border: 1px solid var(--gold);
-  color: var(--gold);
+  border: 1px solid var(--accent);
+  color: var(--accent);
   border-radius: 999px;
   padding: 6px 18px;
   cursor: pointer;
@@ -544,12 +594,40 @@ a.card { display: block; }
 /* Placeholder "photo" when zynx/ is empty: a warm glow like a grinder's sparks */
 .hero-photo.is-empty {
   background:
-    radial-gradient(ellipse 45% 40% at 62% 52%, rgba(232, 200, 122, 0.22), transparent 70%),
-    radial-gradient(ellipse 70% 60% at 70% 60%, rgba(212, 168, 75, 0.10), transparent 75%);
+    radial-gradient(ellipse 45% 40% at 62% 52%, rgba(255, 165, 82, 0.22), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 70% 60%, rgba(255, 122, 26, 0.10), transparent 75%);
 }
 
 /* width/height 100%: a canvas is 300×150 by default unless told otherwise */
 .sparks { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+/* ---- The turning gears (drawn by site.js → addGears) ----
+   A cluster of real interlocking gears sits in the corner of every
+   page header. They mesh properly: a small gear turns faster than a big one. */
+.gears {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  top: -70px;
+  inset-inline-end: -90px;
+  width: min(560px, 75vw);
+  opacity: 0.9;
+}
+.gears svg { width: 100%; height: auto; overflow: visible; }
+.gear-body {
+  fill: rgba(255, 122, 26, 0.045);
+  stroke: rgba(255, 122, 26, 0.38);
+  stroke-width: 1.3;
+  fill-rule: evenodd;               /* NEW: makes the inner circles into holes */
+}
+.gear-axle { fill: rgba(255, 122, 26, 0.45); }
+/* Home hero: the gears sit in the bottom corner, under the faded edge of the photo */
+.hero .gears { top: auto; bottom: -170px; inset-inline-end: -110px; width: min(520px, 80vw); opacity: 0.75; }
+@media (max-width: 860px) {
+  /* quieter, smaller and further into the corner on phones, so they stay out from behind the headings */
+  .gears { opacity: 0.4; width: 300px; top: -150px; inset-inline-end: -130px; }
+  .hero .gears { opacity: 0.4; }
+}
 
 .hero-text { max-width: 620px; padding-block: 60px; }
 .hero h1 { margin-block: 18px 10px; }
@@ -568,14 +646,14 @@ a.card { display: block; }
   overflow: hidden;
   isolation: isolate;                /* keeps the glow and sparks behind the text, inside the hero */
 }
-.page-hero::before {                 /* a soft gold glow in the corner */
+.page-hero::before {                 /* a soft orange glow in the corner */
   content: '';
   position: absolute;
   inset-inline-end: -10%;
   top: -40%;
   width: 60%;
   aspect-ratio: 1;
-  background: radial-gradient(circle, rgba(212, 168, 75, 0.12), transparent 65%);
+  background: radial-gradient(circle, rgba(255, 122, 26, 0.12), transparent 65%);
   z-index: -1;
 }
 .page-hero h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); margin-bottom: 14px; }
@@ -598,7 +676,7 @@ a.card { display: block; }
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--gold);
+  background: var(--accent);
   animation: pulse 2.4s ease-in-out infinite;
 }
 @keyframes pulse { 50% { opacity: 0.35; } }
@@ -619,61 +697,67 @@ a.card { display: block; }
 .project .toggle {
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: var(--gold);
+  color: var(--accent);
   margin-top: 4px;
 }
 .project .toggle::after { content: ' +'; }
 .project[open] .toggle::after { content: ' −'; }
 .project-body { padding: 0 28px 30px; border-top: 1px solid var(--line); padding-top: 26px; }
-.project.featured { grid-column: 1 / -1; border-color: var(--gold); }
+.project.featured { grid-column: 1 / -1; border-color: var(--accent); }
 .project.featured > summary { padding: 38px 32px; }
 .project:hover, .project:focus-within { transform: translateY(-4px); }
 .project[open]:hover,
 .project[open]:focus-within { transform: none; }   /* don't float the open panel while reading */
 
 .ppr { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); margin-block: 10px 24px; }
-.ppr > div { background: var(--surface-2); border-radius: var(--radius-sm); padding: 18px; border: 1px solid rgba(74, 60, 32, 0.6); }
-.ppr h4 { color: var(--gold); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.ppr > div { background: var(--surface-2); border-radius: var(--radius-sm); padding: 18px; border: 1px solid rgba(74, 46, 24, 0.6); }
+.ppr h4 { color: var(--accent); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
 
 .stack-row { margin-top: 18px; }
 
 /* --- Two columns (garage, about) --- */
 .split { display: grid; gap: 28px; grid-template-columns: 1fr 1fr; align-items: start; }
 .bike-head { margin-bottom: 18px; }
-.bike-head .nick { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); color: var(--gold); line-height: 1; }
+.bike-head .nick { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); color: var(--accent); line-height: 1; }
 .bike-col { display: grid; gap: 16px; }
-.tagline-small { font-family: var(--font-mono); font-size: 0.78rem; color: var(--gold); display: block; margin-bottom: 6px; }
+.tagline-small { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); display: block; margin-bottom: 6px; }
 
 /* --- Growth log --- */
 .gap-card dl { display: grid; gap: 12px; margin-top: 12px; }
-.gap-card dt { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+.gap-card dt { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
 .gap-card dd { color: var(--muted); font-size: 0.95rem; }
 .progress {
-  height: 6px;
-  border-radius: 999px;
+  height: 10px;
+  border-radius: 3px;
   background: var(--surface-2);
+  border: 1px solid var(--line);
   margin-top: 18px;
   overflow: hidden;
 }
+/* The fill looks like a moving conveyor belt: diagonal stripes sliding along */
 .progress span {
   display: block;
   height: 100%;
   width: 0;                          /* site.js sets the real width */
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  border-radius: inherit;
+  background:
+    repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.22) 0 6px, transparent 6px 12px),
+    linear-gradient(90deg, var(--accent), var(--accent-light));
+  background-size: 17px 17px, auto;
   transition: width 1.2s var(--ease);
+  animation: conveyor 1.2s linear infinite;
 }
+@keyframes conveyor { to { background-position: 17px 0, 0 0; } }
 .progress-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); margin-top: 6px; }
 
 /* --- Song panel --- */
 .song-panel {
-  border: 1px solid var(--gold);
+  border: 1px solid var(--accent);
   border-radius: var(--radius);
   padding: clamp(26px, 5vw, 48px);
-  background: radial-gradient(circle at 20% 0%, rgba(212, 168, 75, 0.14), transparent 60%), var(--surface);
+  background: radial-gradient(circle at 20% 0%, rgba(255, 122, 26, 0.14), transparent 60%), var(--surface);
   text-align: center;
 }
-.song-title { font-family: var(--font-display); font-size: clamp(2.2rem, 7vw, 4rem); color: var(--gold-light); margin-block: 6px 12px; }
+.song-title { font-family: var(--font-display); font-size: clamp(2.2rem, 7vw, 4rem); color: var(--accent-light); margin-block: 6px 12px; }
 .song-embed { margin-top: 24px; border-radius: var(--radius-sm); overflow: hidden; }
 .song-embed iframe { width: 100%; border: 0; }
 
@@ -687,8 +771,8 @@ a.card { display: block; }
 .contact-grid { display: grid; gap: 28px; grid-template-columns: 1fr 1.3fr; align-items: start; }
 .contact-links { display: grid; gap: 12px; }
 .contact-links a { display: flex; align-items: center; gap: 10px; color: var(--text); word-break: break-word; }
-.contact-links a:hover { color: var(--gold-light); }
-.contact-links svg { width: 20px; height: 20px; color: var(--gold); flex-shrink: 0; }
+.contact-links a:hover { color: var(--accent-light); }
+.contact-links svg { width: 20px; height: 20px; color: var(--accent); flex-shrink: 0; }
 
 .form { display: grid; gap: 14px; }
 .form label { display: grid; gap: 6px; font-size: 0.88rem; color: var(--muted); }
@@ -700,26 +784,26 @@ a.card { display: block; }
   color: var(--text);
   transition: border-color 0.2s;
 }
-.form input:focus, .form textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 3px rgba(212, 168, 75, 0.2); }
+.form input:focus, .form textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.2); }
 .form textarea { min-height: 140px; resize: vertical; }
-.form-status { font-size: 0.9rem; color: var(--gold-light); min-height: 1.4em; }
+.form-status { font-size: 0.9rem; color: var(--accent-light); min-height: 1.4em; }
 
 /* --- Facts list (About) --- */
 .facts { display: grid; gap: 14px; }
-.facts dt { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+.facts dt { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
 .facts dd { color: var(--text); }
 
-.jp-line { font-family: 'Noto Sans JP', var(--font-body); color: var(--gold-light); }
+.jp-line { font-family: 'Noto Sans JP', var(--font-body); color: var(--accent-light); }
 
 /* --- "Hire me" band at the bottom of every page --- */
 .cta-band {
   margin-block: 40px 80px;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--accent);
   border-radius: var(--radius);
   padding: clamp(28px, 6vw, 56px);
   text-align: center;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(212, 168, 75, 0.16), transparent 65%),
+    radial-gradient(ellipse at 50% 0%, rgba(255, 122, 26, 0.16), transparent 65%),
     var(--surface);
 }
 .cta-band h2 { margin-bottom: 10px; }
@@ -730,14 +814,14 @@ a.card { display: block; }
 .site-footer { border-top: 1px solid var(--line); padding-block: 44px 32px; }
 .footer-inner { display: grid; gap: 24px; grid-template-columns: 1.2fr 1fr 1fr; align-items: start; }
 .footer-inner a { color: var(--muted); }
-.footer-inner a:hover { color: var(--gold-light); }
+.footer-inner a:hover { color: var(--accent-light); }
 .footer-links { display: grid; gap: 6px; font-size: 0.92rem; }
 .footer-japan p { color: var(--text); font-size: 0.95rem; }
 .copyright { margin-top: 28px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
 
 /* --- 404 --- */
 .lost { min-height: 70vh; display: grid; place-items: center; text-align: center; }
-.lost .code { font-family: var(--font-mono); font-size: clamp(4rem, 18vw, 9rem); color: var(--gold); line-height: 1; }
+.lost .code { font-family: var(--font-mono); font-size: clamp(4rem, 18vw, 9rem); color: var(--accent); line-height: 1; }
 
 
 /* ===================== 10. 3D VIEWER (assets/js/viewer.js) ===================== */
@@ -748,7 +832,7 @@ a.card { display: block; }
   border-radius: var(--radius-sm);
   overflow: hidden;
   border: 1px solid var(--line);
-  background: radial-gradient(circle at 50% 35%, #241e14, var(--bg) 75%);
+  background: radial-gradient(circle at 50% 35%, #26180e, var(--bg) 75%);
   cursor: grab;
 }
 .model-frame:active { cursor: grabbing; }
@@ -761,15 +845,15 @@ a.card { display: block; }
   font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted);
   pointer-events: none;
 }
-.model-frame.is-missing .viewer-status { align-items: flex-end; color: var(--gold); }
+.model-frame.is-missing .viewer-status { align-items: flex-end; color: var(--accent); }
 .viewer-status[hidden] { display: none; }
 .viewer-btn {
   position: absolute; top: 10px; inset-inline-end: 10px;
   width: 34px; height: 34px; border-radius: 8px;
-  border: 1px solid var(--line); background: rgba(11, 10, 8, 0.75);
-  color: var(--gold); cursor: pointer;
+  border: 1px solid var(--line); background: rgba(11, 9, 7, 0.75);
+  color: var(--accent); cursor: pointer;
 }
-.viewer-btn:hover { border-color: var(--gold); }
+.viewer-btn:hover { border-color: var(--accent); }
 .model-card { padding: 12px 12px 22px; }
 .model-card .model-frame { margin-bottom: 16px; }
 .model-card > :not(.model-frame) { margin-inline: 10px; }
@@ -783,27 +867,34 @@ a.card { display: block; }
 
 /* Industrial: grittier. A subtle noise texture and harder edges. */
 .theme-industrial {
-  --surface: #13110d;
+  --surface: #130f0b;
   --radius: 10px;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.8 0 0 0 0 0.66 0 0 0 0 0.3 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.48 0 0 0 0 0.1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .theme-industrial .page-hero { min-height: 52vh; display: flex; align-items: center; }
-.theme-industrial .page-hero::before { background: radial-gradient(circle, rgba(232, 160, 60, 0.18), transparent 65%); }
-.theme-industrial .card { border-top: 2px solid var(--gold); }
+.theme-industrial .page-hero::before { background: radial-gradient(circle, rgba(255, 110, 20, 0.18), transparent 65%); }
+.theme-industrial .card { border-top: 2px solid var(--accent); }
 .theme-industrial h1 { text-transform: uppercase; letter-spacing: 0.01em; }
-.repair-card .eyebrow::before { content: '[FIX] '; }
+.repair-card .eyebrow::before {      /* text tag instead of the gear here */
+  content: '[FIX] ';
+  -webkit-mask: none; mask: none;
+  background: none;
+  width: auto; height: auto;
+  margin: 0;
+  vertical-align: baseline;
+}
 
 /* Guitar: softer and warmer */
 .theme-guitar {
-  --surface: #1a140d;
+  --surface: #1a120b;
   --radius: 20px;
-  background: radial-gradient(ellipse at 50% -10%, #2a1d0e 0%, var(--bg) 55%) fixed, var(--bg);
+  background: radial-gradient(ellipse at 50% -10%, #2e1708 0%, var(--bg) 55%) fixed, var(--bg);
 }
-.theme-guitar .card { border-color: rgba(212, 168, 75, 0.3); }
+.theme-guitar .card { border-color: rgba(255, 122, 26, 0.3); }
 
 /* Growth: quieter, less glow */
-.theme-growth { --glow: 0 12px 30px -16px rgba(212, 168, 75, 0.3); }
+.theme-growth { --glow: 0 12px 30px -16px rgba(255, 122, 26, 0.3); }
 .theme-growth .page-hero::before { opacity: 0.5; }
 
 
@@ -816,7 +907,16 @@ a.card { display: block; }
   -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 45%), linear-gradient(to top, transparent 0%, #000 30%);
   mask-image: linear-gradient(to left, transparent 0%, #000 45%), linear-gradient(to top, transparent 0%, #000 30%);
 }
-[dir="rtl"] .progress span { background: linear-gradient(-90deg, var(--gold), var(--gold-light)); }
+[dir="rtl"] .progress span {
+  background:
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.22) 0 6px, transparent 6px 12px),
+    linear-gradient(-90deg, var(--accent), var(--accent-light));
+  background-size: 17px 17px, auto;
+  animation-direction: reverse;
+}
+[dir="rtl"] .gears { transform: scaleX(-1); }   /* mirror the gear cluster too */
+/* The code-style font has no Arabic letters, so Arabic labels use the Arabic font */
+html[lang="ar"] { --font-mono: 'IBM Plex Sans Arabic', 'JetBrains Mono', monospace; }
 /* Arabic letters JOIN together. Extra letter-spacing breaks the joins, so turn it off. */
 html[lang="ar"] * { letter-spacing: 0 !important; }
 

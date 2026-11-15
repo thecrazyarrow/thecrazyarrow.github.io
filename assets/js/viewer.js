@@ -81,7 +81,7 @@ function createViewer(frame) {
   const status = frame.querySelector('.viewer-status');
   const card = frame.closest('.card, .featured-model');   // the box this viewer sits in
   const src = frame.dataset.model;                         // data-model="..."
-  const color = frame.dataset.color || '#d4a84b';          // data-color, or gold
+  const color = frame.dataset.color || '#ff7a1a';          // data-color, or orange
   const zUp = (frame.dataset.up || 'z') === 'z';           // data-up
 
   // --- the 3D world ---
@@ -97,7 +97,7 @@ function createViewer(frame) {
   frame.prepend(renderer.domElement);   // put the <canvas> inside the frame
 
   // Soft light from everywhere (sky colour, ground colour)...
-  scene.add(new THREE.HemisphereLight(0xfff4e0, 0x2e2618, 1.6));
+  scene.add(new THREE.HemisphereLight(0xfff0e4, 0x2e1a0c, 1.6));
   // ...plus a "key" light attached to the camera, so the side you're
   // looking at is always lit as you spin the model.
   const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
@@ -158,7 +158,7 @@ function createViewer(frame) {
 
     // Build plate grid in 10 mm squares, roughly twice the model's footprint
     const plate = Math.max(20, Math.ceil(Math.max(size.x, size.z) * 2 / 10) * 10);
-    const grid = new THREE.GridHelper(plate, Math.min(plate / 10, 60), 0x6b5730, 0x2e2618);   // gold-brown "build plate" lines
+    const grid = new THREE.GridHelper(plate, Math.min(plate / 10, 60), 0x7a3f16, 0x2e1a0c);   // orange-brown "build plate" lines
     scene.add(grid);
 
     // Back the camera off until the whole model fits in view
@@ -199,7 +199,7 @@ function createViewer(frame) {
       console.warn('Could not load ' + src, error);
       const placeholder = new THREE.Mesh(
         new THREE.TorusKnotGeometry(10, 3, 120, 16),
-        new THREE.MeshBasicMaterial({ color: 0x6b5730, wireframe: true })
+        new THREE.MeshBasicMaterial({ color: 0x7a3f16, wireframe: true })
       );
       showOnPlate(placeholder);
       frame.classList.add('is-missing');

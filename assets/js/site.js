@@ -7,7 +7,7 @@
    3. Photos: hero, galleries, placeholders, lightbox
    4. Videos found in assets/video
    5. Scroll fade-in + tap feedback on phones
-   6. Gold sparks (home + industrial heroes)
+   6. Orange sparks (home + industrial heroes)
    7. Contact form (Formspree, or email fallback)
    8. Song embed ("Twenty Three") and progress bars
 
@@ -41,7 +41,7 @@ async function getJSON(path) {
   }
 }
 
-// Little line icons, drawn as SVG so they're sharp at any size and take the gold colour.
+// Little line icons, drawn as SVG so they're sharp at any size and take the orange colour.
 const ICONS = {
   printer: '<path d="M6 3h12v4H6zM4 7h16v8H4zM7 15v6h10v-6M12 11v3"/>',
   cube: '<path d="M12 2 3 7v10l9 5 9-5V7zM3 7l9 5 9-5M12 12v10"/>',
@@ -87,7 +87,7 @@ const PAGES = [
 
 // The text logo. When assets/logo/logo.svg exists, buildMedia() swaps in the image.
 const BRAND_HTML =
-  '<span class="brand-main">engineered by <b>chaos</b></span>' +
+  '<span class="brand-main"><i class="brand-gear" aria-hidden="true"></i>engineered by <b>chaos</b></span>' +
   '<span class="brand-sub">the crazy arrow</span>';
 
 function buildChrome() {
@@ -115,7 +115,7 @@ function buildChrome() {
                 <button type="button" data-lang="ja" lang="ja">日本語</button>
                 <button type="button" data-lang="ar" lang="ar">عربي</button>
               </div>
-              <a href="about.html#contact" class="btn btn-gold btn-hire" data-i18n="nav.hire">Hire me</a>
+              <a href="about.html#contact" class="btn btn-primary btn-hire" data-i18n="nav.hire">Hire me</a>
             </div>
           </nav>
         </div>
@@ -131,7 +131,7 @@ function buildChrome() {
           <h2 id="cta-title" data-i18n="cta.title">Let's build something</h2>
           <p data-i18n="cta.text">A role in Japan, a part nobody makes anymore, or a problem that needs a bit of chaos. I'm in.</p>
           <div class="btn-row">
-            <a href="about.html#contact" class="btn btn-gold" data-i18n="cta.button">Get in touch</a>
+            <a href="about.html#contact" class="btn btn-primary" data-i18n="cta.button">Get in touch</a>
             <a href="${CV}" download class="btn btn-ghost" data-i18n="common.cv">Download CV</a>
           </div>
         </section>
@@ -394,7 +394,7 @@ function setupTapFeedback() {
 }
 
 
-// ===================== 6. GOLD SPARKS =====================
+// ===================== 6. ORANGE SPARKS =====================
 // A <canvas class="sparks"> inside a hero gets a few slow drifting sparks.
 // Light on purpose: ~30 dots, paused when off screen or the tab is hidden.
 
@@ -430,8 +430,8 @@ function setupSparks() {
         const alpha = 0.35 + Math.sin(s.life) * 0.3;    // gentle flicker
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(232, 200, 122, ${alpha})`;
-        ctx.shadowColor = 'rgba(212, 168, 75, 0.9)';
+        ctx.fillStyle = `rgba(255, 165, 82, ${alpha})`;
+        ctx.shadowColor = 'rgba(255, 110, 20, 0.9)';
         ctx.shadowBlur = 8;
         ctx.fill();
       });
@@ -445,6 +445,88 @@ function setupSparks() {
     new ResizeObserver(resize).observe(canvas);
     new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop())).observe(canvas);
     document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+  });
+}
+
+
+// ===================== 6b. TURNING GEARS =====================
+// Draws a cluster of gears that really mesh: same tooth size, and each
+// gear turns the opposite way at a speed set by its number of teeth.
+// (A 30-tooth gear driving a 15-tooth gear makes it spin twice as fast.)
+
+const MODULE = 6;   // tooth size. Pitch radius = teeth × MODULE / 2
+
+// The outline of one gear, centred on (0,0), as an SVG path
+function gearPath(teeth) {
+  const pitch = (teeth * MODULE) / 2;
+  const outer = pitch + MODULE;            // tip of the teeth
+  const root = pitch - 1.25 * MODULE;      // bottom of the gaps
+  const step = (Math.PI * 2) / teeth;      // angle from one tooth to the next
+  const pt = (r, a) => `${(r * Math.cos(a)).toFixed(2)} ${(r * Math.sin(a)).toFixed(2)}`;
+  let d = '';
+  for (let i = 0; i < teeth; i++) {
+    const a = i * step;                    // each tooth: up the flank, across the tip, down
+    d += `${i ? 'L' : 'M'}${pt(root, a)} L${pt(outer, a + step * 0.15)} L${pt(outer, a + step * 0.45)} L${pt(root, a + step * 0.6)} `;
+  }
+  d += 'Z ';
+  // a circle as a path (two half arcs). With fill-rule:evenodd these become HOLES.
+  const hole = (cx, cy, r) => `M${(cx - r).toFixed(2)} ${cy.toFixed(2)} a${r} ${r} 0 1 0 ${2 * r} 0 a${r} ${r} 0 1 0 ${-2 * r} 0 `;
+  d += hole(0, 0, MODULE * 1.6);           // the axle hole
+  if (teeth >= 18) {                       // big gears get lightening holes
+    for (let k = 0; k < 5; k++) {
+      const a = (k / 5) * Math.PI * 2;
+      d += hole(Math.cos(a) * root * 0.58, Math.sin(a) * root * 0.58, root * 0.2);
+    }
+  }
+  return d;
+}
+
+function addGears() {
+  // [teeth, which gear it meshes with (index), direction from that gear in degrees]
+  const layout = [
+    [30, null, 0],
+    [14, 0, 120],
+    [22, 0, 200],
+    [10, 1, 40],
+  ];
+  const PERIOD = 60;     // seconds for the big gear to turn once
+  const gears = [];
+
+  layout.forEach(([teeth, parentIndex, angleDeg]) => {
+    const step = (Math.PI * 2) / teeth;
+    const g = { teeth, step, x: 0, y: 0, rot: 0, dir: 1 };
+    if (parentIndex !== null) {
+      const p = gears[parentIndex];
+      const theta = (angleDeg * Math.PI) / 180;
+      const dist = ((p.teeth + teeth) * MODULE) / 2;          // the pitch circles touch
+      g.x = p.x + Math.cos(theta) * dist;
+      g.y = p.y + Math.sin(theta) * dist;
+      g.dir = -p.dir;                                          // meshing gears turn opposite ways
+      // Line the teeth up: where the parent has tooth fraction f, the child needs 0.5 − f
+      const f = (((theta - p.rot) / p.step - 0.3) % 1 + 1) % 1;
+      g.rot = theta + Math.PI - (0.8 - f) * step;
+    }
+    gears.push(g);
+  });
+
+  const deg = r => ((r * 180) / Math.PI).toFixed(2);
+  const svgGears = gears.map(g => {
+    const start = Number(deg(g.rot));
+    const spin = reducedMotion ? '' :
+      `<animateTransform attributeName="transform" type="rotate" from="${start}" to="${start + 360 * g.dir}"
+        dur="${(PERIOD * g.teeth) / gears[0].teeth}s" repeatCount="indefinite"/>`;
+    return `<g transform="translate(${g.x.toFixed(2)} ${g.y.toFixed(2)})">
+        <g transform="rotate(${start})"><path class="gear-body" d="${gearPath(g.teeth)}"/>${spin}</g>
+        <circle class="gear-axle" r="${MODULE * 0.7}"/>
+      </g>`;
+  }).join('');
+
+  $$('.hero, .page-hero').forEach(hero => {
+    const box = document.createElement('div');
+    box.className = 'gears';
+    box.setAttribute('aria-hidden', 'true');
+    box.innerHTML = `<svg viewBox="-215 -105 320 310" xmlns="http://www.w3.org/2000/svg">${svgGears}</svg>`;
+    hero.prepend(box);
   });
 }
 
@@ -523,6 +605,7 @@ function renderProgress() {
 async function init() {
   buildChrome();
   drawIcons();
+  addGears();
   setupLanguageSwitch();
   setupLightbox();
   setupTapFeedback();
