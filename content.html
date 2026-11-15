@@ -1,0 +1,115 @@
+<!--
+  content.html : VIDEO & CONTENT CREATION
+  The videos are the V1 videos.html embeds (same YouTube IDs).
+  TO ADD A SHORT: copy one <div class="video-frame video-vertical">…</div>
+  in "More edits" and change the ID after /embed/.
+  (youtube.com/shorts/ABC123  ->  the ID is ABC123)
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="meta.content.title">Video &amp; Content Creation | Aaron Angel Netto</title>
+  <meta name="description" data-i18n-attr="content:meta.content.desc" content="Video and content creation: a Royal Enfield franchise ad, lead videographer for Supreme Food Co., a QStudios editing internship and freelance edits.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Video & Content Creation | Aaron Angel Netto">
+  <meta property="og:description" content="Shot. Cut. Rendered.">
+  <meta property="og:url" content="https://YOUR-SITE-URL/content.html">
+  <meta property="og:image" content="https://YOUR-SITE-URL/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0907">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { var l = localStorage.getItem('lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } else if (l === 'ja') { document.documentElement.lang = 'ja'; } } catch (e) {}
+  </script>
+</head>
+
+<body class="theme-content">
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero container">
+      <span class="eyebrow" data-i18n="content.eyebrow">Video &amp; content creation</span>
+      <h1 data-i18n="content.title">Shot. Cut. Rendered.</h1>
+      <p class="lead" data-i18n="content.lead">From the idea and the script to the shoot, the edit and the final render.</p>
+    </section>
+
+    <!-- ===================== WHAT I'VE DONE ===================== -->
+    <section class="section container" style="padding-top:20px" aria-label="Video work">
+      <div class="grid">
+        <article class="card reveal">
+          <span class="eyebrow" data-i18n="content.tag.1">Commercial</span>
+          <p data-i18n="content.work.1">Royal Enfield franchise promotional ad: scripting, filming, editing and post-production</p>
+        </article>
+        <article class="card reveal">
+          <span class="eyebrow" data-i18n="content.tag.2">Lead videographer</span>
+          <p data-i18n="content.work.2">Lead Videographer, Supreme Food Co., Kollam: 5 trend-driven promo videos</p>
+        </article>
+        <article class="card reveal">
+          <span class="eyebrow" data-i18n="content.tag.3">Internship</span>
+          <p data-i18n="content.work.3">2-week video-editing internship at QStudios, Kuwait</p>
+        </article>
+        <article class="card reveal">
+          <span class="eyebrow" data-i18n="content.tag.4">Freelance</span>
+          <p data-i18n="content.work.4">Freelance edits</p>
+        </article>
+      </div>
+
+      <ul class="chips reveal" style="margin-top:24px"><li>DaVinci Resolve</li><li>CapCut</li></ul>
+      <blockquote class="quote reveal" data-i18n="content.quote">"My role wasn't simply to operate a camera, it was to turn an idea into content people would actually want to watch."</blockquote>
+    </section>
+
+    <!-- ===================== FEATURED: Supreme Food Co. ===================== -->
+    <section class="section container" aria-labelledby="featured-title">
+      <div class="split" style="align-items:center">
+        <div class="reveal">
+          <div class="video-frame video-vertical" style="max-width:340px; margin-inline:auto">
+            <iframe src="https://www.youtube-nocookie.com/embed/mOWNOJwdcj8" title="Supreme Food Co. advertisement" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="reveal">
+          <span class="eyebrow" data-i18n="content.featured.eyebrow">Featured</span>
+          <h2 id="featured-title">Supreme Food Co.</h2>
+          <p data-i18n="content.featured.text">A short-form vertical ad from my time as lead videographer for Supreme Food Co. in Kollam.</p>
+          <ul class="chips" style="margin-top:16px">
+            <li data-i18n="content.featured.c1">9:16 short</li>
+            <li data-i18n="content.featured.c2">Commercial</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MORE EDITS ===================== -->
+    <section class="section container" aria-labelledby="more-title">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="content.more.eyebrow">The reel</span>
+        <h2 id="more-title" data-i18n="content.more">More edits</h2>
+      </div>
+      <!-- loading="lazy": each player only loads when you scroll near it -->
+      <div class="shorts">
+        <div class="video-frame video-vertical"><iframe src="https://www.youtube-nocookie.com/embed/6tvvxsO46h0" title="Edit 02" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="video-frame video-vertical"><iframe src="https://www.youtube-nocookie.com/embed/WsxwuviLXPg" title="Edit 03" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="video-frame video-vertical"><iframe src="https://www.youtube-nocookie.com/embed/KnqZQk3fWLY" title="Edit 04" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="video-frame video-vertical"><iframe src="https://www.youtube-nocookie.com/embed/kDST0cMLuRo" title="Edit 05" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="video-frame video-vertical"><iframe src="https://www.youtube-nocookie.com/embed/xhGO8mQ4tv8" title="Edit 06" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="video-frame video-vertical"><iframe src="https://www.youtube-nocookie.com/embed/19kmq7kmjRE" title="Edit 07" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="video-frame video-vertical"><iframe src="https://www.youtube-nocookie.com/embed/5XGXGeM-dnY" title="Edit 08" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="video-frame video-vertical"><iframe src="https://www.youtube-nocookie.com/embed/sHTlsLwb0bA" title="Edit 09" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="video-frame video-vertical"><iframe src="https://www.youtube-nocookie.com/embed/SGpilLC3gpA" title="Edit 10" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-cta"></div>
+  <div id="site-footer"></div>
+  <script src="assets/js/site.js" defer></script>
+</body>
+</html>

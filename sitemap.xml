@@ -3,6 +3,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://YOUR-SITE-URL/</loc></url>
   <url><loc>https://YOUR-SITE-URL/projects.html</loc></url>
+  <url><loc>https://YOUR-SITE-URL/content.html</loc></url>
   <url><loc>https://YOUR-SITE-URL/manufacturing.html</loc></url>
   <url><loc>https://YOUR-SITE-URL/industrial.html</loc></url>
   <url><loc>https://YOUR-SITE-URL/garage.html</loc></url>

@@ -273,6 +273,7 @@ p + p { margin-top: 14px; }
 }
 
 .header-inner {
+  max-width: 1400px;                   /* the header is wider than the page, so the full menu fits */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -609,7 +610,8 @@ a.card { display: block; }
   z-index: -1;
   pointer-events: none;
   top: -70px;
-  inset-inline-end: -90px;
+  /* push the cluster out to the edge of the SCREEN, not the centred content box */
+  inset-inline-end: min(-90px, calc((100% - 100vw) / 2 - 60px));
   width: min(560px, 75vw);
   opacity: 0.9;
 }
@@ -643,7 +645,7 @@ a.card { display: block; }
 .page-hero {
   padding-block: 92px 40px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;                 /* let the gears and glow spill past the centred box (no hard edge) */
   isolation: isolate;                /* keeps the glow and sparks behind the text, inside the hero */
 }
 .page-hero::before {                 /* a soft orange glow in the corner */
@@ -817,7 +819,10 @@ a.card { display: block; }
 .footer-inner a:hover { color: var(--accent-light); }
 .footer-links { display: grid; gap: 6px; font-size: 0.92rem; }
 .footer-japan p { color: var(--text); font-size: 0.95rem; }
-.copyright { margin-top: 28px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+/* The footer description uses the same small code-style font as the © line */
+.copyright, .footer-note { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.7; color: var(--muted); }
+.copyright { margin-top: 28px; }
+.footer-note { margin-top: 14px; max-width: 360px; }
 
 /* --- 404 --- */
 .lost { min-height: 70vh; display: grid; place-items: center; text-align: center; }
@@ -941,7 +946,7 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
 /* ===================== 14. SMALLER SCREENS ===================== */
 
 /* Nav collapses earlier than other things, because it has a lot of links */
-@media (max-width: 1300px) {
+@media (max-width: 1400px) {
   .menu-toggle { display: grid; place-items: center; }
   .nav {
     position: absolute;

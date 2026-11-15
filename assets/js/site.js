@@ -54,6 +54,7 @@ const ICONS = {
   mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
   link: '<path d="M4 4h16v16H4zM8 10v6M8 7v.01M12 16v-4a2 2 0 0 1 4 0v4M12 12v4"/>',
   arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  camera: '<rect x="2" y="7" width="14" height="11" rx="2"/><path d="m16 11 6-3v9l-6-3"/><circle cx="9" cy="12.5" r="2.5"/>',
 };
 function icon(name) {
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
@@ -76,6 +77,7 @@ const CV = 'assets/resume/Aaron_Angel_Netto_CV.pdf';
 const PAGES = [
   { file: 'index.html',         key: 'nav.home',          en: 'Home' },
   { file: 'projects.html',      key: 'nav.projects',      en: 'Projects' },
+  { file: 'content.html',       key: 'nav.content',       en: 'Video &amp; Content' },
   { file: 'manufacturing.html', key: 'nav.manufacturing', en: '3D &amp; Manufacturing' },
   { file: 'industrial.html',    key: 'nav.industrial',    en: 'Industrial' },
   { file: 'garage.html',        key: 'nav.garage',        en: 'Garage' },
@@ -146,7 +148,7 @@ function buildChrome() {
           <div class="footer-inner">
             <div>
               <a href="index.html" class="brand" aria-label="Aaron Angel Netto, home">${BRAND_HTML}</a>
-              <p style="margin-top:14px" data-i18n="footer.about">Aaron Angel Netto. Electronics &amp; communication engineer, maker and creator, based in Kuwait.</p>
+              <p class="footer-note" data-i18n="footer.about">Aaron Angel Netto. Electronics &amp; communication engineer, maker and creator, based in Kuwait.</p>
             </div>
             <div class="footer-links">
               <a href="mailto:${EMAIL}">${EMAIL}</a>
