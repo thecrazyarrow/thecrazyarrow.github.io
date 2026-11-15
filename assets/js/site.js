@@ -276,9 +276,10 @@ function photosIn(folder) {
 
 // <picture> uses the small .webp copy when there is one, the original otherwise
 function pictureHTML(photo, alt, eager) {
-  const webp = photo.webp ? `<source srcset="${photo.webp}" type="image/webp">` : '';
+  // encodeURI: file names with spaces (like WhatsApp photos) become safe web addresses
+  const webp = photo.webp ? `<source srcset="${encodeURI(photo.webp)}" type="image/webp">` : '';
   const loading = eager ? 'eager' : 'lazy';
-  return `<picture>${webp}<img src="${photo.src}" alt="${alt}" loading="${loading}" decoding="async"></picture>`;
+  return `<picture>${webp}<img src="${encodeURI(photo.src)}" alt="${alt}" loading="${loading}" decoding="async"></picture>`;
 }
 
 function placeholderHTML() {
@@ -299,7 +300,7 @@ function renderGalleries() {
     }
 
     gallery.innerHTML = photos.map((p, i) =>
-      `<button type="button" data-full="${p.src}" aria-label="${altBase} ${i + 1}">${pictureHTML(p, `${altBase} ${i + 1}`)}</button>`
+      `<button type="button" data-full="${encodeURI(p.src)}" aria-label="${altBase} ${i + 1}">${pictureHTML(p, `${altBase} ${i + 1}`)}</button>`
     ).join('');
   });
 }
