@@ -122,6 +122,7 @@ function buildChrome() {
             <span data-i18n="egg.1">No, we don't like to blind ourselves.</span>
             <span data-i18n="egg.2">Really? You want to get flashbanged with light mode?</span>
             <span data-i18n="egg.3">Nope. I won't allow it.</span>
+            <span data-i18n="egg.end">That's it, folks!</span>
           </div>
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav"
                   data-i18n-attr="aria-label:nav.menu" aria-label="Open menu">&#9776;</button>
@@ -601,6 +602,141 @@ function setupLightModeEgg() {
 }
 
 
+// ===================== 6d. EASTER EGG: THE BUNNY BELOW THE FOOTER =====================
+// There is nothing below the footer. But if a visitor is already at the very
+// bottom and KEEPS trying to scroll down, a pixel bunny pops up from the bottom
+// edge and tells them "That's it, folks!" (line egg.end in the i18n files).
+// It isn't in the page at all until that happens. Scrolling back up sends it away.
+//   mouse/trackpad: keep scrolling down at the bottom
+//   phone/tablet:   keep swiping up at the bottom
+//   keyboard:       press End / Page Down / ↓ / Space a few more times
+
+// The bunny, drawn one "pixel" per letter:
+//   w = fur   s = shadow   p = pink   k = eye   n = nose   . = empty
+const BUNNY_PIXELS = [
+  '..w.......w..',
+  '.wpw.....wpw.',
+  '.wpw.....wpw.',
+  '.wpw.....wpw.',
+  '.wppw...wppw.',
+  '..wwwwwwwww..',
+  '.wwwwwwwwwww.',
+  '.wwkwwwwwkww.',
+  '.wwkwwwwwkww.',
+  '.pwwwwnwwwwp.',
+  '..wwwwwwwww..',
+  '...swwwwws...',
+  '..wwwwwwwww..',
+  '.wwwwwwwwwww.',
+  '.wwsswwwssww.',
+  '..ww.....ww..',
+];
+const BUNNY_COLORS = { w: '#f5ebe0', s: '#c9b29c', p: '#ff9fb0', k: '#0b0907', n: '#ff7a1a' };
+
+// Turns the letter grid into an SVG made of little squares
+function bunnySVG() {
+  let rects = '';
+  BUNNY_PIXELS.forEach((row, y) => {
+    // join runs of the same colour into one wide rectangle (fewer shapes)
+    for (let x = 0; x < row.length;) {
+      const c = row[x];
+      let run = 1;
+      while (row[x + run] === c) run++;
+      if (BUNNY_COLORS[c]) {
+        rects += `<rect class="px-${c}" x="${x}" y="${y}" width="${run}" height="1" fill="${BUNNY_COLORS[c]}"/>`;
+      }
+      x += run;
+    }
+  });
+  return `<svg class="egg-bunny-art" viewBox="0 0 ${BUNNY_PIXELS[0].length} ${BUNNY_PIXELS.length}"
+    shape-rendering="crispEdges" aria-hidden="true">${rects}</svg>`;
+}
+
+function setupFooterBunny() {
+  const doc = document.documentElement;
+  // "at the bottom" = less than 4px of page left below the screen
+  const atBottom = () => window.innerHeight + window.scrollY >= doc.scrollHeight - 4;
+
+  let bunny = null;      // created the first time it's needed
+  let shown = false;
+  let hideTimer = 0;
+  let reachedBottomAt = 0;
+  let push = 0;          // how hard they've tried to scroll past the end (in px)
+  let lastPushAt = 0;
+
+  function show() {
+    if (!bunny) {
+      bunny = document.createElement('div');
+      bunny.className = 'egg-bunny';
+      bunny.setAttribute('role', 'status');
+      bunny.innerHTML = `<p class="egg-bubble"></p>${bunnySVG()}`;
+      document.body.appendChild(bunny);
+      void bunny.offsetWidth;   // let the browser place it off-screen first, so it slides in
+    }
+    const line = $('.egg-lines [data-i18n="egg.end"]');
+    $('.egg-bubble', bunny).textContent = line ? line.textContent : "That's it, folks!";
+    bunny.classList.add('show');
+    shown = true;
+    push = 0;
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hide, 6000);
+  }
+
+  function hide() {
+    if (bunny) bunny.classList.remove('show');
+    shown = false;
+    push = 0;
+  }
+
+  // Count "extra" scrolling. A short pause resets the count, so a single
+  // flick that happens to land on the footer doesn't set it off.
+  function addPush(amount) {
+    const now = Date.now();
+    if (now - lastPushAt > 1200) push = 0;
+    lastPushAt = now;
+    if (now - reachedBottomAt < 350) return;   // ignore the scroll that just arrived here
+    push += amount;
+    if (push > 500 && !shown) show();
+  }
+
+  window.addEventListener('scroll', () => {
+    if (atBottom()) {
+      if (!reachedBottomAt) reachedBottomAt = Date.now();
+    } else {
+      reachedBottomAt = 0;
+      push = 0;
+      // they scrolled back up a bit: off you go, bunny
+      if (shown && window.innerHeight + window.scrollY < doc.scrollHeight - 80) hide();
+    }
+  }, { passive: true });
+
+  // Mouse wheel / trackpad
+  window.addEventListener('wheel', e => {
+    if (e.deltaY <= 0 || !atBottom()) return;
+    if (!reachedBottomAt) reachedBottomAt = Date.now() - 1000;   // page too short to scroll at all
+    addPush(e.deltaMode === 1 ? e.deltaY * 16 : Math.min(e.deltaY, 150));
+  }, { passive: true });
+
+  // Touch: once at the bottom, measure how far the finger keeps pushing up
+  let anchorY = null;
+  window.addEventListener('touchmove', e => {
+    const y = e.touches[0].clientY;
+    if (!atBottom()) { anchorY = null; return; }
+    if (anchorY === null) { anchorY = y; return; }
+    if (anchorY - y > 110 && !shown) show();
+  }, { passive: true });
+  window.addEventListener('touchend', () => (anchorY = null), { passive: true });
+
+  // Keyboard
+  let keyTries = 0;
+  window.addEventListener('keydown', e => {
+    if (e.target.closest('input, textarea, select, [contenteditable]')) return;
+    if (!['End', 'PageDown', 'ArrowDown', ' '].includes(e.key) || !atBottom()) { keyTries = 0; return; }
+    if (++keyTries >= 3 && !shown) show();
+  });
+}
+
+
 // ===================== 7. CONTACT FORM =====================
 // Until you paste your Formspree ID into the form's action (see README),
 // pressing Send opens the visitor's email app with the message filled in.
@@ -681,6 +817,7 @@ async function init() {
   setupTapFeedback();
   setupContactForm();
   setupLightModeEgg();
+  setupFooterBunny();
   setupSong();
 
   // A link like about.html?lang=ja opens straight in Japanese

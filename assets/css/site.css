@@ -1187,3 +1187,73 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
   mask: var(--gear-icon) center / contain no-repeat;
   animation: spin 2s linear infinite;
 }
+
+
+/* ===================== 17. EASTER EGG: THE BUNNY BELOW THE FOOTER =====================
+   Made by setupFooterBunny() in site.js, only once someone tries to scroll
+   past the footer. It waits just below the bottom edge, then pops up. */
+.egg-bunny {
+  position: fixed;
+  z-index: 60;
+  bottom: 0;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  pointer-events: none;
+  transform: translate(-50%, 110%);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);   /* overshoots a little = "pop" */
+}
+.egg-bunny.show { transform: translate(-50%, 0); }
+
+.egg-bunny-art {
+  display: block;
+  width: 78px;               /* 13 pixels x 6 */
+  height: 96px;              /* 16 pixels x 6 */
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 14px rgba(255, 122, 26, 0.35));
+}
+.egg-bunny.show .egg-bunny-art { animation: bunny-hop 1.2s steps(1) infinite; }
+@keyframes bunny-hop {          /* a choppy, 8-bit style bounce */
+  0%, 60%, 100% { transform: translateY(0); }
+  20%           { transform: translateY(-12px); }
+  40%           { transform: translateY(-6px); }
+}
+.egg-bunny.show .px-k { animation: bunny-blink 3.2s steps(1) infinite; }
+@keyframes bunny-blink {
+  0%, 92%, 100% { opacity: 1; }
+  94%, 98%      { opacity: 0; }
+}
+
+/* The chat bubble: square "pixel" corners and a stepped tail */
+.egg-bubble {
+  position: relative;
+  margin: 0;
+  padding: 10px 16px;
+  max-width: calc(100vw - 32px);
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  border-radius: 0;
+  /* a 4px "pixel" border drawn with shadows, so the corners stay notched */
+  box-shadow:
+    0 -4px 0 0 var(--accent), 0 4px 0 0 var(--accent),
+    -4px 0 0 0 var(--accent), 4px 0 0 0 var(--accent);
+}
+.egg-bubble::after {             /* the tail: two stacked squares pointing at the bunny */
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: 4px;
+  background: var(--accent);
+  transform: translateX(-50%);
+  box-shadow: 0 6px 0 -1px var(--accent);
+}
