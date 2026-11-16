@@ -602,90 +602,160 @@ function setupLightModeEgg() {
 }
 
 
-// ===================== 6d. EASTER EGG: THE BUNNY BELOW THE FOOTER =====================
+// ===================== 6d. EASTER EGG: THE CAT BELOW THE FOOTER =====================
 // There is nothing below the footer. But if a visitor is already at the very
-// bottom and KEEPS trying to scroll down, a pixel bunny pops up from the bottom
-// edge and tells them "That's it, folks!" (line egg.end in the i18n files).
+// bottom and KEEPS trying to scroll down, a black pixel cat pops up from the
+// bottom edge and tells them "That's it, folks!" (line egg.end in the i18n files).
 // It isn't in the page at all until that happens. Scrolling back up sends it away.
 //   mouse/trackpad: keep scrolling down at the bottom
 //   phone/tablet:   keep swiping up at the bottom
-//   keyboard:       press End / Page Down / ↓ / Space a few more times
+//   keyboard:       press End / Page Down / Down arrow / Space a few more times
+// Try to touch the cat (hover or click/tap) and it swipes its claws at you.
 
-// The bunny, drawn one "pixel" per letter:
-//   w = fur   s = shadow   p = pink   k = eye   n = nose   . = empty
-const BUNNY_PIXELS = [
-  '..w.......w..',
-  '.wpw.....wpw.',
-  '.wpw.....wpw.',
-  '.wpw.....wpw.',
-  '.wppw...wppw.',
-  '..wwwwwwwww..',
-  '.wwwwwwwwwww.',
-  '.wwkwwwwwkww.',
-  '.wwkwwwwwkww.',
-  '.pwwwwnwwwwp.',
-  '..wwwwwwwww..',
-  '...swwwwws...',
-  '..wwwwwwwww..',
-  '.wwwwwwwwwww.',
-  '.wwsswwwssww.',
-  '..ww.....ww..',
+// The cat and its paw, drawn one "pixel" per letter:
+//   o = orange outline   b = black fur   e = eye / claw   p = pupil   n = nose   . = empty
+const CAT_PIXELS = [
+  '.o.........o....',
+  '.oo.......oo....',
+  '.obo.....obo....',
+  '.obbooooobbo....',
+  '.obbbbbbbbbo....',
+  'obbbbbbbbbbbo...',
+  'obbeebbbeebbo...',
+  'obbepbbbpebbo...',
+  'obbbbbnbbbbbo...',
+  '.obbbbbbbbbo..o.',
+  '..obbbbbbbo...o.',
+  '.obbbbbbbbbo.o..',
+  'obbbbbbbbbbboo..',
+  'obbbbbbbbbbbo...',
+  'obbobbbbbobbo...',
+  '.ooooooooooo....',
 ];
-const BUNNY_COLORS = { w: '#f5ebe0', s: '#c9b29c', p: '#ff9fb0', k: '#0b0907', n: '#ff7a1a' };
+const PAW_PIXELS = [
+  '.e.e.e.',
+  '.e.e.e.',
+  'ooooooo',
+  'obbbbbo',
+  'obbbbbo',
+  '.obbbo.',
+  '.obbbo.',
+  '.obbbo.',
+];
+const CAT_COLORS = { o: '#ff7a1a', b: '#0b0907', e: '#ffa552', p: '#0b0907', n: '#ff7a1a' };
 
-// Turns the letter grid into an SVG made of little squares
-function bunnySVG() {
+// Turns a letter grid into an SVG made of little squares
+function pixelSVG(pixels, className) {
   let rects = '';
-  BUNNY_PIXELS.forEach((row, y) => {
+  pixels.forEach((row, y) => {
     // join runs of the same colour into one wide rectangle (fewer shapes)
     for (let x = 0; x < row.length;) {
       const c = row[x];
       let run = 1;
       while (row[x + run] === c) run++;
-      if (BUNNY_COLORS[c]) {
-        rects += `<rect class="px-${c}" x="${x}" y="${y}" width="${run}" height="1" fill="${BUNNY_COLORS[c]}"/>`;
+      if (CAT_COLORS[c]) {
+        rects += `<rect class="px-${c}" x="${x}" y="${y}" width="${run}" height="1" fill="${CAT_COLORS[c]}"/>`;
       }
       x += run;
     }
   });
-  return `<svg class="egg-bunny-art" viewBox="0 0 ${BUNNY_PIXELS[0].length} ${BUNNY_PIXELS.length}"
+  return `<svg class="${className}" viewBox="0 0 ${pixels[0].length} ${pixels.length}"
     shape-rendering="crispEdges" aria-hidden="true">${rects}</svg>`;
 }
 
-function setupFooterBunny() {
+function setupFooterCat() {
   const doc = document.documentElement;
   // "at the bottom" = less than 4px of page left below the screen
   const atBottom = () => window.innerHeight + window.scrollY >= doc.scrollHeight - 4;
 
-  let bunny = null;      // created the first time it's needed
+  let cat = null;        // created the first time it's needed
   let shown = false;
   let hideTimer = 0;
   let reachedBottomAt = 0;
   let push = 0;          // how hard they've tried to scroll past the end (in px)
   let lastPushAt = 0;
+  let lastSwipeAt = 0;
 
   function show() {
-    if (!bunny) {
-      bunny = document.createElement('div');
-      bunny.className = 'egg-bunny';
-      bunny.setAttribute('role', 'status');
-      bunny.innerHTML = `<p class="egg-bubble"></p>${bunnySVG()}`;
-      document.body.appendChild(bunny);
-      void bunny.offsetWidth;   // let the browser place it off-screen first, so it slides in
-    }
+    if (!cat) build();
     const line = $('.egg-lines [data-i18n="egg.end"]');
-    $('.egg-bubble', bunny).textContent = line ? line.textContent : "That's it, folks!";
-    bunny.classList.add('show');
+    $('.egg-bubble', cat).textContent = line ? line.textContent : "That's it, folks!";
+    cat.classList.add('show');
     shown = true;
     push = 0;
+    scheduleHide();
+  }
+
+  function hide() {
+    if (cat) cat.classList.remove('show');
+    shown = false;
+    push = 0;
+  }
+
+  function scheduleHide() {
     clearTimeout(hideTimer);
     hideTimer = setTimeout(hide, 6000);
   }
 
-  function hide() {
-    if (bunny) bunny.classList.remove('show');
-    shown = false;
-    push = 0;
+  function build() {
+    cat = document.createElement('div');
+    cat.className = 'egg-cat';
+    cat.setAttribute('role', 'status');
+    cat.innerHTML = `<p class="egg-bubble"></p>
+      <div class="egg-cat-body">${pixelSVG(CAT_PIXELS, 'egg-cat-art')}${pixelSVG(PAW_PIXELS, 'egg-paw')}</div>`;
+    document.body.appendChild(cat);
+    void cat.offsetWidth;   // let the browser place it off-screen first, so it slides in
+
+    const body = $('.egg-cat-body', cat);
+    // Hovering: the cat swipes at the pointer (and stays while you're near it)
+    body.addEventListener('pointermove', e => {
+      clearTimeout(hideTimer);
+      if (e.pointerType === 'mouse' && Date.now() - lastSwipeAt > 650) swipe(e.clientX, e.clientY);
+    });
+    body.addEventListener('pointerleave', scheduleHide);
+    // Clicking or tapping: always swipes
+    body.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      clearTimeout(hideTimer);
+      swipe(e.clientX, e.clientY);
+      if (e.pointerType !== 'mouse') scheduleHide();
+    });
+  }
+
+  // One claw swipe toward the point (x, y) on the screen
+  function swipe(x, y) {
+    lastSwipeAt = Date.now();
+    const body = $('.egg-cat-body', cat);
+    const paw = $('.egg-paw', cat);
+    const box = body.getBoundingClientRect();
+    // the paw starts at the cat's chest
+    const fromX = box.left + box.width * 0.4;
+    const fromY = box.top + box.height * 0.55;
+    let dx = x - fromX;
+    let dy = y - fromY;
+    const reach = Math.hypot(dx, dy) || 1;
+    const max = 70;   // how far a cat arm stretches, in px
+    if (reach > max) { dx *= max / reach; dy *= max / reach; }
+    // angle so the claws point at the pointer (0deg = claws straight up)
+    const angle = Math.atan2(dx, -dy) * 180 / Math.PI;
+    paw.style.setProperty('--dx', dx + 'px');
+    paw.style.setProperty('--dy', dy + 'px');
+    paw.style.setProperty('--rot', angle + 'deg');
+
+    // restart the animation
+    cat.classList.remove('is-clawing');
+    void cat.offsetWidth;
+    cat.classList.add('is-clawing');
+    cat.classList.toggle('lean-left', dx < 0);
+
+    // three scratch marks right where the pointer is
+    const marks = document.createElement('div');
+    marks.className = 'egg-scratch';
+    marks.style.left = x + 'px';
+    marks.style.top = y + 'px';
+    marks.innerHTML = '<span></span><span></span><span></span>';
+    document.body.appendChild(marks);
+    setTimeout(() => marks.remove(), 700);
   }
 
   // Count "extra" scrolling. A short pause resets the count, so a single
@@ -705,7 +775,7 @@ function setupFooterBunny() {
     } else {
       reachedBottomAt = 0;
       push = 0;
-      // they scrolled back up a bit: off you go, bunny
+      // they scrolled back up a bit: off you go, cat
       if (shown && window.innerHeight + window.scrollY < doc.scrollHeight - 80) hide();
     }
   }, { passive: true });
@@ -817,7 +887,7 @@ async function init() {
   setupTapFeedback();
   setupContactForm();
   setupLightModeEgg();
-  setupFooterBunny();
+  setupFooterCat();
   setupSong();
 
   // A link like about.html?lang=ja opens straight in Japanese

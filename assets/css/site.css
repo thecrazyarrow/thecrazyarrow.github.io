@@ -1189,10 +1189,11 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
 }
 
 
-/* ===================== 17. EASTER EGG: THE BUNNY BELOW THE FOOTER =====================
-   Made by setupFooterBunny() in site.js, only once someone tries to scroll
-   past the footer. It waits just below the bottom edge, then pops up. */
-.egg-bunny {
+/* ===================== 17. EASTER EGG: THE CAT BELOW THE FOOTER =====================
+   Made by setupFooterCat() in site.js, only once someone tries to scroll
+   past the footer. It waits just below the bottom edge, then pops up.
+   Hover or click it and it claws at your pointer. */
+.egg-cat {
   position: fixed;
   z-index: 60;
   bottom: 0;
@@ -1205,26 +1206,82 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
   transform: translate(-50%, 110%);
   transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);   /* overshoots a little = "pop" */
 }
-.egg-bunny.show { transform: translate(-50%, 0); }
+.egg-cat.show { transform: translate(-50%, 0); }
 
-.egg-bunny-art {
+.egg-cat-body {
+  position: relative;
+  pointer-events: auto;        /* the cat itself can be poked */
+  cursor: pointer;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.egg-cat-art {
   display: block;
-  width: 78px;               /* 13 pixels x 6 */
-  height: 96px;              /* 16 pixels x 6 */
-  image-rendering: pixelated;
-  filter: drop-shadow(0 0 14px rgba(255, 122, 26, 0.35));
+  width: 96px;               /* 16 pixels x 6 */
+  height: 96px;
+  filter: drop-shadow(0 0 12px rgba(255, 122, 26, 0.45));
 }
-.egg-bunny.show .egg-bunny-art { animation: bunny-hop 1.2s steps(1) infinite; }
-@keyframes bunny-hop {          /* a choppy, 8-bit style bounce */
-  0%, 60%, 100% { transform: translateY(0); }
-  20%           { transform: translateY(-12px); }
-  40%           { transform: translateY(-6px); }
+.egg-cat.show .egg-cat-art { animation: cat-idle 1.6s steps(1) infinite; }
+@keyframes cat-idle {          /* a choppy, 8-bit style breathing bob */
+  0%, 50%, 100% { transform: translateY(0); }
+  25%           { transform: translateY(-4px); }
 }
-.egg-bunny.show .px-k { animation: bunny-blink 3.2s steps(1) infinite; }
-@keyframes bunny-blink {
+.egg-cat-art .px-e, .egg-cat-art .px-p { animation: cat-blink 3.4s steps(1) infinite; }
+@keyframes cat-blink {
   0%, 92%, 100% { opacity: 1; }
   94%, 98%      { opacity: 0; }
 }
+
+/* The swipe: the cat leans in, the paw shoots out toward the pointer */
+.egg-cat.is-clawing .egg-cat-art { animation: cat-lean 0.4s steps(2); }
+.egg-cat.is-clawing.lean-left .egg-cat-art { animation-name: cat-lean-left; }
+@keyframes cat-lean      { 50% { transform: translateY(3px) rotate(6deg); } }
+@keyframes cat-lean-left { 50% { transform: translateY(3px) rotate(-6deg); } }
+
+.egg-paw {
+  position: absolute;
+  left: 40%;
+  top: 55%;
+  width: 28px;               /* 7 pixels x 4 */
+  height: 32px;
+  margin: -32px 0 0 -14px;   /* put its bottom-centre on the chest */
+  transform-origin: 50% 100%;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px rgba(255, 122, 26, 0.6));
+}
+.egg-cat.is-clawing .egg-paw { animation: cat-swipe 0.38s steps(4); }
+@keyframes cat-swipe {
+  0%   { opacity: 1; transform: translate(0, 0) rotate(var(--rot)) scale(0.5); }
+  45%  { opacity: 1; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.1); }
+  100% { opacity: 0; transform: translate(0, 0) rotate(var(--rot)) scale(0.5); }
+}
+
+/* Three claw marks where the pointer was */
+.egg-scratch {
+  position: fixed;
+  z-index: 61;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  transform: rotate(-25deg);
+  animation: scratch-fade 0.7s ease-in forwards;
+}
+.egg-scratch span {
+  width: 4px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  transform-origin: top;
+  animation: scratch-draw 0.12s steps(3) both;
+}
+.egg-scratch span:nth-child(2) { animation-delay: 0.04s; margin-top: -4px; }
+.egg-scratch span:nth-child(3) { animation-delay: 0.08s; }
+@keyframes scratch-draw { from { transform: scaleY(0); } }
+@keyframes scratch-fade { 0%, 50% { opacity: 1; } 100% { opacity: 0; } }
 
 /* The chat bubble: square "pixel" corners and a stepped tail */
 .egg-bubble {
@@ -1232,8 +1289,8 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
   margin: 0;
   padding: 10px 16px;
   max-width: calc(100vw - 32px);
-  background: var(--text);
-  color: var(--bg);
+  background: var(--bg);
+  color: var(--accent-light);
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: 0.95rem;
@@ -1245,7 +1302,7 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
     0 -4px 0 0 var(--accent), 0 4px 0 0 var(--accent),
     -4px 0 0 0 var(--accent), 4px 0 0 0 var(--accent);
 }
-.egg-bubble::after {             /* the tail: two stacked squares pointing at the bunny */
+.egg-bubble::after {             /* the tail: two stacked squares pointing at the cat */
   content: "";
   position: absolute;
   top: 100%;
