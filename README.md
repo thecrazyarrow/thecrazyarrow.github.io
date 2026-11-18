@@ -3,7 +3,7 @@
 **engineered by chaos** · *the crazy arrow*
 
 A plain static website: HTML, CSS and vanilla JavaScript. No framework and no build step.
-The old V1 site is kept in `_archive/v1/`. GitHub Pages doesn't publish folders whose names start with `_`.
+Private notes and the old V1 site live outside this project, in `portfolio-private/` next to it, so they never end up on GitHub.
 
 ---
 

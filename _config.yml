@@ -1,7 +1,6 @@
 # GitHub Pages settings. Files listed here are NOT published on the website.
-# (Folders starting with "_", like _archive, are skipped automatically.)
+# (Folders starting with "_" are skipped automatically.)
 exclude:
-  - SADHANAM.md
   - README.md
   - tools
   - package.json

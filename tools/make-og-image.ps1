@@ -32,7 +32,7 @@ function Txt($s, $font, $size, $style, $color, $x, $y) {
   $g.DrawString($s, $f, (New-Object System.Drawing.SolidBrush $color), $x, $y)
 }
 $dot = [string][char]0x00B7   # the middle dot, written as a code so the file encoding can't garble it
-Txt "KUWAIT  $dot  OPEN TO OPPORTUNITIES IN JAPAN" 'Consolas' 22 'Regular' $orange 80 120
+Txt "BASED IN KUWAIT  $dot  ALWAYS BUILDING" 'Consolas' 22 'Regular' $orange 80 120
 Txt 'Aaron Angel Netto' 'Segoe UI' 92 'Bold' $text 70 170
 Txt "Engineer  $dot  Maker  $dot  Creator" 'Segoe UI' 40 'Regular' $light 78 300
 $g.FillRectangle((New-Object System.Drawing.SolidBrush $orange), 82, 395, 90, 4)

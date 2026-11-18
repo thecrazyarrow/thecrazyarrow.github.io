@@ -148,7 +148,7 @@ function buildChrome() {
         <section class="cta-band reveal" aria-labelledby="cta-title">
           <span class="eyebrow" data-i18n="cta.eyebrow">Hire me</span>
           <h2 id="cta-title" data-i18n="cta.title">Let's build something</h2>
-          <p data-i18n="cta.text">A role in Japan, a part nobody makes anymore, or a problem that needs a bit of chaos. I'm in.</p>
+          <p data-i18n="cta.text">A project, a part nobody makes anymore, or a problem that needs a bit of chaos. I'm in.</p>
           <div class="btn-row">
             <a href="about.html#contact" class="btn btn-primary" data-i18n="cta.button">Get in touch</a>
             <a href="${CV}" download class="btn btn-ghost" data-i18n="common.cv">Download CV</a>
@@ -171,10 +171,6 @@ function buildChrome() {
               <a href="mailto:${EMAIL}">${EMAIL}</a>
               <a href="${LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>
               <a href="${CV}" download data-i18n="common.cv">Download CV</a>
-            </div>
-            <div class="footer-japan">
-              <p data-i18n="footer.japan">Open to engineering roles in Japan</p>
-              <p class="jp-line" lang="ja">日本でのエンジニア職を探しています</p>
             </div>
           </div>
           <p class="copyright">&copy; <span id="year"></span> Aaron Angel Netto · engineered by chaos</p>
