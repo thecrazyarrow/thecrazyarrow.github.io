@@ -6,3 +6,4 @@ exclude:
   - package.json
   - package-lock.json
   - node_modules
+  - start-phone-preview.bat
