@@ -1,6 +1,6 @@
 # Lets search engines index the whole site.
-# Replace YOUR-SITE-URL with the real address once the site is online.
+# Site address: https://thecrazyarrow.github.io/ (replace it here if you move to a custom domain).
 User-agent: *
 Allow: /
 
-Sitemap: https://YOUR-SITE-URL/sitemap.xml
+Sitemap: https://thecrazyarrow.github.io/sitemap.xml

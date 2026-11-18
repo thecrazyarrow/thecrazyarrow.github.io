@@ -100,8 +100,8 @@ The numbers (0–100) are `"growth.g1.value"` ... `"growth.g5.value"` in `en.jso
 4. On GitHub: repository → **Settings → Pages** → *Build and deployment* →
    Source **Deploy from a branch** → Branch **main**, folder **/ (root)** → **Save**.
 5. After a minute or two the site is live at
-   `https://YOUR-USERNAME.github.io/portfolio/`.
-6. Replace `https://YOUR-SITE-URL/` with that address in every `.html` file,
+   `https://thecrazyarrow.github.io/` (repository `thecrazyarrow.github.io`).
+6. Done already: every page uses `https://thecrazyarrow.github.io/`. If you move to a custom domain, replace it in every `.html` file,
    `robots.txt` and `sitemap.xml` (VS Code: **Ctrl+Shift+H**, find and replace in all files),
    then commit and push again:
    ```
