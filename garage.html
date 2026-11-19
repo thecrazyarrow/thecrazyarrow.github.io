@@ -1,6 +1,7 @@
 <!--
   garage.html : THE GARAGE, Ava & Toraa
-  Two columns, one per bike (stacked on phones).
+  Each bike gets a full-width showcase: a big photo blended into the page
+  (Ava on the right, Toraa on the left) with the specs beside it.
   PERFORMANCE NUMBERS: the lines with class "i18n-optional" stay hidden
   while their text is empty. Fill in "garage.ava.numbers" and
   "garage.toraa.numbers" in assets/i18n/en.json and they appear.
@@ -40,110 +41,125 @@
       <p class="lead" data-i18n="garage.lead">Two bikes, a lot of late nights, and the place where I learned to wrench.</p>
     </section>
 
-    <section class="section container" style="padding-top:20px">
-      <div class="split">
-
-        <!-- ===================== AVA ===================== -->
-        <div class="bike-col" aria-labelledby="ava-title">
+    <!-- ===================== AVA: big photo on the right, text on the left =====================
+         To change the big photo: change the file in "background-image" below AND in data-skip
+         (data-skip keeps that same photo out of the small gallery). --focus = which part of the
+         photo stays in view when it's cropped (left-right %, top-bottom %). -->
+    <section class="bike-show" aria-labelledby="ava-title">
+      <div class="bike-photo" role="img" data-i18n-attr="aria-label:garage.ava.alt" aria-label="Ava, Hero Splendor"
+           style="background-image:url('assets/images/bikes/ava/01.jpeg'); --focus: 45% 62%"></div>
+      <div class="container">
+        <div class="bike-text">
           <div class="bike-head reveal">
             <p class="nick" id="ava-title">AVA</p>
             <h2 data-i18n="garage.ava.model">Hero Splendor</h2>
             <span class="badge" data-i18n="garage.ava.badge">Stock 97cc → 135cc</span>
             <p class="i18n-optional" style="margin-top:12px" data-i18n="garage.ava.numbers"></p>
           </div>
-          <div class="gallery tall" data-folder="assets/images/bikes/ava" data-placeholders="3"
+
+          <div class="bike-specs">
+            <article class="card reveal">
+              <h3 data-i18n="garage.group.engine">Engine</h3>
+              <ul class="bullets">
+                <li data-i18n="garage.ava.e1">135cc big bore kit (from stock 97cc)</li>
+                <li data-i18n="garage.ava.e2">Ported and polished head with bigger valves</li>
+                <li data-i18n="garage.ava.e3">Air-cooled to oil-cooled conversion</li>
+              </ul>
+            </article>
+            <article class="card reveal">
+              <h3 data-i18n="garage.group.intake">Intake</h3>
+              <ul class="bullets">
+                <li data-i18n="garage.ava.i1">Custom airbox</li>
+                <li data-i18n="garage.ava.i2">Variable velocity stacks at the throttle body for top-end power</li>
+                <li data-i18n="garage.ava.i3">An EDF (electric ducted fan) force-feeding the airbox above 4000 rpm</li>
+              </ul>
+            </article>
+            <article class="card reveal">
+              <span class="tagline-small" data-i18n="garage.ava.mxTag">Built to leave the tarmac</span>
+              <h3 data-i18n="garage.group.mx">Motocross conversion</h3>
+              <ul class="bullets">
+                <li data-i18n="garage.ava.m1">Front raised with a taller machined fork end nut</li>
+                <li data-i18n="garage.ava.m2">Rear raised with TVS Phoenix shocks</li>
+                <li data-i18n="garage.ava.m3">Dual-sport tyres: Michelin Anakee Cross 80/100-18 front, CEAT Gripp X5 100/90-18 rear</li>
+              </ul>
+            </article>
+            <article class="card reveal">
+              <h3 data-i18n="garage.group.body">Front end &amp; body</h3>
+              <ul class="bullets">
+                <li data-i18n="garage.ava.b1">Headlight delete with a custom 3D-printed headlight mount</li>
+                <li data-i18n="garage.ava.b2">3D-printed number plate</li>
+              </ul>
+            </article>
+            <article class="card reveal">
+              <h3 data-i18n="garage.group.electrical">Electrical</h3>
+              <ul class="bullets">
+                <li data-i18n="garage.ava.el1">Full wiring redone</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="gallery tall" data-folder="assets/images/bikes/ava" data-skip="assets/images/bikes/ava/01.jpeg" data-placeholders="0"
                data-i18n-attr="data-alt:garage.ava.alt" data-alt="Ava, Hero Splendor"></div>
-
-          <article class="card reveal">
-            <h3 data-i18n="garage.group.engine">Engine</h3>
-            <ul class="bullets">
-              <li data-i18n="garage.ava.e1">135cc big bore kit (from stock 97cc)</li>
-              <li data-i18n="garage.ava.e2">Ported and polished head with bigger valves</li>
-              <li data-i18n="garage.ava.e3">Air-cooled to oil-cooled conversion</li>
-            </ul>
-          </article>
-          <article class="card reveal">
-            <h3 data-i18n="garage.group.intake">Intake</h3>
-            <ul class="bullets">
-              <li data-i18n="garage.ava.i1">Custom airbox</li>
-              <li data-i18n="garage.ava.i2">Variable velocity stacks at the throttle body for top-end power</li>
-              <li data-i18n="garage.ava.i3">An EDF (electric ducted fan) force-feeding the airbox above 4000 rpm</li>
-            </ul>
-          </article>
-          <article class="card reveal">
-            <span class="tagline-small" data-i18n="garage.ava.mxTag">Built to leave the tarmac</span>
-            <h3 data-i18n="garage.group.mx">Motocross conversion</h3>
-            <ul class="bullets">
-              <li data-i18n="garage.ava.m1">Front raised with a taller machined fork end nut</li>
-              <li data-i18n="garage.ava.m2">Rear raised with TVS Phoenix shocks</li>
-              <li data-i18n="garage.ava.m3">Dual-sport tyres: Michelin Anakee Cross 80/100-18 front, CEAT Gripp X5 100/90-18 rear</li>
-            </ul>
-          </article>
-          <article class="card reveal">
-            <h3 data-i18n="garage.group.body">Front end &amp; body</h3>
-            <ul class="bullets">
-              <li data-i18n="garage.ava.b1">Headlight delete with a custom 3D-printed headlight mount</li>
-              <li data-i18n="garage.ava.b2">3D-printed number plate</li>
-            </ul>
-          </article>
-          <article class="card reveal">
-            <h3 data-i18n="garage.group.electrical">Electrical</h3>
-            <ul class="bullets">
-              <li data-i18n="garage.ava.el1">Full wiring redone</li>
-            </ul>
-          </article>
         </div>
+      </div>
+    </section>
 
-        <!-- ===================== TORAA ===================== -->
-        <div class="bike-col" aria-labelledby="toraa-title">
+    <!-- ===================== TORAA: big photo on the left, text on the right ===================== -->
+    <section class="bike-show is-flipped" aria-labelledby="toraa-title">
+      <div class="bike-photo" role="img" data-i18n-attr="aria-label:garage.toraa.alt" aria-label="Toraa, Royal Enfield Hunter 350"
+           style="background-image:url('assets/images/bikes/toraa/3.jpeg'); --focus: 85% 55%"></div>
+      <div class="container">
+        <div class="bike-text">
           <div class="bike-head reveal">
             <p class="nick" id="toraa-title">TORAA</p>
             <h2 data-i18n="garage.toraa.model">Royal Enfield Hunter 350</h2>
             <span class="badge" data-i18n="garage.toraa.badge">Big bore · cam · slipper clutch</span>
             <p class="i18n-optional" style="margin-top:12px" data-i18n="garage.toraa.numbers"></p>
           </div>
-          <div class="gallery tall" data-folder="assets/images/bikes/toraa" data-placeholders="3"
+
+          <div class="bike-specs">
+            <article class="card reveal">
+              <h3 data-i18n="garage.group.engine">Engine</h3>
+              <p class="tagline-small" data-i18n="garage.toraa.honest">"Went for 410cc. The engine took it; the stock ECU didn't."</p>
+              <ul class="bullets">
+                <li data-i18n="garage.toraa.e1">410cc big bore conversion attempt</li>
+                <li data-i18n="garage.toraa.e2">Hitchcocks high-lift cam</li>
+                <li data-i18n="garage.toraa.e3">Slipper clutch conversion</li>
+              </ul>
+            </article>
+            <article class="card reveal">
+              <h3 data-i18n="garage.group.intake">Intake</h3>
+              <ul class="bullets">
+                <li data-i18n="garage.toraa.i1">Schorl high-flow air filter kit</li>
+                <li data-i18n="garage.toraa.i2">3D-printed high-flow intake cover</li>
+              </ul>
+            </article>
+            <article class="card reveal">
+              <h3 data-i18n="garage.group.ergo">Ergonomics &amp; comfort</h3>
+              <ul class="bullets">
+                <li data-i18n="garage.toraa.c1">Art of Motorcycle scrambler handlebar conversion</li>
+                <li data-i18n="garage.toraa.c2">Royal Enfield custom seat</li>
+                <li data-i18n="garage.toraa.c3">Pulsar 220 rear shocks for comfort</li>
+              </ul>
+            </article>
+            <article class="card reveal">
+              <h3 data-i18n="garage.group.tyres">Tyres</h3>
+              <ul class="bullets">
+                <li data-i18n="garage.toraa.t1">Apollo Tramplr ST dual-sport rear</li>
+                <li data-i18n="garage.toraa.t2">Front still stock (upgrade planned)</li>
+              </ul>
+            </article>
+            <article class="card reveal">
+              <h3 data-i18n="garage.group.fun">Just for fun</h3>
+              <ul class="bullets">
+                <li data-i18n="garage.toraa.f1">3D-printed Monster can holder on the handlebars</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="gallery tall" data-folder="assets/images/bikes/toraa" data-skip="assets/images/bikes/toraa/3.jpeg" data-placeholders="0"
                data-i18n-attr="data-alt:garage.toraa.alt" data-alt="Toraa, Royal Enfield Hunter 350"></div>
-
-          <article class="card reveal">
-            <h3 data-i18n="garage.group.engine">Engine</h3>
-            <p class="tagline-small" data-i18n="garage.toraa.honest">"Went for 410cc. The engine took it; the stock ECU didn't."</p>
-            <ul class="bullets">
-              <li data-i18n="garage.toraa.e1">410cc big bore conversion attempt</li>
-              <li data-i18n="garage.toraa.e2">Hitchcocks high-lift cam</li>
-              <li data-i18n="garage.toraa.e3">Slipper clutch conversion</li>
-            </ul>
-          </article>
-          <article class="card reveal">
-            <h3 data-i18n="garage.group.intake">Intake</h3>
-            <ul class="bullets">
-              <li data-i18n="garage.toraa.i1">Schorl high-flow air filter kit</li>
-              <li data-i18n="garage.toraa.i2">3D-printed high-flow intake cover</li>
-            </ul>
-          </article>
-          <article class="card reveal">
-            <h3 data-i18n="garage.group.ergo">Ergonomics &amp; comfort</h3>
-            <ul class="bullets">
-              <li data-i18n="garage.toraa.c1">Art of Motorcycle scrambler handlebar conversion</li>
-              <li data-i18n="garage.toraa.c2">Royal Enfield custom seat</li>
-              <li data-i18n="garage.toraa.c3">Pulsar 220 rear shocks for comfort</li>
-            </ul>
-          </article>
-          <article class="card reveal">
-            <h3 data-i18n="garage.group.tyres">Tyres</h3>
-            <ul class="bullets">
-              <li data-i18n="garage.toraa.t1">Apollo Tramplr ST dual-sport rear</li>
-              <li data-i18n="garage.toraa.t2">Front still stock (upgrade planned)</li>
-            </ul>
-          </article>
-          <article class="card reveal">
-            <h3 data-i18n="garage.group.fun">Just for fun</h3>
-            <ul class="bullets">
-              <li data-i18n="garage.toraa.f1">3D-printed Monster can holder on the handlebars</li>
-            </ul>
-          </article>
         </div>
-
       </div>
     </section>
   </main>

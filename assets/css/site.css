@@ -1539,3 +1539,77 @@ main { overflow-x: clip; }
 @media (min-width: 820px) {
   .ppr { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+
+/* ===================== 22. GARAGE: BIG BIKE SHOWCASES =====================
+   Like the home page hero: each bike's photo melts into the black page on one
+   side while its name and specs sit on the other. Ava = photo right, Toraa
+   (.is-flipped) = photo left. Arabic mirrors both automatically. */
+.bike-show { position: relative; isolation: isolate; padding-block: 72px; overflow-x: clip; }
+.bike-show + .bike-show { margin-top: 24px; }
+
+.bike-photo {
+  position: absolute;
+  z-index: -1;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: 60%;
+  background-size: cover;
+  background-position: var(--focus, center);
+  /* fade in from the text side, and soften the top and bottom edges */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.6) 22%, #000 45%),
+                      linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.6) 22%, #000 45%),
+              linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+  mask-composite: intersect;
+}
+/* photo on the other side: the fade runs the other way */
+.bike-show.is-flipped .bike-photo,
+[dir="rtl"] .bike-show:not(.is-flipped) .bike-photo {
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.6) 22%, #000 45%),
+                      linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.6) 22%, #000 45%),
+              linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+}
+[dir="rtl"] .bike-show.is-flipped .bike-photo {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.6) 22%, #000 45%),
+                      linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.6) 22%, #000 45%),
+              linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%);
+}
+.bike-show.is-flipped .bike-photo { inset-inline-end: auto; inset-inline-start: 0; }
+
+/* the text column sits on the side away from the photo */
+.bike-text { width: min(100%, 580px, 48vw); display: grid; gap: 16px; }
+.bike-show.is-flipped .bike-text { margin-inline-start: auto; }
+.bike-text .bike-head { margin-bottom: 4px; }
+.bike-text .bike-head .nick { font-size: clamp(3rem, 8vw, 5.5rem); letter-spacing: 0.02em; text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6); }
+.bike-text .gallery { margin-top: 0; }
+
+/* spec cards two across; an odd last card takes the full width */
+.bike-specs { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.bike-specs > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+/* ---- Tablets & phones: the photo goes on top, big, fading down into the
+   page, and the bike's name sits on its lower edge ---- */
+@media (max-width: 1024px) {
+  .bike-show { padding-block: 0 48px; }
+  .bike-photo,
+  .bike-show.is-flipped .bike-photo,
+  [dir="rtl"] .bike-show .bike-photo {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: min(82svh, 760px);
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  }
+  .bike-text,
+  .bike-show.is-flipped .bike-text { width: 100%; margin-inline-start: 0; margin-top: -150px; position: relative; }
+}
+@media (max-width: 600px) {
+  .bike-photo, .bike-show.is-flipped .bike-photo, [dir="rtl"] .bike-show .bike-photo { height: min(72svh, 560px); }
+  .bike-text, .bike-show.is-flipped .bike-text { margin-top: -120px; }
+  .bike-specs { grid-template-columns: minmax(0, 1fr); }
+}

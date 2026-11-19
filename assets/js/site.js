@@ -322,7 +322,8 @@ function placeholderHTML() {
 function renderGalleries() {
   $$('.gallery[data-folder]').forEach(gallery => {
     const limit = Number(gallery.dataset.limit) || Infinity;
-    const photos = photosIn(gallery.dataset.folder).slice(0, limit);
+    // data-skip: leave out a photo that's already shown big elsewhere on the page
+    const photos = photosIn(gallery.dataset.folder).filter(p => p.src !== gallery.dataset.skip).slice(0, limit);
     const altBase = gallery.dataset.alt || '';
 
     if (photos.length === 0) {
@@ -418,8 +419,8 @@ function layoutGallery(gallery) {
     const sum = ars.slice(i, j).reduce((s, a) => s + a, 0);
     const height = (width - gap * (j - i - 1)) / sum;
     // A row that would be too tall (e.g. one wide photo) is capped and centred instead
-    // (a photo alone in its row may grow bigger: up to ~70% of the screen height)
-    const cap = j - i === 1 ? Math.max(maxRow, Math.min(window.innerHeight * 0.7, 640)) : maxRow;
+    // (a row of just 1-2 photos may grow bigger: up to ~70% of the screen height)
+    const cap = j - i <= 2 ? Math.max(maxRow, Math.min(window.innerHeight * 0.7, 640)) : maxRow;
     if (height > cap) row.style.maxWidth = Math.round(sum * cap + gap * (j - i - 1)) + 'px';
     for (let x = i; x < j; x++) {
       buttons[x].style.setProperty('--ar', ars[x]);
