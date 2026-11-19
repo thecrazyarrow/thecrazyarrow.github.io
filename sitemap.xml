@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- The list of pages for search engines. If the site address changes (custom domain), replace it below. -->
+<!-- The list of pages for search engines. If the site address ever changes, replace it below. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://thecrazyarrow.github.io/</loc></url>
-  <url><loc>https://thecrazyarrow.github.io/projects.html</loc></url>
-  <url><loc>https://thecrazyarrow.github.io/content.html</loc></url>
-  <url><loc>https://thecrazyarrow.github.io/manufacturing.html</loc></url>
-  <url><loc>https://thecrazyarrow.github.io/industrial.html</loc></url>
-  <url><loc>https://thecrazyarrow.github.io/garage.html</loc></url>
-  <url><loc>https://thecrazyarrow.github.io/guitar.html</loc></url>
-  <url><loc>https://thecrazyarrow.github.io/versatility.html</loc></url>
-  <url><loc>https://thecrazyarrow.github.io/growth.html</loc></url>
-  <url><loc>https://thecrazyarrow.github.io/about.html</loc></url>
+  <url><loc>https://thecrazyarrow.com/</loc></url>
+  <url><loc>https://thecrazyarrow.com/projects.html</loc></url>
+  <url><loc>https://thecrazyarrow.com/content.html</loc></url>
+  <url><loc>https://thecrazyarrow.com/manufacturing.html</loc></url>
+  <url><loc>https://thecrazyarrow.com/industrial.html</loc></url>
+  <url><loc>https://thecrazyarrow.com/garage.html</loc></url>
+  <url><loc>https://thecrazyarrow.com/guitar.html</loc></url>
+  <url><loc>https://thecrazyarrow.com/versatility.html</loc></url>
+  <url><loc>https://thecrazyarrow.com/growth.html</loc></url>
+  <url><loc>https://thecrazyarrow.com/about.html</loc></url>
 </urlset>

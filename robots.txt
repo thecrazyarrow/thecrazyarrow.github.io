@@ -1,6 +1,6 @@
 # Lets search engines index the whole site.
-# Site address: https://thecrazyarrow.github.io/ (replace it here if you move to a custom domain).
+# Site address: https://thecrazyarrow.com/
 User-agent: *
 Allow: /
 
-Sitemap: https://thecrazyarrow.github.io/sitemap.xml
+Sitemap: https://thecrazyarrow.com/sitemap.xml

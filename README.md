@@ -100,8 +100,8 @@ The numbers (0–100) are `"growth.g1.value"` ... `"growth.g5.value"` in `en.jso
 4. On GitHub: repository → **Settings → Pages** → *Build and deployment* →
    Source **Deploy from a branch** → Branch **main**, folder **/ (root)** → **Save**.
 5. After a minute or two the site is live at
-   `https://thecrazyarrow.github.io/` (repository `thecrazyarrow.github.io`).
-6. Done already: every page uses `https://thecrazyarrow.github.io/`. If you move to a custom domain, replace it in every `.html` file,
+   `https://thecrazyarrow.com/` (repository `thecrazyarrow.github.io`).
+6. Custom domain: `thecrazyarrow.com` (DNS at Cloudflare, "DNS only"; the `CNAME` file tells GitHub). Every page uses `https://thecrazyarrow.com/`. If that ever changes, replace it in every `.html` file,
    `robots.txt` and `sitemap.xml` (VS Code: **Ctrl+Shift+H**, find and replace in all files),
    then commit and push again:
    ```
