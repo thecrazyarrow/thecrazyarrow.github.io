@@ -659,13 +659,73 @@ function addGears() {
       </g>`;
   }).join('');
 
-  $$('.hero, .page-hero').forEach(hero => {
+  $$('.hero, .page-hero, [data-decor]').forEach(hero => {   // data-decor: an extra spot for them (guitar page)
     const box = document.createElement('div');
     box.className = 'gears';
     box.setAttribute('aria-hidden', 'true');
-    box.innerHTML = `<svg viewBox="-215 -105 320 310" xmlns="http://www.w3.org/2000/svg">${svgGears}</svg>`;
+    // The guitar page gets floating instruments instead of gears
+    const art = document.body.classList.contains('theme-guitar') ? musicSVG() : svgGears;
+    box.innerHTML = `<svg viewBox="-215 -105 320 310" xmlns="http://www.w3.org/2000/svg">${art}</svg>`;
     hero.prepend(box);
   });
+}
+
+// ---- Musical instruments, drawn as simple line art (guitar page only) ----
+// Each shape is drawn around (0, 0) at a small size; MUSIC_LAYOUT places,
+// scales and tilts it. They bob gently up and down instead of turning.
+const MUSIC_SHAPES = {
+  // an acoustic guitar: figure-8 body, sound hole, neck, headstock, strings
+  guitar: `<path class="music-fill" d="M0 -22 C9 -22 11 -14 8 -8 C16 -4 18 10 10 18 C4 24 -4 24 -10 18 C-18 10 -16 -4 -8 -8 C-11 -14 -9 -22 0 -22 Z"/>
+           <circle class="music-line" cx="0" cy="2" r="4.5"/>
+           <rect class="music-fill" x="-2.2" y="-54" width="4.4" height="33"/>
+           <rect class="music-fill" x="-3.8" y="-64" width="7.6" height="10" rx="1.5"/>
+           <path class="music-line" d="M-6 12 h12 M-1 -54 V12 M1 -54 V12"/>`,
+  // an electric guitar: offset body, two pickups, long neck
+  electric: `<path class="music-fill" d="M-6 -16 C-2 -22 4 -20 5 -14 C9 -18 15 -16 14 -9 C13 -3 9 0 11 6 C14 14 8 22 -1 22 C-12 22 -17 13 -13 4 C-11 -1 -14 -6 -12 -11 C-11 -15 -8 -17 -6 -16 Z"/>
+             <rect class="music-line" x="-5" y="-6" width="10" height="3" rx="1"/>
+             <rect class="music-line" x="-5" y="3" width="10" height="3" rx="1"/>
+             <rect class="music-fill" x="-1.8" y="-52" width="3.6" height="36"/>
+             <path class="music-fill" d="M-2 -52 l-3 -10 h7 l1 10 z"/>`,
+  // a drum (side view) with crossed sticks
+  drum: `<ellipse class="music-fill" cx="0" cy="-8" rx="22" ry="7"/>
+         <path class="music-fill" d="M-22 -8 V12 C-22 16 -12 20 0 20 C12 20 22 16 22 12 V-8 C22 -4 12 -1 0 -1 C-12 -1 -22 -4 -22 -8 Z"/>
+         <path class="music-line" d="M-16 -2 L-8 18 L0 -1 L8 19 L16 -2"/>
+         <path class="music-line" d="M-26 -34 L-4 -12 M26 -34 L4 -12"/>
+         <circle class="music-dot" cx="-26" cy="-34" r="2.2"/><circle class="music-dot" cx="26" cy="-34" r="2.2"/>`,
+  // a tuning fork: two prongs joined in a U, with a handle
+  fork: `<path class="music-line" d="M-5 -34 V-6 C-5 2 5 2 5 -6 V-34 M0 -2 V26" style="stroke-width:2.2"/>
+         <circle class="music-dot" cx="0" cy="27" r="2.6"/>
+         <path class="music-line" d="M-12 -30 c-4 4 -4 10 0 14 M12 -30 c4 4 4 10 0 14" style="opacity:.6"/>`,
+  // a single eighth note
+  note: `<ellipse class="music-fill" cx="0" cy="0" rx="6.5" ry="4.8" transform="rotate(-22)"/>
+         <path class="music-line" d="M5.8 -1.5 V-30 C12 -27 17 -21 13 -12"/>`,
+  // two beamed notes
+  notes: `<ellipse class="music-fill" cx="0" cy="0" rx="6" ry="4.4" transform="rotate(-22)"/>
+          <ellipse class="music-fill" cx="20" cy="-5" rx="6" ry="4.4" transform="rotate(-22 20 -5)"/>
+          <path class="music-line" d="M5.4 -1.5 V-28 M25.4 -6.5 V-33"/>
+          <path class="music-fill" d="M5.4 -28 L25.4 -33 V-28 L5.4 -23 Z"/>`,
+};
+// [shape, x, y, scale, tilt in degrees, seconds per bob]
+const MUSIC_LAYOUT = [
+  ['guitar',   -40,  60, 2.5,  24, 9],
+  ['drum',    -150, 135, 1.8,  -6, 7],
+  ['fork',      60, -30, 1.9, -16, 8],
+  ['note',    -150, -40, 2.1,  10, 6],
+  ['notes',     20, 150, 1.8,  -8, 7.5],
+  ['electric',  85, 105, 1.5, -28, 10],
+  ['note',      70,  30, 1.2, -12, 5.5],
+  ['fork',    -200,  50, 1.2,  18, 6.5],
+];
+
+function musicSVG() {
+  return MUSIC_LAYOUT.map(([shape, x, y, scale, tilt, secs], i) => {
+    const bob = reducedMotion ? '' :
+      `<animateTransform attributeName="transform" type="translate" values="0 0; 0 -9; 0 0"
+        dur="${secs}s" begin="-${(i * 1.3).toFixed(1)}s" repeatCount="indefinite"/>`;
+    return `<g transform="translate(${x} ${y})"><g>${bob}
+        <g transform="rotate(${tilt}) scale(${scale})" vector-effect="non-scaling-stroke">${MUSIC_SHAPES[shape]}</g>
+      </g></g>`;
+  }).join('');
 }
 
 

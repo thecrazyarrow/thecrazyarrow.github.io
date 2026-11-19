@@ -28,7 +28,16 @@
   --accent-light: #ffa552;      /* hover / highlights */
   --text: #f5ebe0;            /* warm off-white */
   --muted: #a8927e;           /* secondary text */
-  --glow: 0 18px 48px -18px rgba(255, 122, 26, 0.45);
+  --glow: 0 18px 48px -18px rgba(var(--accent-rgb), 0.45);
+
+  /* The same colours as plain numbers, so rgba() can fade them (rgba(var(--accent-rgb), 0.3)).
+     A page theme (like the purple guitar page) changes these and every glow follows. */
+  --accent-rgb: 255, 122, 26;
+  --accent-light-rgb: 255, 165, 82;
+  --line-rgb: 74, 46, 24;
+  --rivet-hi: #6b4426;
+  --rivet-lo: #3a2416;
+  --brand-icon: var(--gear-icon);   /* the logo always keeps its gear, even on themed pages */
 
   /* ---- "Gears era" pieces ----
      --gear-icon is a tiny gear drawn in SVG. CSS uses it as a MASK: the
@@ -38,7 +47,7 @@
 
   /* Rivets: four little bolt heads in the corners of every card, like a
      riveted steel plate. Each radial-gradient draws one dot. */
-  --rivet: radial-gradient(circle, #6b4426 0 1.2px, #3a2416 1.6px 3px, transparent 3.4px);
+  --rivet: radial-gradient(circle, var(--rivet-hi) 0 1.2px, var(--rivet-lo) 1.6px 3px, transparent 3.4px);
   --rivets:
     var(--rivet) 6px 6px / 12px 12px no-repeat,
     var(--rivet) calc(100% - 6px) 6px / 12px 12px no-repeat,
@@ -271,7 +280,7 @@ p + p { margin-top: 14px; }
   z-index: 50;
   background: rgba(11, 9, 7, 0.86);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(74, 46, 24, 0.6);
+  border-bottom: 1px solid rgba(var(--line-rgb), 0.6);
 }
 
 .header-inner {
@@ -301,8 +310,8 @@ p + p { margin-top: 14px; }
   margin-inline-end: 0.4em;
   vertical-align: -0.12em;
   background: var(--accent);
-  -webkit-mask: var(--gear-icon) center / contain no-repeat;
-  mask: var(--gear-icon) center / contain no-repeat;
+  -webkit-mask: var(--brand-icon) center / contain no-repeat;
+  mask: var(--brand-icon) center / contain no-repeat;
   animation: spin 10s linear infinite;
 }
 .brand:hover .brand-gear { animation-duration: 1.5s; }
@@ -329,7 +338,7 @@ p + p { margin-top: 14px; }
   transition: color 0.2s, background-color 0.2s;
 }
 .nav-links a:hover { color: var(--accent-light); }
-.nav-links a[aria-current="page"] { color: var(--accent); background: rgba(255, 122, 26, 0.08); }
+.nav-links a[aria-current="page"] { color: var(--accent); background: rgba(var(--accent-rgb), 0.08); }
 
 .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .btn-hire { padding: 8px 16px; font-size: 0.88rem; white-space: nowrap; }
@@ -399,7 +408,7 @@ a.card { display: block; }
   border-radius: 12px;
   display: grid;
   place-items: center;              /* NEW: centres the icon both ways in one line */
-  background: rgba(255, 122, 26, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
   color: var(--accent);
   margin-bottom: 16px;
 }
@@ -495,7 +504,7 @@ a.card { display: block; }
 .flow li span {
   border: 1px solid var(--accent);
   color: var(--accent-light);
-  background: rgba(255, 122, 26, 0.06);
+  background: rgba(var(--accent-rgb), 0.06);
   border-radius: 999px;
   padding: 6px 14px;
 }
@@ -542,7 +551,7 @@ a.card { display: block; }
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   background:
-    radial-gradient(circle at 50% 40%, rgba(255, 122, 26, 0.08), transparent 70%),
+    radial-gradient(circle at 50% 40%, rgba(var(--accent-rgb), 0.08), transparent 70%),
     var(--surface);
   display: grid;
   place-items: center;
@@ -610,8 +619,8 @@ a.card { display: block; }
 /* Placeholder "photo" when zynx/ is empty: a warm glow like a grinder's sparks */
 .hero-photo.is-empty {
   background:
-    radial-gradient(ellipse 45% 40% at 62% 52%, rgba(255, 165, 82, 0.22), transparent 70%),
-    radial-gradient(ellipse 70% 60% at 70% 60%, rgba(255, 122, 26, 0.10), transparent 75%);
+    radial-gradient(ellipse 45% 40% at 62% 52%, rgba(var(--accent-light-rgb), 0.22), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 70% 60%, rgba(var(--accent-rgb), 0.10), transparent 75%);
 }
 
 /* width/height 100%: a canvas is 300×150 by default unless told otherwise */
@@ -632,12 +641,12 @@ a.card { display: block; }
 }
 .gears svg { width: 100%; height: auto; overflow: visible; }
 .gear-body {
-  fill: rgba(255, 122, 26, 0.045);
-  stroke: rgba(255, 122, 26, 0.38);
+  fill: rgba(var(--accent-rgb), 0.045);
+  stroke: rgba(var(--accent-rgb), 0.38);
   stroke-width: 1.3;
   fill-rule: evenodd;               /* NEW: makes the inner circles into holes */
 }
-.gear-axle { fill: rgba(255, 122, 26, 0.45); }
+.gear-axle { fill: rgba(var(--accent-rgb), 0.45); }
 /* Home hero: the gears sit in the bottom corner, under the faded edge of the photo */
 .hero .gears { top: auto; bottom: -170px; inset-inline-end: -110px; width: min(520px, 80vw); opacity: 0.75; }
 /* Once the hero photo is in, the gears move to the bottom-left so they never sit on the photo */
@@ -674,7 +683,7 @@ a.card { display: block; }
   top: -40%;
   width: 60%;
   aspect-ratio: 1;
-  background: radial-gradient(circle, rgba(255, 122, 26, 0.12), transparent 65%);
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.12), transparent 65%);
   z-index: -1;
 }
 .page-hero h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); margin-bottom: 14px; }
@@ -731,7 +740,7 @@ a.card { display: block; }
 .project[open]:focus-within { transform: none; }   /* don't float the open panel while reading */
 
 .ppr { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); margin-block: 10px 24px; }
-.ppr > div { background: var(--surface-2); border-radius: var(--radius-sm); padding: 18px; border: 1px solid rgba(74, 46, 24, 0.6); }
+.ppr > div { background: var(--surface-2); border-radius: var(--radius-sm); padding: 18px; border: 1px solid rgba(var(--line-rgb), 0.6); }
 .ppr h4 { color: var(--accent); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
 
 .stack-row { margin-top: 18px; }
@@ -775,7 +784,7 @@ a.card { display: block; }
   border: 1px solid var(--accent);
   border-radius: var(--radius);
   padding: clamp(26px, 5vw, 48px);
-  background: radial-gradient(circle at 20% 0%, rgba(255, 122, 26, 0.14), transparent 60%), var(--surface);
+  background: radial-gradient(circle at 20% 0%, rgba(var(--accent-rgb), 0.14), transparent 60%), var(--surface);
   text-align: center;
 }
 .song-title { font-family: var(--font-display); font-size: clamp(2.2rem, 7vw, 4rem); color: var(--accent-light); margin-block: 6px 12px; }
@@ -805,7 +814,7 @@ a.card { display: block; }
   color: var(--text);
   transition: border-color 0.2s;
 }
-.form input:focus, .form textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.2); }
+.form input:focus, .form textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.2); }
 .form textarea { min-height: 140px; resize: vertical; }
 .form-status { font-size: 0.9rem; color: var(--accent-light); min-height: 1.4em; }
 
@@ -823,7 +832,7 @@ a.card { display: block; }
   padding: clamp(28px, 6vw, 56px);
   text-align: center;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(255, 122, 26, 0.16), transparent 65%),
+    radial-gradient(ellipse at 50% 0%, rgba(var(--accent-rgb), 0.16), transparent 65%),
     var(--surface);
 }
 .cta-band h2 { margin-bottom: 10px; }
@@ -913,10 +922,10 @@ a.card { display: block; }
   --radius: 20px;
   background: radial-gradient(ellipse at 50% -10%, #2e1708 0%, var(--bg) 55%) fixed, var(--bg);
 }
-.theme-guitar .card { border-color: rgba(255, 122, 26, 0.3); }
+.theme-guitar .card { border-color: rgba(var(--accent-rgb), 0.3); }
 
 /* Growth: quieter, less glow */
-.theme-growth { --glow: 0 12px 30px -16px rgba(255, 122, 26, 0.3); }
+.theme-growth { --glow: 0 12px 30px -16px rgba(var(--accent-rgb), 0.3); }
 .theme-growth .page-hero::before { opacity: 0.5; }
 
 
@@ -1059,7 +1068,7 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
 }
 @media (pointer: coarse) {
   .model-frame:not(.is-active) .viewer-tap { display: block; }
-  .model-frame.is-active { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(255, 122, 26, 0.35); }
+  .model-frame.is-active { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.35); }
 
   /* Bigger tap targets for fingers */
   .lang-switch button { min-height: 36px; padding-inline: 11px; }
@@ -1219,7 +1228,7 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
   display: block;
   width: 96px;               /* 16 pixels x 6 */
   height: 96px;
-  filter: drop-shadow(0 0 12px rgba(255, 122, 26, 0.45));
+  filter: drop-shadow(0 0 12px rgba(var(--accent-rgb), 0.45));
 }
 .egg-cat.show .egg-cat-art { animation: cat-idle 1.6s steps(1) infinite; }
 @keyframes cat-idle {          /* a choppy, 8-bit style breathing bob */
@@ -1248,7 +1257,7 @@ html[lang="ar"] * { letter-spacing: 0 !important; }
   transform-origin: 50% 100%;
   opacity: 0;
   pointer-events: none;
-  filter: drop-shadow(0 0 6px rgba(255, 122, 26, 0.6));
+  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.6));
 }
 .egg-cat.is-clawing .egg-paw { animation: cat-swipe 0.38s steps(4); }
 @keyframes cat-swipe {
@@ -1407,7 +1416,7 @@ main { overflow-x: clip; }
 /* while held: the gear spins fast and the logo slowly lights up */
 .brand.is-holding .brand-gear { animation-duration: 0.35s; }
 .brand.is-holding .brand-main {
-  text-shadow: 0 0 16px rgba(255, 122, 26, 0.95);
+  text-shadow: 0 0 16px rgba(var(--accent-rgb), 0.95);
   transition: text-shadow 5s linear;
 }
 
@@ -1660,3 +1669,66 @@ main { overflow-x: clip; }
   }
 }
 .hero-music .hero-text > * { text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75); }
+
+
+/* ===================== 24. GUITAR PAGE: BLACK & PURPLE =====================
+   Only the guitar page (<body class="theme-guitar">). Every colour on the
+   site comes from these variables, so changing them here repaints the whole
+   page: header, buttons, cards, glows, even the footer cat. */
+.theme-guitar {
+  --bg: #0a0710;
+  --surface: #140e1c;
+  --surface-2: #1c1427;
+  --line: #3d2a5c;
+  --accent: #a855f7;
+  --accent-light: #c98bff;
+  --text: #f2ecfa;
+  --muted: #a597bd;
+  --accent-rgb: 168, 85, 247;
+  --accent-light-rgb: 201, 139, 255;
+  --line-rgb: 61, 42, 92;
+  --rivet-hi: #6a4a98;
+  --rivet-lo: #2c1f44;
+  /* these are built from the colours above, so they're rebuilt here too */
+  --glow: 0 18px 48px -18px rgba(168, 85, 247, 0.5);
+  --rivet: radial-gradient(circle, var(--rivet-hi) 0 1.2px, var(--rivet-lo) 1.6px 3px, transparent 3.4px);
+  --rivets:
+    var(--rivet) 6px 6px / 12px 12px no-repeat,
+    var(--rivet) calc(100% - 6px) 6px / 12px 12px no-repeat,
+    var(--rivet) 6px calc(100% - 6px) / 12px 12px no-repeat,
+    var(--rivet) calc(100% - 6px) calc(100% - 6px) / 12px 12px no-repeat;
+  /* the little gear markers (bullets, labels, timeline dots) become music notes */
+  --gear-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M8 1.5v11.2a3.8 3.8 0 1 0 2.2 3.4V6.2c2.3.3 4.3 1.6 5.4 3.6.6-3.9-1.7-7.2-5.4-8.3z'/%3E%3C/svg%3E");
+  background: radial-gradient(ellipse at 50% -10%, #1f0f33 0%, var(--bg) 55%) fixed, var(--bg);
+}
+.theme-guitar .site-header { background: rgba(10, 7, 16, 0.86); }
+
+/* the hero photo: black & white with a purple wash instead of the warm tint */
+.theme-guitar .hero-music .hero-photo { filter: none; }   /* already black & white; a filter here would also grey out the purple wash */
+.theme-guitar .hero-music .hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #8b3dff;
+  mix-blend-mode: color;              /* colours the photo purple but keeps its light and shade */
+  opacity: 0.5;
+}
+
+/* The footer cat follows the page colour (orange everywhere else, purple here) */
+.egg-cat .px-o, .egg-cat .px-n { fill: var(--accent); }
+.egg-cat .px-e { fill: var(--accent-light); }
+
+/* ---- Floating instruments instead of gears (site.js -> addGears) ---- */
+.music-line { fill: none; stroke: rgba(var(--accent-rgb), 0.45); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.music-fill { fill: rgba(var(--accent-rgb), 0.07); stroke: rgba(var(--accent-rgb), 0.45); stroke-width: 1.4; stroke-linejoin: round; }
+.music-dot { fill: rgba(var(--accent-rgb), 0.5); }
+.gears .music-line, .gears .music-fill { vector-effect: non-scaling-stroke; }   /* same line weight at any size */
+/* the instruments: a bit stronger than the gears, and extra clusters beside the song and the journey */
+.theme-guitar .gears { opacity: 0.85; }
+.theme-guitar .music-line, .theme-guitar .music-fill { stroke: rgba(var(--accent-rgb), 0.6); }
+[data-decor] { position: relative; isolation: isolate; }
+[data-decor] > .gears { top: -60px; width: min(420px, 60vw); opacity: 0.55; }
+#song > .gears { inset-inline-end: auto; inset-inline-start: min(-60px, calc((100% - 100vw) / 2 - 40px)); }
+@media (max-width: 860px) { [data-decor] > .gears { opacity: 0.3; width: 280px; } }
+/* the journey's cluster stays out at the screen edge, clear of the timeline text */
+#song ~ [data-decor] > .gears { width: min(300px, 40vw); top: -20px; opacity: 0.4; }
