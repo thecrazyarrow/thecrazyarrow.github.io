@@ -191,6 +191,25 @@ function buildChrome() {
     toggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
     $$('a', nav).forEach(a => a.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+
+    // Touching anywhere outside the open menu closes it.
+    // That touch ONLY closes the menu: it won't also press whatever was under
+    // your finger (so you don't open a project by accident).
+    const isOpen = () => nav.classList.contains('open');
+    const outside = target => !nav.contains(target) && !toggle.contains(target);
+    let swallowNextClick = false;
+    document.addEventListener('pointerdown', e => {
+      if (!isOpen() || !outside(e.target)) return;
+      setOpen(false);
+      swallowNextClick = true;
+      setTimeout(() => (swallowNextClick = false), 600);
+    }, true);   // true = "capture": we hear about the touch before anything else on the page does
+    document.addEventListener('click', e => {
+      if (!swallowNextClick || !outside(e.target)) return;
+      swallowNextClick = false;
+      e.preventDefault();
+      e.stopPropagation();
+    }, true);
   }
 }
 
