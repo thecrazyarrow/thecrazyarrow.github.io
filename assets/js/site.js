@@ -326,7 +326,8 @@ function renderGalleries() {
     const altBase = gallery.dataset.alt || '';
 
     if (photos.length === 0) {
-      const count = Number(gallery.dataset.placeholders) || 3;
+      const count = gallery.dataset.placeholders === undefined ? 3 : Number(gallery.dataset.placeholders);
+      if (count === 0) { gallery.hidden = true; return; }   // data-placeholders="0": just hide it
       gallery.innerHTML = placeholderHTML().repeat(Math.min(count, limit));
       return;
     }

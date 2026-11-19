@@ -101,15 +101,13 @@
           <div class="project-body">
             <div class="ppr">
               <div><h4 data-i18n="common.problem">Problem</h4><p data-i18n="projects.splint.problem">The idea came from a hospital visit. Casts are heavy and bulky, and one-size-fits-all splints rarely fit well.</p></div>
-              <div><h4 data-i18n="common.process">Process</h4><p data-i18n="projects.splint.process">A flat-bed-printable design that softens in hot water and is shaped directly on the limb. Explored in collaboration with Athira Hospital, Chavara, Kollam.</p></div>
+              <div><h4 data-i18n="common.process">Process</h4><p data-i18n="projects.splint.process">A flat-bed-printable design that softens in hot water and is shaped directly on the limb.</p></div>
               <div><h4 data-i18n="common.result">Result</h4><p data-i18n="projects.splint.result">A splint that is lighter and less bulky than a cast, with adaptable geometry, designed for low-cost local fabrication.</p></div>
             </div>
             <ul class="chips stack-row">
               <li data-i18n="skill.fdm">FDM printing</li><li data-i18n="projects.splint.t1">Thermoforming</li><li data-i18n="projects.splint.t2">Product design</li>
             </ul>
             <p class="note" data-i18n="projects.splint.note">A product-development concept, not a clinically validated medical device.</p>
-            <div class="gallery" data-folder="assets/images/projects/splint" data-placeholders="2"
-                 data-i18n-attr="data-alt:projects.splint.title" data-alt="Universal Mouldable Splint"></div>
           </div>
         </details>
 
@@ -118,20 +116,20 @@
           <summary>
             <div class="project-title">
               <h3 data-i18n="projects.guitar.title">3D-Printed Electric Guitar</h3>
-              <span class="badge" data-i18n="projects.guitar.badge">In design</span>
+              <span class="badge" data-i18n="projects.guitar.badge">Concept &amp; modelling</span>
             </div>
-            <p data-i18n="projects.guitar.summary">An original sci-fi, asymmetric, angular electric guitar designed in Autodesk Fusion.</p>
+            <p data-i18n="projects.guitar.summary">A Stratocaster-inspired electric guitar, sketched out and fully modelled in Autodesk Fusion, designed to be 3D printed.</p>
             <span class="toggle" data-i18n="common.details">Details</span>
           </summary>
           <div class="project-body">
             <div class="ppr">
               <div><h4 data-i18n="common.problem">Problem</h4><p data-i18n="projects.guitar.problem">A full guitar body is far bigger than a hobby print bed, and it has to survive string tension.</p></div>
               <div><h4 data-i18n="common.process">Process</h4><p data-i18n="projects.guitar.process">A 20 × 40 mm aluminium T-slot extrusion runs from the body into the neck as the backbone. The body has hexagonal through-holes and is split into bolt-together modules that fit a 220 × 220 × 250 mm bed.</p></div>
-              <div><h4 data-i18n="common.result">Result</h4><p data-i18n="projects.guitar.result">The body is modelled. Spin it below. Next: printing and assembly.</p></div>
+              <div><h4 data-i18n="common.result">Result</h4><p data-i18n="projects.guitar.result">Still in the concept and physical-modelling phase: everything is sketched out and modelled in Fusion, and the 3D model is ready. Spin it below. No physical build yet.</p></div>
             </div>
 
             <!-- The 3D viewer from V1 (assets/js/viewer.js) -->
-            <div class="model-frame" data-model="models/GUITAR%20BODY.stl" data-color="#ff7a1a">
+            <div class="model-frame" data-model="models/STRATOCASTER%20INSPIRED%20GUITAR%20BODY.stl" data-color="#ff7a1a">
               <p class="viewer-status">Loading model…</p>
               <p class="viewer-tap" data-i18n="common.tapToRotate">Tap to rotate</p>
               <button class="viewer-btn" type="button" aria-label="Fullscreen">&#x26F6;</button>
@@ -146,8 +144,6 @@
               <li data-i18n="projects.guitar.t4">Fixed bridge</li>
               <li data-i18n="projects.guitar.t5">Volume, tone &amp; 3-way selector</li>
             </ul>
-            <div class="gallery" data-folder="assets/images/projects/guitar" data-placeholders="2"
-                 data-i18n-attr="data-alt:projects.guitar.title" data-alt="3D-Printed Electric Guitar"></div>
           </div>
         </details>
 
@@ -155,25 +151,23 @@
         <details class="card project reveal">
           <summary>
             <div class="project-title"><h3 data-i18n="projects.arm.title">Gesture-Controlled Robotic Arm</h3></div>
-            <p data-i18n="projects.arm.summary">Built single-handedly: a robotic arm that follows hand gestures through computer vision.</p>
+            <p data-i18n="projects.arm.summary">Built single-handedly: a laser-cut acrylic robotic arm that follows hand gestures through computer vision.</p>
             <span class="toggle" data-i18n="common.details">Details</span>
           </summary>
           <div class="project-body">
             <div class="ppr">
               <div><h4 data-i18n="common.problem">Problem</h4><p data-i18n="projects.arm.problem">Control a robotic arm naturally, with your hand, without joysticks or a remote.</p></div>
-              <div><h4 data-i18n="common.process">Process</h4><p data-i18n="projects.arm.process">MediaPipe tracks 21 points on the hand, YOLOv8 handles detection, and an Arduino drives the motors.</p></div>
+              <div><h4 data-i18n="common.process">Process</h4><p data-i18n="projects.arm.process">The arm is cut from 3 mm acrylic sheet on a laser cutter. MediaPipe tracks 21 points on the hand, YOLOv8 handles detection, and an Arduino drives the motors.</p></div>
               <div><h4 data-i18n="common.result">Result</h4><p data-i18n="projects.arm.result">An arm that responds to hand movements in real time.</p></div>
             </div>
             <ul class="chips stack-row">
               <li>MediaPipe</li><li>YOLOv8</li><li>Python</li><li>Arduino</li>
-              <li data-i18n="projects.arm.t1">21-point hand tracking</li>
+              <li data-i18n="projects.arm.t1">21-point hand tracking</li><li data-i18n="projects.arm.t2">Laser-cut 3 mm acrylic</li>
             </ul>
-            <!-- Shows assets/video/robotic-arm.mp4 if you add it; hidden otherwise -->
+            <!-- Shows assets/video/robotic arm.mp4 (any video whose name starts with "robotic arm") -->
             <div data-hide-if-empty hidden style="margin-top:20px">
-              <div class="video-list" data-prefix="robotic-arm"></div>
+              <div class="video-list video-small" data-prefix="robotic arm"></div>
             </div>
-            <div class="gallery" data-folder="assets/images/projects/robotic-arm" data-placeholders="2"
-                 data-i18n-attr="data-alt:projects.arm.title" data-alt="Gesture-Controlled Robotic Arm"></div>
           </div>
         </details>
 
