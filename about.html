@@ -3,8 +3,8 @@
   The three story paragraphs (about.p1, about.p2, about.p3) are a first draft.
   Rewrite them in your own voice in assets/i18n/en.json.
 
-  CONTACT FORM: replace YOUR_FORM_ID in the form's action with your
-  Formspree ID (see README). Until then, "Send" opens an email instead.
+  CONTACT FORM: sends through Formspree (form meagzwel, set up with aaronnetto78@gmail.com).
+  Messages arrive by email and in the Formspree dashboard (formspree.io).
 -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css?v=202611200053">
+  <link rel="stylesheet" href="assets/css/site.css?v=202611200100">
   <script>
     document.documentElement.classList.add('js');
     try { var l = localStorage.getItem('lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } else if (l === 'ja') { document.documentElement.lang = 'ja'; } } catch (e) {}
@@ -99,7 +99,10 @@
           </div>
 
           <!-- NEW: a form. "name" on each field is the label Formspree uses in the email it sends you. -->
-          <form id="contact-form" class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <form id="contact-form" class="form" action="https://formspree.io/f/meagzwel" method="POST">
+            <!-- subject line of the email you receive, and a hidden trap: spam bots fill it in, people never see it -->
+            <input type="hidden" name="_subject" value="New message from thecrazyarrow.com">
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
             <label><span data-i18n="contact.name">Name</span>
               <input type="text" name="name" required autocomplete="name">
             </label>
@@ -119,6 +122,6 @@
 
   <!-- No "Hire me" band here: this page IS the contact page -->
   <div id="site-footer"></div>
-  <script src="assets/js/site.js?v=202611200053" defer></script>
+  <script src="assets/js/site.js?v=202611200100" defer></script>
 </body>
 </html>

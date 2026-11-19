@@ -63,11 +63,11 @@ with `guitar` (`guitar-01.mp4` ...) appear on the Guitar page. Keep clips under 
 
 ## The contact form (Formspree)
 
-1. Sign up free at **formspree.io** and create a form. It gives you an ID like `xyzabcd`.
-2. In `about.html`, replace `YOUR_FORM_ID` in
-   `action="https://formspree.io/f/YOUR_FORM_ID"` with that ID.
+1. Done: the form uses Formspree form `meagzwel` (formspree.io/f/meagzwel). Messages arrive by email and in the Formspree dashboard.
+2. To use a different form, change the ID in `about.html` in
+   `action="https://formspree.io/f/meagzwel"`.
 
-Until you do, pressing **Send** opens the visitor's email app with the message filled in.
+If the ID were missing, pressing **Send** would open the visitor's email app with the message filled in instead.
 
 ## The song "Twenty Three"
 
