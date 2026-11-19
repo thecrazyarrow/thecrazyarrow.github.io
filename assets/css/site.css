@@ -38,6 +38,7 @@
   --rivet-hi: #6b4426;
   --rivet-lo: #3a2416;
   --brand-icon: var(--gear-icon);   /* the logo always keeps its gear, even on themed pages */
+  --spot-core-rgb: 255, 214, 170;   /* the hot centre of the card spotlight (section 25) */
 
   /* ---- "Gears era" pieces ----
      --gear-icon is a tiny gear drawn in SVG. CSS uses it as a MASK: the
@@ -1732,3 +1733,77 @@ main { overflow-x: clip; }
 @media (max-width: 860px) { [data-decor] > .gears { opacity: 0.3; width: 280px; } }
 /* the journey's cluster stays out at the screen edge, clear of the timeline text */
 #song ~ [data-decor] > .gears { width: min(300px, 40vw); top: -20px; opacity: 0.4; }
+
+
+/* ===================== 25. CARD SPOTLIGHT =====================
+   On a computer, a card glows most RIGHT WHERE THE MOUSE IS and fades out
+   from there, and its border lights up near the cursor. site.js
+   (setupCardSpotlight) keeps --mx / --my = the mouse position inside the card.
+   ::before = the soft glow inside the card, ::after = the lit-up border. */
+.card { isolation: isolate; }       /* keeps the glow layer between the card's background and its text */
+
+@media (hover: hover) {
+  .card::before,
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;            /* the glow never gets in the way of clicks */
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  .card::before {
+    z-index: -1;                     /* behind the card's text, in front of its background */
+    background:
+      radial-gradient(150px circle at var(--mx, 50%) var(--my, 50%), rgba(var(--spot-core-rgb), 0.13), transparent 70%),
+      radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(var(--accent-rgb), 0.14), transparent 62%);
+  }
+  .card::after {
+    z-index: 1;
+    inset: -1px;                     /* sits exactly on the 1px border */
+    padding: 1px;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(var(--spot-core-rgb), 0.95), rgba(var(--accent-rgb), 0.55) 32%, transparent 70%);
+    /* keep only the 1px ring: the full box minus the inside */
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  .project.card::after { inset: 0; }   /* project panels clip their edges */
+  .card:hover::before, .card:hover::after,
+  .card:focus-within::before, .card:focus-within::after { opacity: 1; }
+
+  /* the overall glow is now quieter, so the spot under the cursor stands out */
+  .card:hover,
+  .card:focus-within {
+    border-color: rgba(var(--accent-rgb), 0.28);
+    box-shadow: 0 18px 50px -26px rgba(var(--accent-rgb), 0.45);
+  }
+}
+
+
+/* ===================== 26. GUITAR PAGE: A SPRINKLE OF GOLD =====================
+   Purple stays the main colour; gold shows up in small touches only. */
+.theme-guitar {
+  --gold: #e3bd62;
+  --gold-rgb: 227, 189, 98;
+  --spot-core-rgb: 227, 189, 98;    /* card spotlights have a gold centre here */
+  --rivet-hi: #d8b056;              /* gold rivets on the cards */
+  --rivet-lo: #4a3818;
+}
+.theme-guitar .eyebrow { color: var(--gold); }
+.theme-guitar .song-title {
+  background: linear-gradient(100deg, var(--gold) 0%, #f3dc9a 35%, var(--accent-light) 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.theme-guitar .song-panel .badge-solid { background: var(--gold); color: #1a1205; }
+.theme-guitar .timeline li.now .when { color: var(--gold); }
+.theme-guitar .timeline li.now::before { background: var(--gold); }
+/* two of the floating instruments are gold */
+.theme-guitar .music-gold .music-line, .theme-guitar .music-gold .music-fill { stroke: rgba(var(--gold-rgb), 0.75); }
+.theme-guitar .music-gold .music-fill { fill: rgba(var(--gold-rgb), 0.08); }
+.theme-guitar .music-gold .music-dot { fill: rgba(var(--gold-rgb), 0.75); }

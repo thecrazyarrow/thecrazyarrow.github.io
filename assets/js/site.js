@@ -522,6 +522,27 @@ function setupReveal() {
 }
 
 // Phones have no "hover", so a tap gives the card the same lift for a moment
+// Card spotlight: as the mouse moves over a card, tell the card WHERE the
+// mouse is (--mx, --my). The CSS draws a glow centred on that spot, so the
+// card lights up most right under the cursor (section 25 in site.css).
+function setupCardSpotlight() {
+  if (!window.matchMedia('(hover: hover)').matches) return;   // phones: no mouse, no spotlight
+  let pending = 0;
+  let last = null;
+  document.addEventListener('pointermove', e => {
+    last = e;
+    if (pending) return;
+    pending = requestAnimationFrame(() => {   // at most once per screen refresh
+      pending = 0;
+      const card = last.target instanceof Element && last.target.closest('.card');
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${Math.round(last.clientX - r.left)}px`);
+      card.style.setProperty('--my', `${Math.round(last.clientY - r.top)}px`);
+    });
+  }, { passive: true });
+}
+
 function setupTapFeedback() {
   document.addEventListener('touchstart', e => {
     const card = e.target.closest('.card');
@@ -705,24 +726,24 @@ const MUSIC_SHAPES = {
           <path class="music-line" d="M5.4 -1.5 V-28 M25.4 -6.5 V-33"/>
           <path class="music-fill" d="M5.4 -28 L25.4 -33 V-28 L5.4 -23 Z"/>`,
 };
-// [shape, x, y, scale, tilt in degrees, seconds per bob]
+// [shape, x, y, scale, tilt in degrees, seconds per bob, 'gold' = drawn in gold]
 const MUSIC_LAYOUT = [
   ['guitar',   -40,  60, 2.5,  24, 9],
   ['drum',    -150, 135, 1.8,  -6, 7],
   ['fork',      60, -30, 1.9, -16, 8],
   ['note',    -150, -40, 2.1,  10, 6],
   ['notes',     20, 150, 1.8,  -8, 7.5],
-  ['electric',  85, 105, 1.5, -28, 10],
-  ['note',      70,  30, 1.2, -12, 5.5],
+  ['electric',  85, 105, 1.5, -28, 10, 'gold'],
+  ['note',      70,  30, 1.2, -12, 5.5, 'gold'],
   ['fork',    -200,  50, 1.2,  18, 6.5],
 ];
 
 function musicSVG() {
-  return MUSIC_LAYOUT.map(([shape, x, y, scale, tilt, secs], i) => {
+  return MUSIC_LAYOUT.map(([shape, x, y, scale, tilt, secs, gold], i) => {
     const bob = reducedMotion ? '' :
       `<animateTransform attributeName="transform" type="translate" values="0 0; 0 -9; 0 0"
         dur="${secs}s" begin="-${(i * 1.3).toFixed(1)}s" repeatCount="indefinite"/>`;
-    return `<g transform="translate(${x} ${y})"><g>${bob}
+    return `<g transform="translate(${x} ${y})"${gold ? ' class="music-gold"' : ''}><g>${bob}
         <g transform="rotate(${tilt}) scale(${scale})" vector-effect="non-scaling-stroke">${MUSIC_SHAPES[shape]}</g>
       </g></g>`;
   }).join('');
@@ -1128,6 +1149,7 @@ async function init() {
   setupLanguageSwitch();
   setupLightbox();
   setupTapFeedback();
+  setupCardSpotlight();
   setupContactForm();
   setupLightModeEgg();
   setupFooterCat();
