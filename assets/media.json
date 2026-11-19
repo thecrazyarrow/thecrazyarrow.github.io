@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-19T21:06:49.9824825Z",
+  "generated": "2026-11-19T21:27:35.5766822Z",
   "logo": null,
   "folders": {
     "zynx": [{"src":"zynx/hero .jpeg","w":1200,"h":1600}],
@@ -10,10 +10,10 @@
     "assets/images/manufacturing": [],
     "assets/images/music": [{"src":"assets/images/music/WhatsApp Image 2026-11-19 at 11.40.44 PM.jpeg","w":740,"h":1012}],
     "assets/images/projects": [],
-    "assets/images/bikes/ava": [{"src":"assets/images/bikes/ava/01.jpeg","w":1074,"h":1600}, {"src":"assets/images/bikes/ava/02.jpeg","w":740,"h":1600}, {"src":"assets/images/bikes/ava/03.jpeg","w":1181,"h":1370}],
-    "assets/images/bikes/toraa": [{"src":"assets/images/bikes/toraa/1.jpeg","w":788,"h":1260}, {"src":"assets/images/bikes/toraa/2.jpeg","w":1098,"h":1600}, {"src":"assets/images/bikes/toraa/3.jpeg","w":1284,"h":1444}],
-    "assets/images/industrial/SPLENDOR BUILD PICS DURING UPGRADATION PROCESS": [{"src":"assets/images/industrial/SPLENDOR BUILD PICS DURING UPGRADATION PROCESS/WhatsApp Image 2026-11-19 at 11.46.34 PM (1).jpeg","w":740,"h":1600}, {"src":"assets/images/industrial/SPLENDOR BUILD PICS DURING UPGRADATION PROCESS/WhatsApp Image 2026-11-19 at 11.46.34 PM.jpeg","w":1200,"h":1600}, {"src":"assets/images/industrial/SPLENDOR BUILD PICS DURING UPGRADATION PROCESS/WhatsApp Image 2026-11-19 at 11.46.35 PM (1).jpeg","w":1284,"h":1543}, {"src":"assets/images/industrial/SPLENDOR BUILD PICS DURING UPGRADATION PROCESS/WhatsApp Image 2026-11-19 at 11.46.35 PM.jpeg","w":1140,"h":1600}],
-    "assets/images/projects/cement-printer": [{"src":"assets/images/projects/cement-printer/WhatsApp Image 2026-11-19 at 11.26.07 PM (1).jpeg","w":1284,"h":1476}, {"src":"assets/images/projects/cement-printer/WhatsApp Image 2026-11-19 at 11.26.07 PM (2).jpeg","w":1124,"h":1600}, {"src":"assets/images/projects/cement-printer/WhatsApp Image 2026-11-19 at 11.26.07 PM.jpeg","w":1282,"h":1462}, {"src":"assets/images/projects/cement-printer/WhatsApp Image 2026-11-19 at 11.26.08 PM (1).jpeg","w":1284,"h":1368}, {"src":"assets/images/projects/cement-printer/WhatsApp Image 2026-11-19 at 11.26.08 PM.jpeg","w":592,"h":1280}],
+    "assets/images/bikes/ava": [{"src":"assets/images/bikes/ava/01.jpeg","w":1074,"h":1600}, {"src":"assets/images/bikes/ava/03.jpeg","w":1181,"h":1370}, {"src":"assets/images/bikes/ava/MAIN ONE ON THE WEBSITE AVA.jpeg","w":740,"h":1138}],
+    "assets/images/bikes/toraa": [{"src":"assets/images/bikes/toraa/1.jpeg","w":788,"h":1260}, {"src":"assets/images/bikes/toraa/3.jpeg","w":1284,"h":1444}, {"src":"assets/images/bikes/toraa/MAIN ONE ON THE WEBSITE.jpeg","w":1098,"h":1600}],
+    "assets/images/industrial/SPLENDOR BUILD PICS DURING UPGRADATION PROCESS": [{"src":"assets/images/industrial/SPLENDOR BUILD PICS DURING UPGRADATION PROCESS/WhatsApp Image 2026-11-19 at 11.46.34 PM (1).jpeg","w":740,"h":1040}, {"src":"assets/images/industrial/SPLENDOR BUILD PICS DURING UPGRADATION PROCESS/WhatsApp Image 2026-11-19 at 11.46.34 PM.jpeg","w":1200,"h":1600}, {"src":"assets/images/industrial/SPLENDOR BUILD PICS DURING UPGRADATION PROCESS/WhatsApp Image 2026-11-19 at 11.46.35 PM (1).jpeg","w":1284,"h":1543}, {"src":"assets/images/industrial/SPLENDOR BUILD PICS DURING UPGRADATION PROCESS/WhatsApp Image 2026-11-19 at 11.46.35 PM.jpeg","w":1140,"h":1600}],
+    "assets/images/projects/cement-printer": [{"src":"assets/images/projects/cement-printer/WhatsApp Image 2026-11-19 at 11.26.07 PM (1).jpeg","w":1284,"h":1476}, {"src":"assets/images/projects/cement-printer/WhatsApp Image 2026-11-19 at 11.26.07 PM (2).jpeg","w":1124,"h":1600}, {"src":"assets/images/projects/cement-printer/WhatsApp Image 2026-11-19 at 11.26.07 PM.jpeg","w":1282,"h":1462}, {"src":"assets/images/projects/cement-printer/WhatsApp Image 2026-11-19 at 11.26.08 PM (1).jpeg","w":1284,"h":1368}, {"src":"assets/images/projects/cement-printer/WhatsApp Image 2026-11-19 at 11.26.08 PM.jpeg","w":592,"h":739}],
     "assets/images/projects/guitar": [],
     "assets/images/projects/robotic-arm": [],
     "assets/images/projects/splint": []
