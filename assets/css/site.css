@@ -1395,3 +1395,47 @@ main { overflow-x: clip; }
   .header-inner { max-width: 2600px; }
   .theme-toggle { transform: scale(1.6); }
 }
+
+
+/* ===================== 19. EASTER EGG: HOLD THE LOGO (home page) =====================
+   site.js -> setupTwinEgg(). Hold the header logo for 5 seconds. */
+.brand {
+  -webkit-touch-callout: none;     /* phones: no "open link / copy" menu on a long press */
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* while held: the gear spins fast and the logo slowly lights up */
+.brand.is-holding .brand-gear { animation-duration: 0.35s; }
+.brand.is-holding .brand-main {
+  text-shadow: 0 0 16px rgba(255, 122, 26, 0.95);
+  transition: text-shadow 5s linear;
+}
+
+.egg-twin {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.egg-twin.show { opacity: 1; pointer-events: auto; cursor: pointer; }
+.egg-twin-text {
+  margin: 0;
+  max-width: 100%;
+  padding: 22px 30px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--rivets), var(--surface);
+  box-shadow: var(--glow), 0 20px 60px rgba(0, 0, 0, 0.6);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 4vw, 1.6rem);
+  text-align: center;
+  transform: scale(0.6) rotate(-4deg);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);   /* overshoots a little = "pop" */
+}
+.egg-twin.show .egg-twin-text { transform: none; }

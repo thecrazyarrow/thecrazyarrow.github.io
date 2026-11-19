@@ -803,6 +803,72 @@ function setupFooterCat() {
 }
 
 
+// ===================== 6e. EASTER EGG: HOLD THE LOGO (HOME PAGE ONLY) =====================
+// Press and HOLD the "engineered by chaos" logo in the header for 5 seconds
+// on the home page, and a little message pops up. While you hold, the logo's
+// gear spins faster and faster. Let go early and nothing happens (a normal
+// quick click still just goes to the home page).
+// The message isn't translated on purpose; it's the same in every language.
+const TWIN_MESSAGE = 'anneyong twin 😉 i see u lynne';
+const TWIN_HOLD_MS = 5000;
+
+function setupTwinEgg() {
+  if (!$('.hero')) return;              // only the home page has the big hero
+  const brand = $('.site-header .brand');
+  if (!brand) return;
+
+  let holdTimer = 0;
+  let fired = false;                    // true right after the message popped
+  let popup = null;
+  let hideTimer = 0;
+
+  function startHold(e) {
+    if (e.button > 0) return;           // left mouse button / finger only
+    fired = false;
+    brand.classList.add('is-holding');
+    clearTimeout(holdTimer);
+    holdTimer = setTimeout(() => {
+      fired = true;
+      brand.classList.remove('is-holding');
+      show();
+    }, TWIN_HOLD_MS);
+  }
+  function stopHold() {
+    clearTimeout(holdTimer);
+    brand.classList.remove('is-holding');
+  }
+
+  function show() {
+    if (!popup) {
+      popup = document.createElement('div');
+      popup.className = 'egg-twin';
+      popup.setAttribute('role', 'status');
+      popup.innerHTML = '<p class="egg-twin-text"></p>';
+      popup.addEventListener('click', hide);
+      document.body.appendChild(popup);
+      void popup.offsetWidth;           // so the pop-in animation plays the first time too
+    }
+    $('.egg-twin-text', popup).textContent = TWIN_MESSAGE;
+    popup.classList.add('show');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hide, 6000);
+  }
+  function hide() {
+    if (popup) popup.classList.remove('show');
+  }
+
+  brand.addEventListener('pointerdown', startHold);
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(type => brand.addEventListener(type, stopHold));
+  // After a successful hold, don't also follow the logo's link
+  brand.addEventListener('click', e => {
+    if (fired) { e.preventDefault(); fired = false; }
+  });
+  // Phones: a long press normally opens the "open link / copy link" menu. Not here.
+  brand.addEventListener('contextmenu', e => e.preventDefault());
+  brand.addEventListener('dragstart', e => e.preventDefault());
+}
+
+
 // ===================== 7. CONTACT FORM =====================
 // Until you paste your Formspree ID into the form's action (see README),
 // pressing Send opens the visitor's email app with the message filled in.
@@ -884,6 +950,7 @@ async function init() {
   setupContactForm();
   setupLightModeEgg();
   setupFooterCat();
+  setupTwinEgg();
   setupSong();
 
   // A link like about.html?lang=ja opens straight in Japanese
