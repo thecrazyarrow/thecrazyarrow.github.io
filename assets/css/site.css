@@ -1613,3 +1613,50 @@ main { overflow-x: clip; }
   .bike-text, .bike-show.is-flipped .bike-text { margin-top: -120px; }
   .bike-specs { grid-template-columns: minmax(0, 1fr); }
 }
+
+
+/* ===================== 23. GUITAR PAGE: THE MUSIC PHOTO IS THE STAR =====================
+   Reuses the home page hero (photo melting into the page, text beside it).
+   The black & white photo gets a slight warm tint so it sits in the orange theme. */
+.hero-music .hero-photo {
+  background-position: 58% 32%;           /* keeps the face and the guitar in view */
+  filter: sepia(0.28) saturate(1.35) contrast(1.06);
+}
+.hero-music h1 { font-size: clamp(2.4rem, 5.2vw, 4.2rem); margin-top: 14px; }
+.hero-music .hero-text .lead { margin-top: 18px; }
+
+/* Tablets & phones: the photo at full strength on top (not dimmed behind the
+   text like the home page), fading down into the title */
+@media (max-width: 1024px) {
+  .hero-music { display: block; min-height: 0; }
+  .hero-music .hero-photo,
+  [dir="rtl"] .hero-music .hero-photo {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: min(86svh, 860px);
+    opacity: 1;
+    background-position: 55% 28%;
+    -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
+  }
+  .hero-music .hero-text { padding-block: 0 48px; margin-top: -170px; position: relative; }
+}
+@media (max-width: 600px) {
+  .hero-music .hero-photo, [dir="rtl"] .hero-music .hero-photo { height: min(76svh, 620px); }
+  .hero-music .hero-text { margin-top: -130px; }
+}
+/* laptops: keep the text on the dark side and let the photo fade in more gently,
+   so the intro never sits on the bright sky */
+@media (min-width: 1025px) {
+  .hero-music .hero-text { max-width: 34rem; }
+  .hero-music .hero-photo {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.45) 26%, #000 55%), linear-gradient(to top, transparent 0%, #000 14%);
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.45) 26%, #000 55%), linear-gradient(to top, transparent 0%, #000 14%);
+  }
+  [dir="rtl"] .hero-music .hero-photo {
+    -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.45) 26%, #000 55%), linear-gradient(to top, transparent 0%, #000 14%);
+    mask-image: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.45) 26%, #000 55%), linear-gradient(to top, transparent 0%, #000 14%);
+  }
+}
+.hero-music .hero-text > * { text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75); }

@@ -328,7 +328,12 @@ function renderGalleries() {
 
     if (photos.length === 0) {
       const count = gallery.dataset.placeholders === undefined ? 3 : Number(gallery.dataset.placeholders);
-      if (count === 0) { gallery.hidden = true; return; }   // data-placeholders="0": just hide it
+      if (count === 0) {                  // data-placeholders="0": just hide it
+        gallery.hidden = true;
+        const wrap = gallery.closest('.hide-if-no-photos');   // ...and its whole section, heading included
+        if (wrap) wrap.hidden = true;
+        return;
+      }
       gallery.innerHTML = placeholderHTML().repeat(Math.min(count, limit));
       return;
     }
@@ -456,7 +461,9 @@ function setupLightbox() {
 function renderHero() {
   const slot = $('.hero-photo[data-folder]');
   if (!slot) return;
-  const first = photosIn(slot.dataset.folder)[0];
+  // data-pick chooses a specific photo; otherwise the first one in the folder
+  const list = photosIn(slot.dataset.folder);
+  const first = (slot.dataset.pick && list.find(p => p.src === slot.dataset.pick)) || list[0];
   if (first) {
     // encodeURI turns spaces in file names (like "hero .jpeg") into %20 so CSS can read them
     slot.style.backgroundImage = `url("${encodeURI(first.webp || first.src)}")`;
@@ -927,7 +934,7 @@ const TWIN_MESSAGE = 'anneyong twin 😉 i see u lynne';
 const TWIN_HOLD_MS = 5000;
 
 function setupTwinEgg() {
-  if (!$('.hero')) return;              // only the home page has the big hero
+  if (!$('.hero-photo[data-folder="zynx"]')) return;   // only the home page (its hero photo comes from zynx/)
   const brand = $('.site-header .brand');
   if (!brand) return;
 

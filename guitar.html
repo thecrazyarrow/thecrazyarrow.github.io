@@ -36,14 +36,27 @@
   <div id="site-header"></div>
 
   <main id="main">
-    <section class="page-hero container">
-      <span class="eyebrow" data-i18n="guitar.eyebrow">Guitar era · singer-songwriter</span>
-      <h1 data-i18n="guitar.title">From first chords to my own songs</h1>
-      <p class="lead" data-i18n="guitar.lead">Self-taught in 1.8 years on a Yamaha C40. Building things is one way I make something from nothing. Writing songs is the other.</p>
+    <!-- ===================== HERO: the music photo is the star of this page =====================
+         The big photo is picked with data-pick (a file in assets/images/music). To use a
+         different one, change data-pick here AND data-skip in the gallery at the bottom. -->
+    <section class="hero hero-music" aria-labelledby="guitar-title">
+      <div class="hero-photo is-empty" data-folder="assets/images/music"
+           data-pick="assets/images/music/WhatsApp Image 2026-11-19 at 11.40.44 PM.jpeg" role="img"
+           data-i18n-attr="aria-label:guitar.photoAlt" aria-label="Aaron playing guitar"></div>
+      <div class="container">
+        <div class="hero-text">
+          <span class="eyebrow" data-i18n="guitar.eyebrow">Guitar era · singer-songwriter</span>
+          <h1 id="guitar-title" data-i18n="guitar.title">From first chords to my own songs</h1>
+          <p class="lead" data-i18n="guitar.lead">Self-taught in 1.8 years on a Yamaha C40. Building things is one way I make something from nothing. Writing songs is the other.</p>
+          <div class="btn-row">
+            <a href="#song" class="btn btn-primary" data-i18n="guitar.hero.cta">My first song</a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ===================== THE SONG ===================== -->
-    <section class="section container" style="padding-top:20px" aria-labelledby="song-title">
+    <section class="section container" id="song" aria-labelledby="song-title">
       <!-- Paste the song link between the quotes: data-song-url="https://..." -->
       <div class="song-panel reveal" data-song-url="">
         <span class="eyebrow" data-i18n="guitar.song.eyebrow">First original song</span>
@@ -86,12 +99,14 @@
       <div class="video-list grid" data-prefix="guitar"></div>
     </section>
 
-    <section class="section container" aria-labelledby="music-gallery-title">
+    <!-- More music photos appear here (the big one at the top is left out). Hidden while there are none. -->
+    <section class="section container hide-if-no-photos" aria-labelledby="music-gallery-title">
       <div class="section-head reveal">
         <span class="eyebrow" data-i18n="common.gallery">Gallery</span>
         <h2 id="music-gallery-title" data-i18n="guitar.gallery.title">Music</h2>
       </div>
-      <div class="gallery" data-folder="assets/images/music" data-placeholders="3"
+      <div class="gallery" data-folder="assets/images/music" data-placeholders="0"
+           data-skip="assets/images/music/WhatsApp Image 2026-11-19 at 11.40.44 PM.jpeg"
            data-i18n-attr="data-alt:guitar.gallery.title" data-alt="Music"></div>
     </section>
   </main>
