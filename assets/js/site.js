@@ -125,7 +125,7 @@ function buildChrome() {
             <span data-i18n="egg.end">That's it, folks!</span>
           </div>
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav"
-                  data-i18n-attr="aria-label:nav.menu" aria-label="Open menu">&#9776;</button>
+                  data-i18n-attr="aria-label:nav.menu" aria-label="Open menu"><span class="menu-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
           <nav class="nav" id="main-nav" aria-label="Main">
             <ul class="nav-links">${links}</ul>
             <div class="nav-actions">

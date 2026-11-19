@@ -1439,3 +1439,47 @@ main { overflow-x: clip; }
   transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);   /* overshoots a little = "pop" */
 }
 .egg-twin.show .egg-twin-text { transform: none; }
+
+
+/* ===================== 20. PHONE POLISH =====================
+   Fixes spotted on a real phone. */
+
+/* The menu button: three drawn bars instead of the "☰" character (phones draw
+   that character in all sorts of sizes). They fold into an X when the menu is open. */
+.menu-bars { display: grid; gap: 5px; width: 20px; }
+.menu-bars i {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.25s var(--ease), opacity 0.2s;
+}
+.menu-toggle[aria-expanded="true"] .menu-bars i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-bars i:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded="true"] .menu-bars i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* EN / 日本語 / عربي: three equal pills, each label centred the same way,
+   whatever font the phone uses for Japanese and Arabic letters */
+.lang-switch { align-items: center; gap: 2px; }
+.lang-switch button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 30px;
+  padding: 0 10px;
+  line-height: 1;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+}
+.lang-switch button[lang="ja"] { font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', sans-serif; font-size: 0.78rem; }
+.lang-switch button[lang="ar"] { font-family: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif; font-size: 0.86rem; padding-bottom: 2px; }
+@media (pointer: coarse) {
+  .lang-switch button { height: 36px; min-height: 0; min-width: 52px; padding-inline: 12px; }
+}
+
+/* "Currently": on phones, the label sits on its own line and each item gets its own row */
+@media (max-width: 600px) {
+  .currently { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 20px; }
+  .currently .eyebrow { margin-bottom: 2px; }
+}
