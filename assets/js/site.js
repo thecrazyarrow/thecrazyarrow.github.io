@@ -332,10 +332,103 @@ function renderGalleries() {
       return;
     }
 
-    gallery.innerHTML = photos.map((p, i) =>
-      `<button type="button" data-full="${encodeURI(p.src)}" aria-label="${altBase} ${i + 1}">${pictureHTML(p, `${altBase} ${i + 1}`)}</button>`
-    ).join('');
+    // data-ar = the photo's shape (width ÷ height), from media.json when known
+    gallery.innerHTML = photos.map((p, i) => {
+      const ar = p.w && p.h ? (p.w / p.h).toFixed(4) : '';
+      return `<button type="button" data-full="${encodeURI(p.src)}" data-ar="${ar}" aria-label="${altBase} ${i + 1}">${pictureHTML(p, `${altBase} ${i + 1}`)}</button>`;
+    }).join('');
+    if (gallery.dataset.limit !== '1') justify(gallery);
   });
+}
+
+
+// ===================== 3b. JUSTIFIED GALLERIES =====================
+// Like Google Photos: photos are shown WHOLE (no cropping) and arranged in
+// rows that are each stretched to fill the full width exactly, so there are
+// no empty gaps, on any screen. When the screen size changes, the rows are
+// worked out again (a phone gets more, shorter rows; a laptop fewer, wider ones).
+
+const justified = new Set();
+const galleryWatcher = 'ResizeObserver' in window ? new ResizeObserver(entries => {
+  entries.forEach(entry => {
+    const g = entry.target;
+    const w = Math.round(entry.contentRect.width);
+    if (w && w !== Number(g.dataset.laidOutAt)) layoutGallery(g);
+  });
+}) : null;
+
+function justify(gallery) {
+  gallery.classList.add('is-justified');
+  // Photos without a known shape: measure them once they load, then redo the rows
+  $$('button', gallery).forEach(btn => {
+    if (btn.dataset.ar) return;
+    const img = $('img', btn);
+    const measure = () => {
+      if (img.naturalWidth) { btn.dataset.ar = (img.naturalWidth / img.naturalHeight).toFixed(4); layoutGallery(gallery); }
+    };
+    if (img.complete) measure(); else img.addEventListener('load', measure, { once: true });
+  });
+  layoutGallery(gallery);
+  if (galleryWatcher && !justified.has(gallery)) { galleryWatcher.observe(gallery); justified.add(gallery); }
+}
+
+// Splits the shapes into k rows whose total widths are as even as possible
+// (keeps the photo order). "Dynamic programming": try every split, remember the best.
+function balancedRows(ars, k) {
+  const n = ars.length;
+  const prefix = [0];
+  ars.forEach(a => prefix.push(prefix[prefix.length - 1] + a));
+  const ideal = prefix[n] / k;
+  const cost = (i, j) => (prefix[j] - prefix[i] - ideal) ** 2;        // row = items i..j-1
+  const best = Array.from({ length: k + 1 }, () => Array(n + 1).fill(Infinity));
+  const cut = Array.from({ length: k + 1 }, () => Array(n + 1).fill(0));
+  best[0][0] = 0;
+  for (let r = 1; r <= k; r++) {
+    for (let j = r; j <= n; j++) {
+      for (let i = r - 1; i < j; i++) {
+        const c = best[r - 1][i] + cost(i, j);
+        if (c < best[r][j]) { best[r][j] = c; cut[r][j] = i; }
+      }
+    }
+  }
+  const rows = [];
+  for (let r = k, j = n; r > 0; r--) { const i = cut[r][j]; rows.unshift([i, j]); j = i; }
+  return rows;
+}
+
+function layoutGallery(gallery) {
+  const buttons = $$('button[data-full]', gallery);
+  const width = gallery.clientWidth;
+  if (!buttons.length || !width) return;
+  gallery.dataset.laidOutAt = Math.round(width);
+
+  const gap = parseFloat(getComputedStyle(gallery).rowGap) || 14;
+  const target = Math.max(180, Math.min(300, width * 0.3));   // ideal row height: ~180px phone, ~300px laptop
+  const maxRow = target * 1.7;                                   // never taller than this (a lone photo stays sensible)
+  const ars = buttons.map(b => Number(b.dataset.ar) || 4 / 3);
+
+  // how many rows: the photos' total width at the ideal height, divided by the screen width
+  const natural = ars.reduce((s, a) => s + a * target, 0) + gap * (ars.length - 1);
+  const k = Math.max(1, Math.min(ars.length, Math.round(natural / width)));
+
+  const frag = document.createDocumentFragment();
+  balancedRows(ars, k).forEach(([i, j]) => {
+    const row = document.createElement('div');
+    row.className = 'g-row';
+    const sum = ars.slice(i, j).reduce((s, a) => s + a, 0);
+    const height = (width - gap * (j - i - 1)) / sum;
+    // A row that would be too tall (e.g. one wide photo) is capped and centred instead
+    // (a photo alone in its row may grow bigger: up to ~70% of the screen height)
+    const cap = j - i === 1 ? Math.max(maxRow, Math.min(window.innerHeight * 0.7, 640)) : maxRow;
+    if (height > cap) row.style.maxWidth = Math.round(sum * cap + gap * (j - i - 1)) + 'px';
+    for (let x = i; x < j; x++) {
+      buttons[x].style.setProperty('--ar', ars[x]);
+      buttons[x].style.flexGrow = (ars[x] * 100).toFixed(2);   // x100: shares under 1 would leave part of the row empty
+      row.appendChild(buttons[x]);
+    }
+    frag.appendChild(row);
+  });
+  gallery.replaceChildren(frag);
 }
 
 // Click a photo: show it big. NEW: <dialog> has showModal() and close() built in.

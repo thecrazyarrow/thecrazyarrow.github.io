@@ -1489,3 +1489,53 @@ main { overflow-x: clip; }
 .video-small { max-width: 720px; }
 .video-small .video-frame { aspect-ratio: auto; }
 .video-small video { width: 100%; height: auto; max-height: 75vh; display: block; margin-inline: auto; }
+
+
+/* ===================== 21. NO DEAD SPACE =====================
+   Layouts that fill every row, whatever the screen size. */
+
+/* ---- Photo galleries: justified rows (site.js -> layoutGallery) ----
+   Each row is a flex line; each photo grows in proportion to its shape
+   (--ar = width / height), so the row is exactly full and nothing is cropped. */
+.gallery.is-justified { display: flex; flex-direction: column; gap: 14px; }
+.gallery .g-row { display: flex; gap: 14px; width: 100%; margin-inline: auto; }
+.gallery .g-row > button { flex: var(--ar) 1 0; aspect-ratio: var(--ar); min-width: 0; }
+@media (max-width: 480px) {
+  .gallery.is-justified, .gallery .g-row { gap: 8px; }
+}
+
+/* ---- Card grids: the last row is always full ----
+   Laptops: 3 across. If the last row would have 2 cards, they share it half
+   and half; if it would have 1, the last 4 cards become two rows of 2.
+   (A 6-column grid makes those halves and thirds possible.) */
+@media (min-width: 1024px) {
+  .grid:not(.grid-2) { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .grid:not(.grid-2) > * { grid-column: span 2; }
+  .grid:not(.grid-2):has(> :last-child:nth-child(3n+2)) > :nth-last-child(-n+2) { grid-column: span 3; }
+  .grid:not(.grid-2):has(> :last-child:nth-child(3n+1)) > :nth-last-child(-n+4) { grid-column: span 3; }
+  .grid:not(.grid-2) > :only-child { grid-column: 1 / -1; }
+  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-2 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+/* Tablets: 2 across; an odd one out at the end takes the full row */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .grid, .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+/* Phones: one column */
+@media (max-width: 639px) {
+  .grid, .grid-2 { grid-template-columns: minmax(0, 1fr); }
+}
+/* A 3D model card that ends up wider than usual shouldn't get a giant, tall viewer */
+.model-card .model-frame { max-height: 380px; }
+
+/* ---- Projects: one full-width column, so opening a panel never leaves an
+   empty box beside it ---- */
+.projects-list { display: flex; flex-direction: column; gap: 20px; }
+
+/* ---- Problem / Process / Result: all three side by side, or all three
+   stacked, never two-and-one-left-over ---- */
+.ppr { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 820px) {
+  .ppr { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

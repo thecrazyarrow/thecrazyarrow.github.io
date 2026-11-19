@@ -7,6 +7,7 @@
 # ============================================================
 
 $root = Split-Path -Parent $PSScriptRoot
+Add-Type -AssemblyName System.Drawing   # to read each photo's width and height
 $imageTypes = '.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif'
 $videoTypes = '.mp4', '.webm', '.mov'
 
@@ -30,6 +31,18 @@ foreach ($start in 'zynx', 'assets\images') {
       $entry = [ordered]@{ src = (WebPath $f.FullName) }
       $webp = Join-Path $d.FullName ($f.BaseName + '.webp')
       if (-not $isWebp -and (Test-Path $webp)) { $entry.webp = WebPath $webp }
+      # Width and height, so galleries can lay photos out at their real shape before they load.
+      # Phone photos can be stored sideways with an "orientation" tag (EXIF 0x0112); 5-8 = turned 90°.
+      try {
+        $img = [System.Drawing.Image]::FromFile($f.FullName)
+        $w = $img.Width; $h = $img.Height
+        if ($img.PropertyIdList -contains 0x0112) {
+          $o = [BitConverter]::ToUInt16($img.GetPropertyItem(0x0112).Value, 0)
+          if ($o -ge 5 -and $o -le 8) { $w, $h = $h, $w }
+        }
+        $img.Dispose()
+        $entry.w = $w; $entry.h = $h
+      } catch { }   # .webp/.avif can't be read here; the site measures those itself
       $list += $entry
     }
     $folders[(WebPath $d.FullName)] = $list
