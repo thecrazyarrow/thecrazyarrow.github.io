@@ -1858,3 +1858,15 @@ main { overflow-x: clip; }
   color: var(--accent-light);
 }
 .season-greeting + .copyright { margin-top: 8px; }
+
+/* ===================== 28. FEATURED BADGE EASTER EGG (projects page) ===================== */
+.egg-badge { cursor: pointer; user-select: none; transition: transform .15s ease; }
+.egg-badge:hover { transform: translateY(-1px) scale(1.04); }
+.egg-badge:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.egg-badge[data-egg="1"] { animation: egg-wiggle 1.2s ease-in-out infinite; }
+.egg-badge[data-egg="2"] { white-space: normal; text-transform: none; letter-spacing: .02em; }
+.egg-badge.egg-pop { animation: egg-pop .35s ease-out; }
+.egg-badge.egg-pop[data-egg="1"] { animation: egg-pop .35s ease-out, egg-wiggle 1.2s ease-in-out .35s infinite; }
+@keyframes egg-pop { 0% { transform: scale(.8); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+@keyframes egg-wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-4deg); } 75% { transform: rotate(4deg); } }
+@media (prefers-reduced-motion: reduce) { .egg-badge, .egg-badge[data-egg] , .egg-badge.egg-pop { animation: none; } }

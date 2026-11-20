@@ -1006,6 +1006,39 @@ function setupFooterCat() {
 }
 
 
+// ===================== 6d2. EASTER EGG: THE "FEATURED" BADGE (PROJECTS PAGE) =====================
+// Click "★ Featured" on the cement printer → it says "Click me".
+// Click again → "hello boyo konnichiwa hari san". Click once more → back to normal.
+// Clicking the badge doesn't open/close the project box. Not translated on purpose.
+const FEATURED_STEPS = [null, 'Click me', 'hello boyo konnichiwa hari san'];
+
+function setupFeaturedEgg() {
+  const badge = $('.project.featured [data-i18n="projects.featured"]');
+  if (!badge) return;
+  let step = 0;
+  badge.classList.add('egg-badge');
+  badge.setAttribute('role', 'button');
+  badge.tabIndex = 0;
+  const next = (e) => {
+    e.preventDefault();
+    e.stopPropagation();                         // don't toggle the <details>
+    step = (step + 1) % FEATURED_STEPS.length;
+    if (step === 0) {
+      badge.removeAttribute('data-egg');
+      badge.textContent = t('projects.featured') || '★ Featured';
+    } else {
+      badge.setAttribute('data-egg', step);
+      badge.textContent = FEATURED_STEPS[step];
+    }
+    badge.classList.remove('egg-pop');
+    void badge.offsetWidth;                      // restart the little pop animation
+    badge.classList.add('egg-pop');
+  };
+  badge.addEventListener('click', next);
+  badge.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') next(e); });
+}
+
+
 // ===================== 6e. EASTER EGG: HOLD THE LOGO (HOME PAGE ONLY) =====================
 // Press and HOLD the "engineered by chaos" logo in the header for 5 seconds
 // on the home page, and a little message pops up. While you hold, the logo's
@@ -1240,6 +1273,7 @@ async function init() {
   setupLightModeEgg();
   setupFooterCat();
   setupTwinEgg();
+  setupFeaturedEgg();
   setupSong();
 
   // A link like about.html?lang=ja opens straight in Japanese
