@@ -173,6 +173,7 @@ function buildChrome() {
               <a href="${CV}" download data-i18n="common.cv">Download CV</a>
             </div>
           </div>
+          <p class="season-greeting" hidden></p>
           <p class="copyright">&copy; <span id="year"></span> Aaron Angel Netto · engineered by chaos</p>
         </div>
       </footer>`;
@@ -1141,9 +1142,94 @@ function renderProgress() {
 }
 
 
+// ===================== 9. HOLIDAY SEASON =====================
+// From 20 November to 5 January every year the site dresses up for
+// Christmas and New Year: falling snow, a Santa hat on the logo's gear,
+// fairy lights along the header and a greeting in the footer.
+// On 6 January it goes back to normal BY ITSELF (nothing to push), and it
+// comes back on its own next November.
+// Preview it any day with ?season=xmas, or switch it off with ?season=off.
+
+function isHolidaySeason(d) {
+  const m = d.getMonth();                 // 0 = January ... 10 = November, 11 = December
+  const day = d.getDate();
+  return (m === 10 && day >= 20) || m === 11 || (m === 0 && day <= 5);
+}
+
+function setupSeason() {
+  const force = new URLSearchParams(location.search).get('season');
+  const now = new Date();
+  if (force === 'off' || (force !== 'xmas' && !isHolidaySeason(now))) return;
+
+  document.documentElement.classList.add('season-xmas');
+
+  // Footer greeting: Christmas until the 25th, then New Year
+  const newYear = (now.getMonth() === 11 && now.getDate() >= 26) || now.getMonth() === 0;
+  const greet = $('.season-greeting');
+  if (greet) {
+    greet.dataset.i18n = newYear ? 'season.newyear' : 'season.xmas';
+    greet.textContent = newYear ? '✨ Happy New Year from the workshop ✨' : '🎄 Merry Christmas & happy holidays 🎄';
+    greet.hidden = false;
+  }
+
+  if (!reducedMotion) letItSnow();
+}
+
+// Falling snow: one see-through canvas over the page that never blocks clicks.
+// Light on purpose (fewer flakes on phones), and it pauses when the tab is hidden.
+function letItSnow() {
+  const canvas = document.createElement('canvas');
+  canvas.className = 'snow';
+  canvas.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  let w = 0, h = 0, flakes = [];
+
+  function size() {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w * ratio; canvas.height = h * ratio;
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    const count = w < 700 ? 35 : 75;
+    while (flakes.length < count) flakes.push(newFlake(true));
+    flakes.length = count;
+  }
+  function newFlake(anywhere) {
+    return {
+      x: Math.random() * w,
+      y: anywhere ? Math.random() * h : -10,
+      r: 0.7 + Math.random() * 2,                 // size
+      speed: 0.25 + Math.random() * 0.75,         // falling speed
+      drift: Math.random() * Math.PI * 2,         // where it is in its side-to-side sway
+      alpha: 0.35 + Math.random() * 0.5,
+    };
+  }
+  function frame() {
+    if (!document.hidden) {
+      ctx.clearRect(0, 0, w, h);
+      flakes.forEach((f, i) => {
+        f.y += f.speed;
+        f.drift += 0.01;
+        f.x += Math.sin(f.drift) * 0.35;
+        if (f.y > h + 10) flakes[i] = newFlake(false);
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${f.alpha})`;
+        ctx.fill();
+      });
+    }
+    requestAnimationFrame(frame);
+  }
+  size();
+  window.addEventListener('resize', size);
+  requestAnimationFrame(frame);
+}
+
+
 // ===================== START EVERYTHING =====================
 async function init() {
   buildChrome();
+  setupSeason();          // Christmas & New Year look, only during the holidays
   drawIcons();
   addGears();
   setupLanguageSwitch();
